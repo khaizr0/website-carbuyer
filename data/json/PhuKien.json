@@ -6,7 +6,7 @@
       "idLoai": "LPK001",
       "GiaNiemYet": 5000000,
       "chiTietSP": "Camera hành trình 4K, kết nối wifi.",
-      "hinhAnh": "camera_hanh_trinh.png",
+      "hinhAnh": "camera_hanh_trinh.png || camera2.png",
       "trangThai": 1,
       "datLich": 0
     },
@@ -17,7 +17,7 @@
       "idLoai": "LPK002",
       "GiaNiemYet": 3000000,
       "chiTietSP": "Cảm biến đo áp suất lốp chính xác, kết nối qua app.",
-      "hinhAnh": "cam_bien_ap_suat_lop.png",
+      "hinhAnh": "cam_bien_ap_suat_lop.png || cambien2.png",
       "trangThai": 1,
       "datLich": 1
     }

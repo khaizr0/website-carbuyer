@@ -11,7 +11,7 @@
       "soKm": 0,
       "mauXe": "Đen",
       "loaiCanSo": "Tự động",
-      "hinhAnh": "toyota_camry.png",
+      "hinhAnh": "toyota_camry.png || toyota2.png",
       "chiTietSP": "Xe nhập khẩu, đời mới 2023.",
       "trangThai": 1,
       "datLich": 1
@@ -28,7 +28,7 @@
       "soKm": 1000,
       "mauXe": "Trắng",
       "loaiCanSo": "Số sàn",
-      "hinhAnh": "honda_civic.png",
+      "hinhAnh": "honda_civic.png || civic2.png",
       "chiTietSP": "Mẫu hatchback thể thao, động cơ mạnh mẽ.",
       "trangThai": 1,
       "datLich": 0
