@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .header {
     display: flex;
@@ -18,7 +18,7 @@ body {
 .menu a {
     text-decoration: none;
     color: #333;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 30px;
 }
 .logo {
@@ -31,16 +31,17 @@ body {
 .search-box {
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 4px 0 0 4px; 
     height: 30px; 
+    width: 200px; 
+    box-shadow: none; 
 }
 .search-button {
     padding: 5px 10px;
     border: none;
     background-color: #007bff;
     color: white;
-    border-radius: 4px;
-    margin-left: 5px;
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
     height: 30px; 
 }
@@ -50,6 +51,29 @@ body {
 .hotline {
     margin-left: 20px;
     color: #007bff;
-    font-weight: bold;
+    font-weight: 550;
     line-height: 30px; 
 }
+.hotline-container {
+    margin-left: 20px;
+    display: inline-block;
+    text-align: left;
+}
+
+.hotline-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #000; /* Màu đen cho tiêu đề */
+}
+
+.hotline-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: #007bff; /* Màu xanh dương cho số hotline */
+    text-decoration: none;
+}
+
+.hotline-link:hover {
+    text-decoration: underline;
+}
+

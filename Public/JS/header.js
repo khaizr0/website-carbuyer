@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="search-container">
             <input type="text" class="search-box" placeholder="Tìm kiếm xe ở đây">
             <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <span class="hotline">Hotline: 0901234567</span>
+            <div class="hotline-container">
+                    <span class="hotline-title">Hotline</span><br>
+                    <a href="tel:0123456789" class="hotline-link">0123456789</a>
+            </div>
         </div>
     </div>
     `;
