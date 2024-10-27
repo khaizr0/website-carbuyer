@@ -297,3 +297,18 @@ body {
     font-size: 14px;
     color: #333;
 }
+
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* GOOGLE MAPS */
+.map-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}

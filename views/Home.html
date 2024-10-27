@@ -6,10 +6,12 @@
     <title>Home</title>
     <link rel="stylesheet" href="/Public/css/home.css">
     <link rel="icon" type="image/x-icon" href="/Documents/CarLogo.png">
+    <script src="/config/config.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/Public/css/header.css">
+    <link rel="stylesheet" href="/Public/css/footer.css">
     <script src="/Public/JS/header.js" defer ></script>
-
 </head>
 <body>
 <!-- Slideshow container -->
@@ -235,5 +237,18 @@
     </div>
 </div>
 
+<br><br>
+<!-- GG Maps container -->
+<div class="map-container">
+    <iframe id="mapFrame" allowfullscreen="" loading="lazy"></iframe>
+</div>
+<script>
+    document.getElementById('mapFrame').src = mapConfig.url;
+</script>
+
+<br><br>
+<!-- Footer -->
+<div id="footer-container"></div>
+<script src="/Public/JS/footer.js"></script>
 </body>
 </html>
