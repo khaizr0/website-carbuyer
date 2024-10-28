@@ -1,0 +1,251 @@
+.layout{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    align-content: center;
+    margin-top: 20px;
+    max-width: 2000px;
+}
+.come-back {
+    width: 90%;
+    min-height: 30px;
+    font-weight: bold;
+    
+}
+.ri-arrow-go-back-line{
+    border: 2px solid #000;
+    padding: 5px 5px;
+    border-radius: 10px;
+}
+.box-product-detail{
+    background-color: #EBE7E7;
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+}
+.img-detail-1{
+    height: 750px;
+    width: 950px;
+    padding: 40px 40px 0px 40px;
+    border-radius: 10px;
+}
+.img-detail-1:hover{
+    height: 750px;
+    width: 950px;
+    padding: 40px 40px 0px 40px;
+    border-radius: 10px;
+    background: transparent;
+    background-color: rgba(0,0,0,0.1);
+}
+.image-range{
+    display: flex;
+    padding: 10px 40px 0px 40px;
+}
+.btn-change-image{
+    border: 0;
+    background: transparent;
+
+}
+.ri-arrow-left-circle-fill , .ri-arrow-right-circle-fill{
+    font-size: 40px;
+}
+.img-detail-2{
+    height: 150px;
+    width: 190px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10%;
+}
+.img-detail-2:hover{
+    height: 150px;
+    width: 190px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10%;
+    background: transparent;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.box-price{
+    padding: 40px 40px 0px 40px;
+}
+.box-detail-model{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: aliceblue;
+    margin-left: 40px;
+    height: 400px;
+    padding: 0px 0px 0px 0px;
+    border-radius: 30px;
+}
+.product-detail-price{
+    font-size: 40px;
+    color: #34499E;
+}
+.product-detail-p{
+    font-size: 20px;
+}
+.product-detail-name{
+    font-size: 50px;
+    font-weight: bold;
+}
+.product-detail-model{
+    font-size: 25px;
+    font-weight: bold;
+    padding: 10px 30px 10px 40px;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.ri-calendar-line, .ri-scan-line, .ri-gas-station-fill, .ri-settings-5-line, .ri-roadster-fill{
+    font-size: 40px;
+    font-weight: bold;
+    position: relative;
+    top: 6px;
+}
+.btn-regiter-callnow{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 40px;
+    padding: 40px 0px 0px 0px;
+    border-radius: 30px;
+    justify-content: center;
+}
+.register{
+    width: 40%;
+    background: #6185A8;
+    height: 100px;
+    border: 0;
+    border-radius: 10px;
+    margin-right: 50px;
+    font-size: 30px;
+    color: white;
+}
+.call{
+    width: 40%;
+    background: #D9D9D9;
+    height: 100px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+}
+
+/*  */
+.box-product-detail-infromation{
+    background-color: #EEEDF3;
+    width: 80%;
+    height: auto;
+    border-radius: 1px;
+    border: 1px solid #000;
+    padding: 10px 0px 0px 40px;
+}
+
+ul li {
+    list-style: none;
+    font-size: 30px;
+}
+.menu-content{
+    font-size: 30px;
+}
+.caikhunggiday{
+    width: 100%;
+    height: 50px;
+    background: #D0CCE3;
+    margin-top: 100px;
+}
+.box-image-detail-panel{
+    width: 100%;
+    height: auto;
+}
+/* 
+ */
+ .quantam{
+    margin-top: 100px;
+    align-content: center;
+    text-align: center;
+ }
+ .bancothequantam{
+    width: 100%;
+    flex-wrap: nowrap;
+ }
+ .col-xs-4{
+    border: 1px solid #000;
+    margin-right: 23px;
+    flex-wrap: nowrap;
+ }
+.image-lienquan{
+    width: 450px;
+    height: 350px;
+    padding: 5px 5px 5px 5px;
+}
+.name-lienquan{
+    color: #080808;
+    font-size: 30px;
+    margin-top: -10px;
+}
+.price-lienquan{
+    color: #FF0000;
+    font-size: 30px;
+    margin-top: -10px;
+}
+.box-detail-lienquan{
+    display: flex;
+    width: 100%;
+    margin-top: -10px;
+    max-width: 2000px;
+}
+.product-detail-lienquan{
+    padding: 10px 10px 10px 10px;
+    font-size: 20px;
+    margin-top: -10px;
+}
+.btn-change-lienquan-left{
+    background: transparent;
+    background-color: rgba(0,0,0,0.4);
+    border: 0;
+    position: absolute;
+    height: 533px;
+    width: 70px;
+}
+.btn-change-lienquan-right{
+    background: transparent;
+    background-color: rgba(0,0,0,0.4);
+    border: 0;
+    position: absolute;
+    height: 533px;
+    right: 0;
+    width: 70px;
+    max-width: 2000px;
+}
+
+.btn-change-lienquan-left:hover{
+    background: transparent;
+    background-color: rgba(0,0,0,0.1);
+    border: 0;
+    position: absolute;
+    height: 533px;
+    width: 70px;
+}
+.btn-change-lienquan-right:hover{
+    background: transparent;
+    background-color: rgba(0,0,0,0.1);
+    border: 0;
+    position: absolute;
+    height: 533px;
+    right: 0;
+    width: 70px;
+    max-width: 2000px;
+}
+.ri-arrow-left-circle-line , .ri-arrow-right-circle-line {
+    font-size: 50px;
+    color:white;
+}
+
+.footer{
+    width: 100%;
+    height: 500px;
+    margin-top: 200px;
+    background: #656F93;
+
+}
