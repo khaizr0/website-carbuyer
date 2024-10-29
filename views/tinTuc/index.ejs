@@ -1,0 +1,114 @@
+<h1>Danh sách Tin Tức</h1>
+<div>
+    <div class="container-fluid d-flex justify-content-between table-options">
+        <div>
+            <form class="input-group">
+                <input class="form-control" type="search" placeholder="Tìm kiếm tin tức" aria-label="Search">
+                <button class="btn btn-search" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div>
+            <!-- Button to add new news -->
+            <button type="button" class="btn btn-trans" data-bs-toggle="modal" data-bs-target="#createTinTucModal">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn btn-trans" id="deleteSelected"><i class="fas fa-trash"></i></button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><i class="fa-solid fa-rectangle-list"></i></th>
+                    <th>ID</th>
+                    <th>Tên Tin Tức</th>
+                    <th>Ảnh Đại Diện</th>
+                    <th>Ngày Đăng</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% tinTuc.forEach(function(t) { %>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox" data-id="<%= t.id %>"></td>
+                        <td><%= t.id %></td>
+                        <td><%= t.tenTT %></td>
+                        <td><img src="/images/<%= t.anhDaiDien %>" alt="<%= t.tenTT %>" style="width: 100px; height: auto;" /></td>
+                        <td><%= t.ngayDang %></td>
+                        <td><%= t.trangThai === 1 ? 'Hiện' : 'Ẩn' %></td>
+                        <td>
+                            <a href="/tinTuc/edit/<%= t.id %>" class="btn btn-trans"><i class="fas fa-edit"></i></a>
+                            <form action="/tinTuc/delete/<%= t.id %>" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>    
+    </div>
+</div>
+<!-- The Modal for Creating Tin Tức -->
+<div class="modal fade" id="createTinTucModal" tabindex="-1" aria-labelledby="createTinTucModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTinTucModalLabel">Thêm Tin Tức Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/tinTuc/create" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="tenTT" class="form-label">Tên Tin Tức</label>
+                        <input type="text" class="form-control" id="tenTT" name="tenTT" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="anhDaiDien" class="form-label">Ảnh Đại Diện</label>
+                        <input type="file" class="form-control" id="anhDaiDien" name="anhDaiDien" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ngayDang" class="form-label">Ngày Đăng</label>
+                        <input type="date" class="form-control" id="ngayDang" name="ngayDang" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="trangThai" class="form-label">Trạng Thái</label>
+                        <select class="form-select" id="trangThai" name="trangThai" required>
+                            <option value="1">Hiện</option>
+                            <option value="0">Ẩn</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="chiTietBaiViet" class="form-label">Chi Tiết Bài Viết</label>
+                        <textarea class="form-control" id="chiTietBaiViet" name="chiTietBaiViet" rows="3" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Xóa các mục đã chọn
+    document.getElementById('deleteSelected').addEventListener('click', function() {
+        var checkedIds = [];
+        var checkboxes = document.querySelectorAll('.row-checkbox:checked');
+        checkboxes.forEach(function(checkbox) {
+            checkedIds.push(checkbox.dataset.id);
+        });
+
+        if (checkedIds.length > 0) {
+            // Call your deletion logic here
+            // For example: send AJAX request to delete selected items
+        } else {
+            alert('Vui lòng chọn ít nhất một mục để xóa.');
+        }
+    });
+</script>
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

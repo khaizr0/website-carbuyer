@@ -1,0 +1,109 @@
+<h1>Danh sách Lịch Hẹn</h1>
+<div>
+    <div class="container-fluid d-flex justify-content-between table-options">
+        <div>
+            <form class="input-group">
+                <input class="form-control" type="search" placeholder="Tìm kiếm lịch hẹn" aria-label="Search">
+                <button class="btn btn-search" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div>
+            <!-- Button to Open the Change Time Modal -->
+            <button type="button" class="btn btn-trans" data-bs-toggle="modal" data-bs-target="#changeTimeModal">
+                <i class="fas fa-clock"></i> Đổi Giờ
+            </button>
+            <button class="btn btn-trans" id="deleteSelected"><i class="fas fa-trash"></i></button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><i class="fa-solid fa-rectangle-list"></i></th>
+                    <th>Tên Khách Hàng</th>
+                    <th>Ngày</th>
+                    <th>Giờ</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% lichHen.forEach(function(item) { %>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox" data-id="<%= item.id %>"></td>
+                        <td><%= item.hoTenKH %></td>
+                        <td><%= item.date %></td>
+                        <td><%= item.time %></td>
+                        <td>
+                            <button class="btn btn-trans change-time-btn" data-id="<%= item.id %>" data-date="<%= item.date %>" data-time="<%= item.time %>" data-bs-toggle="modal" data-bs-target="#changeTimeModal"><i class="fas fa-clock"></i></button>
+                            <form action="/lichHen/delete/<%= item.id %>" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>    
+    </div>
+</div>
+
+<!-- The Modal for Changing Appointment Time -->
+<div class="modal fade" id="changeTimeModal" tabindex="-1" aria-labelledby="changeTimeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeTimeModalLabel">Đổi Giờ và Ngày Lịch Hẹn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/lichHen/change-time" method="POST">
+                    <input type="hidden" id="appointmentId" name="id" value="">
+                    <div class="mb-3">
+                        <label for="newDate" class="form-label">Ngày Mới</label>
+                        <input type="date" class="form-control" id="newDate" name="newDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newTime" class="form-label">Giờ Mới</label>
+                        <input type="time" class="form-control" id="newTime" name="newTime" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Event listener for opening the change time modal
+    document.querySelectorAll('.change-time-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var appointmentId = this.getAttribute('data-id');
+            var appointmentDate = this.getAttribute('data-date');
+            var appointmentTime = this.getAttribute('data-time');
+            document.getElementById('appointmentId').value = appointmentId;
+            document.getElementById('newDate').value = appointmentDate;
+            document.getElementById('newTime').value = appointmentTime;
+        });
+    });
+
+    // Xóa các mục đã chọn
+    document.getElementById('deleteSelected').addEventListener('click', function() {
+        var checkedIds = [];
+        var checkboxes = document.querySelectorAll('.row-checkbox:checked');
+        checkboxes.forEach(function(checkbox) {
+            checkedIds.push(checkbox.dataset.id);
+        });
+
+        if (checkedIds.length > 0) {
+            // Call your deletion logic here
+        } else {
+            alert('Vui lòng chọn ít nhất một mục để xóa.');
+        }
+    });
+</script>
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
