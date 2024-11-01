@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
         // Fetch all appointments using the model function
         const lichHenList = lichHenModel.getAllLichHen();
         // Render the appointments page, passing the list and a null message
-        res.render('lichHen/index', { lichHen: lichHenList, message: null });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: null });
     } catch (error) {
         // Handle error: render the page with an empty list and an error message
-        res.render('lichHen/index', { lichHen: [], message: 'Đã có lỗi xảy ra khi lấy lịch hẹn.' });
+        res.render('admin/lichHen/index', { lichHen: [], message: 'Đã có lỗi xảy ra khi lấy lịch hẹn.' });
     }
 });
 
@@ -23,10 +23,10 @@ router.post('/create', (req, res) => {
     try {
         lichHenModel.createLichHen(newLichHen); // Create a new appointment using the model function
         const lichHenList = lichHenModel.getAllLichHen(); // Fetch the updated list
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Thêm lịch hẹn thành công!' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Thêm lịch hẹn thành công!' });
     } catch (error) {
         const lichHenList = lichHenModel.getAllLichHen(); // Fetch the list again for rendering
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra khi thêm lịch hẹn.' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra khi thêm lịch hẹn.' });
     }
 });
 
@@ -42,11 +42,11 @@ router.post('/change-time', (req, res) => {
         const lichHenList = lichHenModel.getAllLichHen();
 
         // Render the appointments page with the updated list and a success message
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Đổi giờ và ngày thành công!' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Đổi giờ và ngày thành công!' });
     } catch (error) {
         // Handle any errors that may occur
         const lichHenList = lichHenModel.getAllLichHen(); // Fetch the list again for rendering
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra. Vui lòng thử lại.' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra. Vui lòng thử lại.' });
     }
 });
 
@@ -58,10 +58,10 @@ router.post('/delete', (req, res) => {
     try {
         lichHenModel.deleteLichHen(id); // Delete the appointment using the model function
         const lichHenList = lichHenModel.getAllLichHen(); // Fetch the updated list
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Xóa lịch hẹn thành công!' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Xóa lịch hẹn thành công!' });
     } catch (error) {
         const lichHenList = lichHenModel.getAllLichHen(); // Fetch the list again for rendering
-        res.render('lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra khi xóa lịch hẹn.' });
+        res.render('admin/lichHen/index', { lichHen: lichHenList, message: 'Đã có lỗi xảy ra khi xóa lịch hẹn.' });
     }
 });
 

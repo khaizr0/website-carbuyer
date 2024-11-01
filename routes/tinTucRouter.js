@@ -20,12 +20,12 @@ const upload = multer({ storage });
 // 1. List all TinTuc (Read)
 router.get('/', (req, res) => {
     const tinTucData = getTinTucData();
-    res.render('tinTuc/', { tinTuc: tinTucData });
+    res.render('admin/tinTuc/', { tinTuc: tinTucData });
 });
 
 // 2. Show form to create new TinTuc
 router.get('/create', (req, res) => {
-    res.render('tinTuc/create');
+    res.render('admin/tinTuc/create');
 });
 
 // 3. Handle form submission to create new TinTuc
@@ -50,7 +50,7 @@ router.post('/create', upload.single('anhDaiDien'), (req, res) => {
 router.get('/edit/:id', (req, res) => {
     const tinTucData = getTinTucData();
     const tinTuc = tinTucData.find(t => t.id === req.params.id);
-    res.render('tinTuc/edit', { tinTuc });
+    res.render('admin/tinTuc/edit', { tinTuc });
 });
 
 // 5. Handle form submission to update TinTuc

@@ -15,7 +15,7 @@ const getThuongHieuData = () => JSON.parse(fs.readFileSync(thuongHieuFile, 'utf-
 router.get('/', (req, res) => {
     const xeOtoData = getXeOtoData();
     const thuongHieuData = getThuongHieuData();
-    res.render('xeOto/index', { xeOto: xeOtoData, thuongHieu: thuongHieuData });
+    res.render('admin/xeOto/index', { xeOto: xeOtoData, thuongHieu: thuongHieuData });
 });
 
 
@@ -38,7 +38,7 @@ router.get('/edit/:id', (req, res) => {
     const xeOtoData = getXeOtoData();
     const thuongHieuData = getThuongHieuData();
     const xe = xeOtoData.find(x => x.id === req.params.id);
-    res.render('xeOto/edit', { xeOto: xe, thuongHieu: thuongHieuData });
+    res.render('admin/xeOto/edit', { xeOto: xe, thuongHieu: thuongHieuData });
 });
 
 // 5. Handle form submission to update XeOto
