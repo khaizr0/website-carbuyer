@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Tin Tức</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="/Public/css/employee.css">
+</head>
+
+<body>
+    <header class="d-flex justify-content-between align-items-center text-white">
+        <div class="d-flex align-items-center">
+            <!-- Logo -->
+            <a href="#">
+                <img src="https://via.placeholder.com/100" alt="Logo"
+                    style="width: 40px; height: auto; margin-right: 10px;">
+            </a>
+            <!-- Navigation Links -->
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/views/san-pham.html">Quản lý sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/tin-tuc.html">Quản lý tin tức</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Lịch được đặt</a>
+                </li>
+            </ul>
+        </div>
+        <!-- User Greeting and Logout -->
+        <div class="text-end">
+            <div class="mb-0 fw-bold fs-5">Xin chào, ABC</div>
+            <p class="mb-0"><a href="#" class="text-white">Đăng xuất</a></p>
+        </div>
+    </header>
+
+
+    <div class="p-5">
+        <h1>Danh sách Lịch Hẹn</h1>
+        <div>
+            <div class="container-fluid d-flex justify-content-between table-options">
+                <div>
+                    <form class="input-group">
+                        <input class="form-control" type="search" placeholder="Tìm kiếm lịch hẹn" aria-label="Search">
+                        <button class="btn btn-search" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <div>
+                    <!-- Button to Open the Change Time Modal -->
+                    <button type="button" class="btn btn-trans" data-bs-toggle="modal"
+                        data-bs-target="#changeTimeModal">
+                        <i class="fas fa-clock"></i> Đổi Giờ
+                    </button>
+                    <button class="btn btn-trans" id="deleteSelected"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><i class="fa-solid fa-rectangle-list"></i></th>
+                            <th>Tên Khách Hàng</th>
+                            <th>Ngày</th>
+                            <th>Giờ</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example data -->
+                        <tr>
+                            <td><input type="checkbox" class="row-checkbox" data-id="1"></td>
+                            <td>Nguyễn Văn A</td>
+                            <td>2024-11-10</td>
+                            <td>14:00</td>
+                            <td>
+                                <button class="btn btn-trans change-time-btn" data-id="1" data-date="2024-11-10"
+                                    data-time="14:00" data-bs-toggle="modal" data-bs-target="#changeTimeModal"><i
+                                        class="fas fa-clock"></i></button>
+                                <form action="/lichHen/delete/1" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="row-checkbox" data-id="2"></td>
+                            <td>Trần Thị B</td>
+                            <td>2024-11-11</td>
+                            <td>15:30</td>
+                            <td>
+                                <button class="btn btn-trans change-time-btn" data-id="2" data-date="2024-11-11"
+                                    data-time="15:30" data-bs-toggle="modal" data-bs-target="#changeTimeModal"><i
+                                        class="fas fa-clock"></i></button>
+                                <form action="/lichHen/delete/2" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- The Modal for Changing Appointment Time -->
+        <div class="modal fade" id="changeTimeModal" tabindex="-1" aria-labelledby="changeTimeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changeTimeModalLabel">Đổi Giờ và Ngày Lịch Hẹn</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/lichHen/change-time" method="POST">
+                            <input type="hidden" id="appointmentId" name="id" value="">
+                            <div class="mb-3">
+                                <label for="newDate" class="form-label">Ngày Mới</label>
+                                <input type="date" class="form-control" id="newDate" name="newDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTime" class="form-label">Giờ Mới</label>
+                                <input type="time" class="form-control" id="newTime" name="newTime" required>
+                            </div>
+                            <!-- Modal Footer with Buttons -->
+                            <div class="modal-footer d-flex justify-content-start px-0">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-clock"></i>
+                                    Lưu
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pagination under table-container -->
+    <div class="d-flex justify-content-end px-5">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Previous button with chevron-left icon -->
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Page numbers -->
+                <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+                <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
+                <li class="page-item"><a class="page-link text-muted" href="#">3</a></li>
+                <li class="page-item"><a class="page-link text-muted" href="#">4</a></li>
+                <li class="page-item"><a class="page-link text-muted" href="#">5</a></li>
+
+                <!-- Next button with chevron-right icon -->
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <script>
+        // Event listener for opening the change time modal
+        document.querySelectorAll('.change-time-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var appointmentId = this.getAttribute('data-id');
+                var appointmentDate = this.getAttribute('data-date');
+                var appointmentTime = this.getAttribute('data-time');
+                document.getElementById('appointmentId').value = appointmentId;
+                document.getElementById('newDate').value = appointmentDate;
+                document.getElementById('newTime').value = appointmentTime;
+            });
+        });
+
+        // Xóa các mục đã chọn
+        document.getElementById('deleteSelected').addEventListener('click', function () {
+            var checkedIds = [];
+            var checkboxes = document.querySelectorAll('.row-checkbox:checked');
+            checkboxes.forEach(function (checkbox) {
+                checkedIds.push(checkbox.dataset.id);
+            });
+
+            if (checkedIds.length > 0) {
+                // Call your deletion logic here
+                console.log('Delete IDs:', checkedIds); // Example logic, replace with actual deletion
+            } else {
+                alert('Vui lòng chọn ít nhất một mục để xóa.');
+            }
+        });
+    </script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
