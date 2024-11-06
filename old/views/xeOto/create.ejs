@@ -1,0 +1,68 @@
+<h1>Tạo Mới Xe Ô tô</h1>
+<form action="/xeOto/create" method="POST">
+    <div class="form-group">
+        <label for="tenSP">Tên Sản Phẩm</label>
+        <input type="text" name="tenSP" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="iDthuongHieu">Thương Hiệu</label>
+        <select name="iDthuongHieu" class="form-control" required>
+            <% thuongHieu.forEach(function(thuongHieu) { %>
+            <option value="<%= thuongHieu.id %>"><%= thuongHieu.TenTH %></option>
+            <% }) %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="GiaNiemYet">Giá Niêm Yết (VND)</label>
+        <input type="number" name="GiaNiemYet" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="nguyenLieuXe">Loại Nhiên Liệu</label>
+        <input type="text" name="nguyenLieuXe" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="namSanXuat">Năm Sản Xuất</label>
+        <input type="number" name="namSanXuat" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="kieuDang">Kiểu Dáng</label>
+        <input type="text" name="kieuDang" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="soChoNgoi">Số Chỗ Ngồi</label>
+        <input type="number" name="soChoNgoi" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="soKm">Số Km Đã Đi</label>
+        <input type="number" name="soKm" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="mauXe">Màu Xe</label>
+        <input type="text" name="mauXe" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="loaiCanSo">Loại Cần Số</label>
+        <input type="text" name="loaiCanSo" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="hinhAnh">Tên File Hình Ảnh</label>
+        <input type="text" name="hinhAnh" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="chiTietSP">Chi Tiết Sản Phẩm</label>
+        <textarea name="chiTietSP" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Tạo Mới</button>
+</form>

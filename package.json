@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "db": "node createDatabase.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.0",
     "multer": "^1.4.5-lts.1",
