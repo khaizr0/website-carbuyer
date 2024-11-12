@@ -9,15 +9,13 @@ const connectDB = async () => {
   }
 
   try {
-    const db = await mongoose.connect('mongodb://localhost:27017/your_database_name', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
-
+    const db = await mongoose.connect('mongodb://localhost:27017/car-buyer');
     isConnected = db.connections[0].readyState === 1;
-    console.log('Kết nối MongoDB thành công!');
+    if (isConnected) {
+      console.log('Kết nối MongoDB thành công!');
+    } else {
+      console.log('Không thể kết nối MongoDB!');
+    }
     return db;
   } catch (error) {
     console.error('Lỗi kết nối MongoDB:', error);
@@ -25,4 +23,13 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+// Function to check current MongoDB connection status
+const checkConnectionStatus = () => {
+  if (isConnected) {
+    console.log('MongoDB server is connected.');
+  } else {
+    console.log('MongoDB server is not connected.');
+  }
+};
+
+module.exports = { connectDB, checkConnectionStatus };
