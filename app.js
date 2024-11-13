@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const { connectDB } = require('./config/db');
-const authRoutes = require('./routes/admin');
+const authRoutes = require('./routes/admin'); // Route admin.js
+const employeeRoutes = require('./routes/employee');
 const path = require('path');
 const app = express();
 
@@ -17,11 +18,12 @@ app.use(session({ secret: 'AnhEmVanPhong2032@', resave: false, saveUninitialized
 app.use('/Public', express.static('Public'));
 
 // Routes
-app.use('/auth', authRoutes);
+app.use('/', authRoutes); 
+app.use('/employee', employeeRoutes);
 
-// Homepage redirecting to login
+// Route chính redirect tới login
 app.get('/', (req, res) => {
-  res.redirect('/auth/login');
+  res.redirect('/login'); 
 });
 
 app.listen(3000, () => {

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Nhân Viên</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="/Public/css/employee.css">
+    <style>
+        /* Ẩn form mặc định */
+        #addEmployeeForm {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            z-index: 1000; /* Đảm bảo form hiện lên trên các phần khác */
+        }
+
+        /* Chặn phần nội dung đằng sau khi form hiển thị */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="d-flex justify-content-between align-items-center text-white">
+        <div class="d-flex align-items-center">
+            <!-- Logo -->
+            <a href="#">
+                <img src="https://via.placeholder.com/100" alt="Logo"
+                    style="width: 40px; height: auto; margin-right: 10px;">
+            </a>
+            <!-- Navigation Links -->
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Quản lý nhân viên</a>
+                </li>
+            </ul>
+        </div>
+        <!-- User Greeting and Logout -->
+        <div class="text-end">
+            <div class="mb-0 fw-bold fs-5">Xin chào, ABC</div>
+            <p class="mb-0"><a href="#" class="text-white">Đăng xuất</a></p>
+        </div>
+    </header>
+
+    <div class="p-5">
+        <h1>Danh sách nhân viên</h1>
+        <div class="container-fluid d-flex justify-content-between table-options">
+            <div>
+                <form class="input-group">
+                    <input class="form-control" type="search" placeholder="Tìm kiếm nhân viên" aria-label="Search">
+                    <button class="btn btn-search" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div>
+                <!-- Nút để mở form -->
+                <button type="button" class="btn btn-trans" id="btnAddEmployee">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn btn-trans" id="deleteSelected"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><i class="fa-solid fa-rectangle-list"></i></th>
+                        <th>Hình ảnh</th>
+                        <th>Họ và tên</th>
+                        <th>ngày sinh</th>
+                        <th>Số CCCD/CMND/Hộ Chiếu</th>
+                        <th>Email</th>
+                        <th>Giới tính</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeList">
+                    <!-- Example data without using EJS -->
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox" data-id="1"></td>
+                        <td>picture.png</td>
+                        <td>Quang Trung</td>
+                        <td>24/10/2000</td>
+                        <td>0123456789</td>
+                        <td>hadioa!@email.dot</td>
+                        <td>Nam</td>
+                        <td>
+                            <button class="btn btn-trans"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- The Form for Adding New Employee -->
+    <div id="overlay"></div>
+    <div id="addEmployeeForm">
+        <h5>Thêm Nhân Viên Mới</h5>
+        <form id="createEmployeeForm">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="hoTen" class="form-label">Họ và Tên</label>
+                        <input type="text" class="form-control" id="hoTen" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ngaySinh" class="form-label">Ngày Sinh</label>
+                        <input type="date" class="form-control" id="ngaySinh" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gioiTinh" class="form-label">Giới Tính</label>
+                        <select class="form-select" id="gioiTinh" required>
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cccd" class="form-label">CCCD</label>
+                        <input type="text" class="form-control" id="cccd" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matKhau" class="form-label">Mật Khẩu</label>
+                        <input type="password" class="form-control" id="matKhau" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="anhNhanVien" class="form-label">Ảnh Nhân Viên</label>
+                        <input type="file" class="form-control" id="anhNhanVien" accept="image/*" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="phanLoai" class="form-label">Phân Loại</label>
+                        <select class="form-select" id="phanLoai" required>
+                            <option value="admin">Admin</option>
+                            <option value="employee">Nhân viên</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary" id="closeForm">Đóng</button>
+            <button type="submit" class="btn btn-primary">Lưu Nhân Viên</button>
+        </form>
+    </div>
+
+    <script>
+        // Hiển thị form khi nhấn nút Thêm Nhân Viên
+        const btnAddEmployee = document.getElementById('btnAddEmployee');
+        const addEmployeeForm = document.getElementById('addEmployeeForm');
+        const overlay = document.getElementById('overlay');
+        const closeForm = document.getElementById('closeForm');
+
+        btnAddEmployee.addEventListener('click', () => {
+            addEmployeeForm.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Đóng form khi nhấn nút Đóng
+        closeForm.addEventListener('click', () => {
+            addEmployeeForm.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Đóng form khi nhấn vào overlay (phần nền mờ)
+        overlay.addEventListener('click', () => {
+            addEmployeeForm.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
