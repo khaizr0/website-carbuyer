@@ -74,7 +74,7 @@ async function createDatabase() {
             ngaySinh: "1990-05-10",
             gioiTinh: "Nam",
             cccd: "123456789",
-            matKhau: "b9ff6b991cdc84277a42cacc41493d5a9dc867445a33999401f50efe8052a022",
+            matKhau: "b9ff6b991cdc84277a42cacc41493d5a9dc867445a33999401f50efe8052a022", //Pass: hashedpassword123
             anhNhanVien: "avatar_nguyenvanb.png",
             PhanLoai: 0
         });

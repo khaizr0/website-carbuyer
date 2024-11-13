@@ -1,15 +1,13 @@
-const mongoose = require('mongoose');
+const { getDB } = require('../config/db');
+const getUserByEmail = async (email) => {
+  const db = getDB();
+  const user = await db.collection('User').findOne({ email });
+  return user;
+};
 
-const userSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  hoTen: { type: String, required: true },
-  email: { type: String, required: true, unique: true },  // Đảm bảo email là duy nhất
-  ngaySinh: { type: Date, required: true },
-  gioiTinh: { type: String, required: true },
-  cccd: { type: String, required: true },
-  matKhau: { type: String, required: true },  // Mật khẩu đã được mã hóa
-  anhNhanVien: { type: String },
-  PhanLoai: { type: Number, required: true }  // 0: admin, 1: nhân viên
-}, { timestamps: true });  // Tự động lưu ngày tạo và cập nhật
+const addUser = async (user) => {
+  const db = getDB();
+  await db.collection('User').insertOne(user);
+};
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = { getUserByEmail, addUser };
