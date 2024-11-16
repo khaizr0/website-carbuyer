@@ -79,6 +79,19 @@ async function createDatabase() {
             PhanLoai: 0
         });
 
+        await db.collection('User').insertOne({
+            id: "U002",
+            hoTen: "Le Thi C",
+            email: "caophankhai123@gmail.com",
+            ngaySinh: "1992-08-15",
+            gioiTinh: "Nu",
+            cccd: "987654321",
+            matKhau: "371858e8d61fa056ea19eaa9bd5ed00095d4b2944dbbd65dfa64ff0601a3a4ca", // hashedpassword1232
+            anhNhanVien: "avatar_lethic.png",
+            PhanLoai: 1
+        });
+        
+
         await db.collection('XeOto').insertOne({
             id: "XE001",
             tenSP: "Toyota Camry",

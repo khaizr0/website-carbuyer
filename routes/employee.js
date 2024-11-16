@@ -7,7 +7,7 @@ router.get('/dashboard', (req, res) => {
   if (!req.session.userId) {
     return res.redirect('/login');
   }
-  res.sendFile(path.join(__dirname, '..', 'views', 'employee', 'employee-dashboard.html'));
+  res.sendFile(path.join(__dirname, '..', 'views', 'employee', 'san-pham.html'));
 });
 
 module.exports = router;

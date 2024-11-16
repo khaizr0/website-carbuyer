@@ -4,7 +4,7 @@ const footerHTML = `
                     <div class="footer-columns">
                         <div class="footer-column">
                             <h4>GIỚI THIỆU</h4>
-                            <p>Thái Công Auto là đơn vị chuyên hoạt động trong lĩnh vực kinh doanh các loại xe...</p>
+                            <p> Auto là đơn vị chuyên hoạt động trong lĩnh vực kinh doanh các loại xe...</p>
                             <p>Tiêu chí của chúng tôi: Chỉ Xe Chất - Giá Tốt Nhất!</p>
                         </div>
 
@@ -17,7 +17,7 @@ const footerHTML = `
                                 Số 437  Hà Nội
                             </address>
                             <p>Hotline: 8388 888 886<br>0919 555 555</p>
-                            <p>Email: info@otosieuluot.com</p>
+                            <p>Email: info@autoluot.com</p>
                         </div>
 
                         <div class="footer-column">

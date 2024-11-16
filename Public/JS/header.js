@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const headerHTML = `
          <div class="header">
         <div class="menu">
-            <img src="/Documents/CarLogo.png" alt="Logo" class="logo">
-            <a href="#">Trang chủ</a>
-            <a href="#">Giới thiệu</a>
-            <a href="#">Dịch vụ</a>
-            <a href="#">Liên hệ</a>
+            <img src="/Public/images/CarLogo.png" alt="Logo" class="logo">
+            <a href="/">Trang chủ</a>
+            <a href="/xedangban">Xe đang bán</a>
+            <a href="/phukien">Phụ Kiện</a>
+            <a href="/tintuc">Tin Tức</a>
         </div>
         <div class="search-container">
             <input type="text" class="search-box" placeholder="Tìm kiếm xe ở đây">
