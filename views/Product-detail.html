@@ -301,5 +301,23 @@
     <!-- Footer -->
     <div id="footer-container"></div>
     <script src="/Public/JS/footer.js"></script>
+    
+    <script>
+        // Lấy tất cả các ảnh nhỏ và ảnh chính
+        const thumbnails = document.querySelectorAll('.img-detail-2');
+        const mainImage = document.querySelector('.img-detail-1');
+    
+        // Lặp qua từng ảnh nhỏ
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                // Khi nhấn vào, đổi src của ảnh chính thành src của ảnh nhỏ
+                mainImage.src = thumbnail.src;
+            });
+        });
+    </script>
+    
+
+
+
 </body>
 </html>
