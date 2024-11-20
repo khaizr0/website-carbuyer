@@ -7,6 +7,9 @@ const path = require('path');
 
 const JWT_SECRET = 'your_jwt_secret'; // Thay bằng secret thực tế của bạn
 
+const emailRS ="";
+const tokenRS ="";
+
 // Hàm đăng nhập
 const login = async (req, res) => {
   const { userName, password } = req.body;
@@ -89,6 +92,8 @@ const resetPasswordPage = async (req, res) => {
   console.log('Token:', token);  
 
   try {
+
+
     if (!email || !token) {
       return res.status(400).send('Email hoặc token không được cung cấp');
     }
@@ -103,11 +108,11 @@ const resetPasswordPage = async (req, res) => {
     const secret = JWT_SECRET + user.matKhau;
     jwt.verify(token, secret);  // Verify the token
 
+    global.emailRS = email; 
+    global.tokenRS = token;
+
     // Send the reset-password.html file, including email and token in query parameters
-    res.sendFile(path.join(__dirname, '../views/authentication/reset-password.html', {
-      email, 
-      token
-    }));
+    res.sendFile(path.join(__dirname, '../views/authentication/reset-password.html'));
 
   } catch (error) {
     console.error('Error during reset password page:', error);
@@ -118,10 +123,19 @@ const resetPasswordPage = async (req, res) => {
 
 // Hàm xử lý đặt lại mật khẩu
 const resetPassword = async (req, res) => {
-  const { password, password2, email, token } = req.body;
-  
-  console.log('Email:', email); // Debugging: Logging email
-  console.log('Token:', token); // Debugging: Logging token
+  const { password, password2 } = req.body;
+
+  // Lấy email và token từ biến toàn cục
+  const email = global.emailRS;
+  const token = global.tokenRS;
+
+  console.log('-----------------------');
+  console.log('Email:', email); 
+  console.log('Token:', token);
+
+  if (!email || !token) {
+    return res.status(400).send('Không thể tìm thấy email hoặc token');
+  }
 
   // Kiểm tra xem mật khẩu có khớp hay không
   if (password !== password2) {
@@ -153,7 +167,6 @@ const resetPassword = async (req, res) => {
       { $set: { matKhau: hashedPassword } }
     );
 
-    // Thông báo thành công
     res.send('Mật khẩu đã được cập nhật thành công, vui lòng đăng nhập lại');
   } catch (error) {
     console.error('Lỗi trong quá trình xử lý mật khẩu:', error);

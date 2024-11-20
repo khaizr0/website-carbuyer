@@ -50,97 +50,8 @@
 <!-- Recent Product shower container -->
 <div class="product-recent-container">
     <h1>Xe mới về</h1>
-    <div class="grid">
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/Public/images/BMW.webp" alt="Car">
-            <div class="card-content">
-                <p class="card-title">BMW 320i Sport Line 2024</p>
-                <p class="card-price">1.600.000.000</p>
-                <p class="card-details">
-                    📅 2024 / 🚗 20,000 km / ⛽ Xăng
-                </p>
-            </div>
-        </div>
+    <div class="grid" id="recent-products-grid">
+        <!-- Products will be dynamically inserted here -->
     </div>
     <br>
     <a href="#" class="button">Xem thêm sản phẩm</a>
@@ -251,4 +162,28 @@
 <div id="footer-container"></div>
 <script src="/Public/JS/footer.js"></script>
 </body>
+<script>
+    // Fetch recent products from the backend
+    fetch('/recent-products')
+        .then(response => response.json())
+        .then(products => {
+            const gridContainer = document.getElementById('recent-products-grid');
+            products.forEach(product => {
+                const productCard = `
+                    <div class="card">
+                        <img src="${product.imageUrl}" alt="Car">
+                        <div class="card-content">
+                            <p class="card-title">${product.name}</p>
+                            <p class="card-price">${product.price}</p>
+                            <p class="card-details">
+                                📅 ${product.year} / 🚗 ${product.mileage} km / ⛽ ${product.fuelType}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                gridContainer.innerHTML += productCard;
+            });
+        })
+        .catch(error => console.error('Error fetching products:', error));
+</script>
 </html>

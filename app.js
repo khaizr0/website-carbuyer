@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const { connectDB } = require('./config/db');
-const authRoutes = require('./routes/admin'); // Route admin.js
+const authRoutes = require('./routes/admin');
 const employeeRoutes = require('./routes/employee');
+const productRoutes = require('./routes/product');
 const path = require('path');
 const app = express();
 
@@ -21,8 +22,9 @@ app.use('/config', express.static(path.join(__dirname, 'config')));
 app.use('/Public', express.static('Public'));
 
 // Routes
-app.use('/', authRoutes); // Đã có route cho các tính năng đăng nhập và quên mật khẩu
+app.use('/', authRoutes);
 app.use('/employee', employeeRoutes);
+app.use('/recent-products', productRoutes);
 
 // Các route cho việc quên mật khẩu và reset mật khẩu
 app.post('/forgot-password', (req, res) => {
