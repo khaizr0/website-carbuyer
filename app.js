@@ -24,16 +24,14 @@ app.use('/Public', express.static('Public'));
 // Routes
 app.use('/', authRoutes);
 app.use('/employee', employeeRoutes);
-app.use('/recent-products', productRoutes);
+app.use('/', productRoutes);  // Điều chỉnh route ở đây
 
 // Các route cho việc quên mật khẩu và reset mật khẩu
 app.post('/forgot-password', (req, res) => {
-  // Gọi controller forgotPassword
   require('./controllers/authController').forgotPassword(req, res);
 });
 
 app.post('/reset-password', (req, res) => {
-  // Gọi controller resetPassword
   require('./controllers/authController').resetPassword(req, res);
 });
 
@@ -53,7 +51,6 @@ app.get('/forgot', (req, res) => {
   res.sendFile(path.join(__dirname, 'views','authentication', 'forgot-password.html'));
 });
 app.get('/reset-password', (req, res) => {
-  // Chuyển hướng tới trang reset mật khẩu
   res.sendFile(path.join(__dirname, 'views','authentication', 'reset-password.html'));
 });
 app.get('/email-sent-success', (req, res) => {
