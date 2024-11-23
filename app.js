@@ -4,6 +4,7 @@ const { connectDB } = require('./config/db');
 const authRoutes = require('./routes/admin');
 const employeeRoutes = require('./routes/employee');
 const productRoutes = require('./routes/product');
+const newsRoutes = require('./routes/tinTucRoute');
 const path = require('path');
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/Public', express.static('Public'));
 app.use('/', authRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/', productRoutes);  // Điều chỉnh route ở đây
+app.use('/news', newsRoutes);
 
 // Các route cho việc quên mật khẩu và reset mật khẩu
 app.post('/forgot-password', (req, res) => {
@@ -33,6 +35,9 @@ app.post('/forgot-password', (req, res) => {
 
 app.post('/reset-password', (req, res) => {
   require('./controllers/authController').resetPassword(req, res);
+});
+app.get('/employee/tin-tuc', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'employee/tin-tuc.html'));
 });
 
 app.get('/', (req, res) => {
