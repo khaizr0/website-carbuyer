@@ -1,4 +1,5 @@
 const { getDB } = require('../config/db');
+const { addCarProduct } = require('../models/ProductModel')
 const multer = require('multer');
 const path = require('path');
 
@@ -116,4 +117,32 @@ const deleteProductById = async (req, res) => {
   }
 };
 
-module.exports = { getRecentProducts, getAllProducts, deleteProductById, addProduct, upload };
+const createCarProduct = async (req, res) => {
+  try {
+    const carData = req.body;
+    console.log('Dữ liệu nhận từ client:', carData);
+
+    // Kiểm tra các trường bắt buộc
+    const missingFields = [];
+    if (!carData.tenSP) missingFields.push('Tên sản phẩm');
+    if (!carData.iDthuongHieu) missingFields.push('Thương hiệu');
+    if (!carData.namSanXuat) missingFields.push('Năm sản xuất');
+    if (!carData.GiaNiemYet) missingFields.push('Giá niêm yết');
+    if (!carData.soChoNgoi) missingFields.push('Số chỗ ngồi');
+    
+    if (missingFields.length > 0) {
+      console.log('Các trường thiếu:', missingFields);
+      return res.status(400).json({ message: `Dữ liệu không đầy đủ, thiếu các trường: ${missingFields.join(', ')}` });
+    }
+
+    // Call the addCarProduct function to insert the data into the database
+    await addCarProduct(carData);
+
+    res.status(200).json({ message: 'Sản phẩm đã được thêm thành công!' });
+  } catch (error) {
+    console.error('Lỗi khi thêm sản phẩm:', error);
+    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+  }
+};
+
+module.exports = { getRecentProducts, getAllProducts, deleteProductById, createCarProduct };

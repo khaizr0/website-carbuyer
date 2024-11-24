@@ -62,5 +62,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
-     
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const createCarForm = document.getElementById('createCarForm');
+    
+        if (createCarForm) {
+            createCarForm.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Ngăn form gửi theo GET mặc định
+    
+                const formData = new FormData(createCarForm);
+                const carData = {
+                    tenSP: formData.get('tensp'),
+                    iDthuongHieu: formData.get('idthuonghieu'),
+                    namSanXuat: parseInt(formData.get('namsanxuat')),
+                    GiaNiemYet: parseInt(formData.get('gia')),
+                    soKm: parseInt(formData.get('sokmdadi') || 0),
+                    trangThai: formData.get('trangthai'),
+                    nguyenLieuXe: formData.get('nguyenlieuxe'),
+                    kieuDang: formData.get('kieudang'),
+                    soChoNgoi: parseInt(formData.get('sochongoi')),
+                    mauXe: formData.get('mauxe'),
+                    loaiCanSo: formData.get('loaicanso'),
+                    chiTietSP: formData.get('chitietsanpham'),
+                };
+    
+                console.log("Dữ liệu trước khi gửi:", carData); 
+    
+                try {
+                    const response = await fetch('/products/create-car', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(carData),
+                    });
+    
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert('Sản phẩm đã thêm thành công!');
+                        createCarForm.reset();
+                    } else {
+                        alert(`Có lỗi xảy ra: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error('Lỗi kết nối:', error);
+                    alert('Đã xảy ra lỗi khi thêm sản phẩm.');
+                }
+            });
+        }
+    });
+    
 });

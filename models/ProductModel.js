@@ -1,17 +1,35 @@
 const { getDB } = require('../config/db');
 
-const getRecentProducts = async () => {
+const addCarProduct = async (carData) => {
   try {
     const db = getDB();
-    const products = await db.collection('products')
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(9)
-      .toArray();
-    return products;
+    const carCollection = db.collection('XeOto'); 
+
+  
+    const newCarData = {
+      id: `XE${Date.now()}`,
+      tenSP: carData.tenSP,
+      nguyenLieuXe: carData.nguyenLieuXe || '',
+      iDthuongHieu: carData.iDthuongHieu,
+      namSanXuat: carData.namSanXuat,
+      kieuDang: carData.kieuDang || '',
+      GiaNiemYet: carData.GiaNiemYet,
+      soChoNgoi: carData.soChoNgoi,
+      soKm: carData.soKm || 0,
+      mauXe: carData.mauXe || '',
+      loaiCanSo: carData.loaiCanSo || '',
+      hinhAnh: carData.uploadImage || '',
+      chiTietSP: carData.chiTietSP || '',
+      trangThai: carData.trangThai || 1,
+      datLich: carData.dangkilaithu ? 1 : 0,
+    };
+
+    await carCollection.insertOne(newCarData);
+    console.log('Sản phẩm đã được thêm thành công!');
   } catch (error) {
-    throw new Error('Không thể lấy sản phẩm gần đây: ' + error.message);
+    console.error('Lỗi khi thêm sản phẩm:', error);
+    throw new Error('Đã có lỗi xảy ra khi thêm sản phẩm');
   }
 };
 
-module.exports = { getRecentProducts };
+module.exports = { addCarProduct };

@@ -19,9 +19,6 @@ app.use('/Public', express.static(path.join(__dirname, 'Public')));
 app.use('/Documents', express.static(path.join(__dirname, 'Documents')));
 app.use('/config', express.static(path.join(__dirname, 'config')));
 
-// Static files
-app.use('/Public', express.static('Public'));
-
 // Routes
 app.use('/', authRoutes);
 app.use('/employee', employeeRoutes);
