@@ -24,7 +24,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/views/tin-tuc.html">Quản lý tin tức</a>
+                    <a class="nav-link" href="/employee/tin-tuc">Quản lý tin tức</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/views/lich-hen.html">Lịch được đặt</a>
@@ -70,31 +70,7 @@
                     </tr>
                 </thead>
                 <tbody id="carList">
-                    <!-- Example data without using EJS -->
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox" data-id="1"></td>
-                        <td>Car A</td>
-                        <td>Brand X</td>
-                        <td>500,000,000 VND</td>
-                        <td>Ô tô</td>
-                        <td>Đang đăng</td>
-                        <td>
-                            <button class="btn btn-trans"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-trans"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox" data-id="2"></td>
-                        <td>Car B</td>
-                        <td>Brand Y</td>
-                        <td>750,000,000 VND</td>
-                        <td>Ô tô</td>
-                        <td>Đang đăng</td>
-                        <td>
-                            <button class="btn btn-trans"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-trans"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+                   
                 </tbody>
             </table>
         </div>
@@ -154,11 +130,11 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="tenSanPham" class="form-label">Tên Sản Phẩm</label>
-                                            <input type="text" class="form-control" id="tenSanPham" required>
+                                            <input type="text" class="form-control" name="tenSanPham" id="tenSanPham" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="thuongHieu" class="form-label">Thương hiệu</label>
-                                            <select class="form-select" id="thuongHieu" required>
+                                            <select class="form-select" name="thuongHieu" id="thuongHieu" required>
                                                 <option value="brand1">Brand 1</option>
                                                 <option value="brand2">Brand 2</option>
                                             </select>
@@ -166,19 +142,19 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="namSanXuat" class="form-label">Năm Sản Xuất</label>
-                                            <input type="text" class="form-control" id="namSanXuat" required>
+                                            <input type="text" class="form-control" name="namSanXuat" id="namSanXuat" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="gia" class="form-label">Giá Niêm Yết (₫)</label>
-                                            <input type="number" class="form-control" id="gia" required>
+                                            <input type="number" class="form-control" name="gia" id="gia" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="soKmDaDi" class="form-label">Số km đã đi</label>
-                                            <input type="number" class="form-control" id="soKmDaDi">
+                                            <input type="number" class="form-control" name="soKmDaDi" id="soKmDaDi">
                                         </div>
                                         <div class="mb-3">
                                             <label for="trangThai" class="form-label">Trạng Thái Sản Phẩm</label>
-                                            <select class="form-select" id="trangThai" required>
+                                            <select class="form-select" name="trangThai" id="trangThai" required>
                                                 <option value="new">Mới</option>
                                                 <option value="used">Đã Qua Sử Dụng</option>
                                                 <option value="refurbished">Tân Trang</option>
@@ -186,27 +162,22 @@
                                         </div>
                                         <div>
                                             <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                            <input type="file" class="form-control" id="uploadImage" accept="image/*">
+                                            <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="nguyenLieuXe" class="form-label">Nguyên Liệu Xe</label>
-                                            <select class="form-select" id="nguyenLieuXe" required>
+                                            <select class="form-select" name="nguyenLieuXe" id="nguyenLieuXe" required>
                                                 <option value="steel">Thép</option>
                                                 <option value="aluminum">Nhôm</option>
                                                 <option value="carbon_fiber">Sợi Carbon</option>
                                             </select>
                                         </div>
-                                        <div class="form-check mt-4 mb-4">
-                                            <input class="form-check-input" type="checkbox" id="luuThuongHieuMoi">
-                                            <label class="form-check-label" for="luuThuongHieuMoi">Lưu thương hiệu
-                                                mới</label>
-                                        </div>
                                         <div class="mb-3">
                                             <label for="kieuDang" class="form-label">Kiểu Dáng</label>
-                                            <select class="form-select" id="kieuDang" required>
+                                            <select class="form-select" name="kieuDang" id="kieuDang" required>
                                                 <option value="sedan">Sedan</option>
                                                 <option value="suv">SUV</option>
                                                 <option value="coupe">Coupe</option>
@@ -214,7 +185,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="soChoNgoi" class="form-label">Số Chỗ Ngồi</label>
-                                            <select class="form-select" id="soChoNgoi" required>
+                                            <select class="form-select" name="soChoNgoi" id="soChoNgoi" required>
                                                 <option value="2">2</option>
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
@@ -224,25 +195,30 @@
 
                                         <div class="mb-3">
                                             <label for="mauXe" class="form-label">Màu Xe</label>
-                                            <input type="text" class="form-control" id="mauXe">
+                                            <select class="form-select" name="mauXe" id="mauXe" required>
+                                                <option value="xanh">xanh</option>
+                                                <option value="do">do</option>
+                                                <option value="tim">tim</option>
+                                                <option value="vang">vang</option>
+                                            </select>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="loaiCanSo" class="form-label">Loại cần số</label>
-                                            <select class="form-select" id="loaiCanSo" required>
+                                            <select class="form-select" name="loaiCanSo" id="loaiCanSo" required>
                                                 <option value="automatic">Tự động</option>
                                                 <option value="manual">Số sàn</option>
                                             </select>
                                         </div>
                                         <div class="form-check mt-5">
-                                            <input class="form-check-input" type="checkbox" id="dangKiLaiThu">
+                                            <input class="form-check-input" type="checkbox" name="dangKiLaiThu" id="dangKiLaiThu">
                                             <label class="form-check-label" for="dangKiLaiThu">Đăng kí lái thử</label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <label for="chiTietSanPham" class="form-label">Chi Tiết Sản Phẩm</label>
-                                        <textarea class="form-control" id="chiTietSanPham" rows="20" required></textarea>
+                                        <textarea class="form-control" name="chiTietSanPham" id="chiTietSanPham" rows="20" required></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -280,7 +256,7 @@
                                         </div>
                                         <div>
                                             <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                            <input type="file" class="form-control" id="uploadImage" accept="image/*">
+                                            <input type="file" class="form-control" id="uploadImage" accept="image/*" multiple required>
                                         </div>
                                     </div>
 
@@ -321,12 +297,11 @@
                 </div>
                   <!-- Modal Footer with Buttons -->
                   <div class="modal-footer d-flex justify-content-start px-0">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
                         Thêm
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -348,6 +323,7 @@
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Public/JS/process/loadProduct.js"></script>
 </body>
 
 </html>

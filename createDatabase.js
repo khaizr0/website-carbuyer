@@ -86,7 +86,7 @@ async function createDatabase() {
             ngaySinh: "1992-08-15",
             gioiTinh: "Nu",
             cccd: "987654321",
-            matKhau: "371858e8d61fa056ea19eaa9bd5ed00095d4b2944dbbd65dfa64ff0601a3a4ca", // hashedpassword1232
+            matKhau: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", // Pass 123456
             anhNhanVien: "avatar_lethic.png",
             PhanLoai: 1
         });
