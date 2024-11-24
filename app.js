@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const { connectDB } = require('./config/db');
-const authRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
 const employeeRoutes = require('./routes/employee');
 const productRoutes = require('./routes/product');
 const newsRoutes = require('./routes/tinTucRoute');
