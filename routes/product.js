@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { getRecentProducts, getAllProducts, deleteProductById, createCarProduct } = require('../controllers/ProductController');
+const { getRecentProductsController, getAllProductsController, deleteProductByIdController, createCarProduct } = require('../controllers/ProductController');
 
 // Route to get recent products
-router.get('/recent-products', getRecentProducts);
+router.get('/recent-products', getRecentProductsController);
 
-router.get('/products', getAllProducts);
+router.get('/products', getAllProductsController);
 
-router.delete('/products/:id', deleteProductById);
+router.delete('/products/:id', deleteProductByIdController);
 
 router.post('/products/create-car', createCarProduct);
-
 
 module.exports = router;

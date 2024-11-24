@@ -48,7 +48,7 @@ async function createDatabase() {
             GiaNiemYet: 5000000,
             chiTietSP: "Camera hành trình 4K, kết nối wifi.",
             hinhAnh: "camera_hanh_trinh.png || camera2.png",
-            trangThai: 1,
+            trangThai: "Mới",
             datLich: 0
         });
 
@@ -106,7 +106,7 @@ async function createDatabase() {
             loaiCanSo: "Tự động",
             hinhAnh: "toyota_camry.png || toyota2.png",
             chiTietSP: "Xe nhập khẩu, đời mới 2023.",
-            trangThai: 1,
+            trangThai: "Mới",
             datLich: 1
         });
 

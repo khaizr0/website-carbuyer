@@ -1,19 +1,35 @@
-const { getDB } = require('../config/db');
-const { addCarProduct } = require('../models/ProductModel')
-const multer = require('multer');
-const path = require('path');
+const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById } = require('../models/ProductModel');
 
-
-const getRecentProducts = async (req, res) => {
+const createCarProduct = async (req, res) => {
   try {
-    const db = getDB();
-    const productsCollection = db.collection('XeOto');
+    const carData = req.body;
+    console.log('Dữ liệu nhận từ client:', carData);
+
+    // Kiểm tra các trường bắt buộc
+    const missingFields = [];
+    if (!carData.tenSP) missingFields.push('Tên sản phẩm');
+    if (!carData.iDthuongHieu) missingFields.push('Thương hiệu');
+    if (!carData.namSanXuat) missingFields.push('Năm sản xuất');
+    if (!carData.GiaNiemYet) missingFields.push('Giá niêm yết');
+    if (!carData.soChoNgoi) missingFields.push('Số chỗ ngồi');
     
-    const recentProducts = await productsCollection
-      .find({ trangThai: 1 })
-      .sort({ namSanXuat: -1 })
-      .limit(6)
-      .toArray();
+    if (missingFields.length > 0) {
+      console.log('Các trường thiếu:', missingFields);
+      return res.status(400).json({ message: `Dữ liệu không đầy đủ, thiếu các trường: ${missingFields.join(', ')}` });
+    }
+
+    await addCarProduct(carData);
+
+    res.status(200).json({ message: 'Sản phẩm đã được thêm thành công!' });
+  } catch (error) {
+    console.error('Lỗi khi thêm sản phẩm:', error);
+    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+  }
+};
+
+const getRecentProductsController = async (req, res) => {
+  try {
+    const recentProducts = await getRecentProducts();
     
     const formattedProducts = recentProducts.map(product => {
       const imageFileName = product.hinhAnh.split('||')[0].trim();
@@ -40,51 +56,9 @@ const getRecentProducts = async (req, res) => {
   }
 };
 
-const getAllProducts = async (req, res) => {
+const getAllProductsController = async (req, res) => {
   try {
-    const db = getDB();
-    
-    // Lấy danh sách ô tô
-    const carsCollection = db.collection('XeOto');
-    const cars = await carsCollection.find({}).toArray();
-    
-    // Lấy danh sách phụ kiện
-    const accessoriesCollection = db.collection('PhuKien');
-    const accessories = await accessoriesCollection.find({}).toArray();
-    
-    // Lấy thông tin thương hiệu
-    const brandsCollection = db.collection('ThuongHieu');
-    const brands = await brandsCollection.find({}).toArray();
-    
-    // Map brands để dễ tra cứu
-    const brandMap = brands.reduce((acc, brand) => {
-      acc[brand.id] = brand.TenTH;
-      return acc;
-    }, {});
-    
-    // Format dữ liệu ô tô
-    const formattedCars = cars.map(car => ({
-      id: car.id,
-      name: car.tenSP,
-      brand: brandMap[car.iDthuongHieu] || 'Unknown',
-      price: car.GiaNiemYet,
-      type: 'Ô tô',
-      status: car.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn'
-    }));
-    
-    // Format dữ liệu phụ kiện
-    const formattedAccessories = accessories.map(acc => ({
-      id: acc.id,
-      name: acc.tenSP,
-      brand: brandMap[acc.IDthuongHieu] || 'Unknown',
-      price: acc.GiaNiemYet,
-      type: 'Phụ kiện',
-      status: acc.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn'
-    }));
-    
-    // Gộp và sắp xếp tất cả sản phẩm
-    const allProducts = [...formattedCars, ...formattedAccessories];
-    
+    const allProducts = await getAllProducts();
     res.json(allProducts);
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -92,57 +66,15 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-const deleteProductById = async (req, res) => {
+const deleteProductByIdController = async (req, res) => {
   try {
-      const { id } = req.params;
-      const db = getDB();
-      const carCollection = db.collection('XeOto');
-      const accessoryCollection = db.collection('PhuKien');
-
-      // Tìm và xóa sản phẩm trong các collection
-      const carResult = await carCollection.deleteOne({ id });
-      if (carResult.deletedCount > 0) {
-          return res.status(200).json({ message: 'Xóa ô tô thành công!' });
-      }
-
-      const accessoryResult = await accessoryCollection.deleteOne({ id });
-      if (accessoryResult.deletedCount > 0) {
-          return res.status(200).json({ message: 'Xóa phụ kiện thành công!' });
-      }
-
-      return res.status(404).json({ message: 'Sản phẩm không tồn tại.' });
+    const { id } = req.params;
+    const message = await deleteProductById(id);
+    res.status(200).json({ message });
   } catch (error) {
-      console.error('Error deleting product:', error);
-      res.status(500).json({ message: 'Có lỗi khi xóa sản phẩm.' });
+    console.error('Error deleting product:', error);
+    res.status(500).json({ message: 'Có lỗi khi xóa sản phẩm.' });
   }
 };
 
-const createCarProduct = async (req, res) => {
-  try {
-    const carData = req.body;
-    console.log('Dữ liệu nhận từ client:', carData);
-
-    // Kiểm tra các trường bắt buộc
-    const missingFields = [];
-    if (!carData.tenSP) missingFields.push('Tên sản phẩm');
-    if (!carData.iDthuongHieu) missingFields.push('Thương hiệu');
-    if (!carData.namSanXuat) missingFields.push('Năm sản xuất');
-    if (!carData.GiaNiemYet) missingFields.push('Giá niêm yết');
-    if (!carData.soChoNgoi) missingFields.push('Số chỗ ngồi');
-    
-    if (missingFields.length > 0) {
-      console.log('Các trường thiếu:', missingFields);
-      return res.status(400).json({ message: `Dữ liệu không đầy đủ, thiếu các trường: ${missingFields.join(', ')}` });
-    }
-
-    // Call the addCarProduct function to insert the data into the database
-    await addCarProduct(carData);
-
-    res.status(200).json({ message: 'Sản phẩm đã được thêm thành công!' });
-  } catch (error) {
-    console.error('Lỗi khi thêm sản phẩm:', error);
-    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
-  }
-};
-
-module.exports = { getRecentProducts, getAllProducts, deleteProductById, createCarProduct };
+module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController };
