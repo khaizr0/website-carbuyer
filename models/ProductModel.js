@@ -4,7 +4,7 @@ const { getDB } = require('../config/db');
 const addCarProduct = async (carData) => {
   try {
     const db = getDB();
-    const carCollection = db.collection('XeOto'); 
+    const carCollection = db.collection('XeOto');
 
     const newCarData = {
       id: `XE${Date.now()}`,
@@ -13,19 +13,21 @@ const addCarProduct = async (carData) => {
       iDthuongHieu: carData.iDthuongHieu,
       namSanXuat: carData.namSanXuat,
       kieuDang: carData.kieuDang || '',
-      GiaNiemYet: carData.GiaNiemYet,
+      GiaNiemYet: Number(carData.GiaNiemYet),
       soChoNgoi: carData.soChoNgoi,
-      soKm: carData.soKm || 0,
+      soKm: Number(carData.soKm || 0),
       mauXe: carData.mauXe || '',
       loaiCanSo: carData.loaiCanSo || '',
-      hinhAnh: carData.uploadImage || '',
+      hinhAnh: carData.hinhAnh || '', // Tên file sau khi upload
       chiTietSP: carData.chiTietSP || '',
-      trangThai: carData.trangThai || 1,
-      datLich: carData.dangkilaithu ? 1 : 0,
+      trangThai: carData.trangThai || '',
+      datLich: Number(carData.datLich) || 0, // Chuyển đổi sang số 0/1
+      ngayTao: new Date(),
     };
 
-    await carCollection.insertOne(newCarData);
-    console.log('Sản phẩm đã được thêm thành công!');
+    const result = await carCollection.insertOne(newCarData);
+    console.log('Sản phẩm đã được thêm thành công:', newCarData);
+    return newCarData;
   } catch (error) {
     console.error('Lỗi khi thêm sản phẩm:', error);
     throw new Error('Đã có lỗi xảy ra khi thêm sản phẩm');
@@ -67,7 +69,7 @@ const getAllProducts = async () => {
     brand: brandMap[car.iDthuongHieu] || 'Unknown',
     price: car.GiaNiemYet,
     type: 'Ô tô',
-    status: car.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn'
+    status: car.trangThai
   }));
   
   // Format dữ liệu phụ kiện
@@ -77,7 +79,7 @@ const getAllProducts = async () => {
     brand: brandMap[acc.IDthuongHieu] || 'Unknown',
     price: acc.GiaNiemYet,
     type: 'Phụ kiện',
-    status: acc.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn'
+    status: acc.trangThai
   }));
   
   // Gộp và sắp xếp tất cả sản phẩm

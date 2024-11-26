@@ -6,6 +6,7 @@ const employeeRoutes = require('./routes/employee');
 const productRoutes = require('./routes/product');
 const newsRoutes = require('./routes/tinTucRoute');
 const path = require('path');
+const multer = require('multer');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));

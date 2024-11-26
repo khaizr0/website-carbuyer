@@ -62,43 +62,64 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
-
     document.addEventListener('DOMContentLoaded', function() {
         const createCarForm = document.getElementById('createCarForm');
-    
+        
         if (createCarForm) {
             createCarForm.addEventListener('submit', async function(event) {
-                event.preventDefault(); // Ngăn form gửi theo GET mặc định
+                event.preventDefault();
     
                 const formData = new FormData(createCarForm);
-                const carData = {
-                    tenSP: formData.get('tensp'),
-                    iDthuongHieu: formData.get('idthuonghieu'),
-                    namSanXuat: parseInt(formData.get('namsanxuat')),
-                    GiaNiemYet: parseInt(formData.get('gia')),
-                    soKm: parseInt(formData.get('sokmdadi') || 0),
-                    trangThai: formData.get('trangthai'),
-                    nguyenLieuXe: formData.get('nguyenlieuxe'),
-                    kieuDang: formData.get('kieudang'),
-                    soChoNgoi: parseInt(formData.get('sochongoi')),
-                    mauXe: formData.get('mauxe'),
-                    loaiCanSo: formData.get('loaicanso'),
-                    chiTietSP: formData.get('chitietsanpham'),
-                };
+                const fileInput = document.getElementById('uploadImage');
     
-                console.log("Dữ liệu trước khi gửi:", carData); 
+                // Kiểm tra số lượng file
+                if (fileInput.files.length > 5) {
+                    alert('Chỉ được phép upload tối đa 5 ảnh!');
+                    return;
+                }
+                    
+                    // Kiểm tra loại file
+                    if (!file.type.startsWith('image/')) {
+                        alert(`File ${file.name} không phải là file ảnh!`);
+                        return;
+                    }
+                
     
                 try {
+                    formData.set('tenSP', formData.get('tenSP'));
+                    formData.set('iDthuongHieu', formData.get('iDthuongHieu'));
+                    formData.set('namSanXuat', formData.get('namSanXuat'));
+                    formData.set('GiaNiemYet', formData.get('GiaNiemYet'));
+                    formData.set('soKm', formData.get('soKm') || '0');
+                    formData.set('trangThai', formData.get('trangThai'));
+                    formData.set('nguyenLieuXe', formData.get('nguyenLieuXe'));
+                    formData.set('kieuDang', formData.get('kieuDang'));
+                    formData.set('soChoNgoi', formData.get('soChoNgoi'));
+                    formData.set('mauXe', formData.get('mauXe'));
+                    formData.set('loaiCanSo', formData.get('loaiCanSo'));
+                    formData.set('chiTietSP', formData.get('chiTietSP'));
+                    formData.set('dangkilaithu', formData.get('dangkilaithu') ? '1' : '0');
+    
+                    // Log dữ liệu trước khi gửi để debug
+                    console.log("Dữ liệu form trước khi gửi:");
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
+    
                     const response = await fetch('/products/create-car', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(carData),
+                        body: formData 
                     });
     
                     const result = await response.json();
+                    
                     if (response.ok) {
                         alert('Sản phẩm đã thêm thành công!');
                         createCarForm.reset();
+                        // Tải lại danh sách sản phẩm nếu cần
+                        if (typeof fetchProducts === 'function') {
+                            fetchProducts();
+                        }
                     } else {
                         alert(`Có lỗi xảy ra: ${result.message}`);
                     }
@@ -108,6 +129,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-    });
     
+        // Thêm preview ảnh (tùy chọn)
+        const uploadImage = document.getElementById('uploadImage');
+        if (uploadImage) {
+            uploadImage.addEventListener('change', function(event) {
+                const previewContainer = document.createElement('div');
+                previewContainer.id = 'imagePreview';
+                previewContainer.style.marginTop = '10px';
+                
+                // Xóa preview cũ nếu có
+                const oldPreview = document.getElementById('imagePreview');
+                if (oldPreview) {
+                    oldPreview.remove();
+                }
+    
+                // Tạo preview cho mỗi file được chọn
+                for (let file of this.files) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxHeight = '100px';
+                        img.style.marginRight = '10px';
+                        img.style.marginBottom = '10px';
+                        previewContainer.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                }
+    
+                // Chèn preview vào sau input
+                this.parentNode.appendChild(previewContainer);
+            });
+        }
+    });
 });
