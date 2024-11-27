@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById } = require('../models/ProductModel');
+const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct } = require('../models/ProductModel');
 
 // Cấu hình multer
 const storage = multer.diskStorage({
@@ -23,9 +23,9 @@ const upload = multer({
     }
   },
   limits: {
-    files: 5
+    files: 5 
   }
-}).single('uploadImage');
+}).array('uploadImage', 5);
 
 const createCarProduct = async (req, res) => {
   try {
@@ -38,9 +38,11 @@ const createCarProduct = async (req, res) => {
       // Lấy dữ liệu từ form
       const carData = req.body;
       
-      // Thêm tên file hình ảnh vào dữ liệu
-      if (req.file) {
-        carData.hinhAnh = req.file.filename;
+      // Xử lý danh sách hình ảnh
+      if (req.files && req.files.length > 0) {
+        carData.hinhAnh = req.files.map(file => file.filename).join(' || ');
+      } else {
+        carData.hinhAnh = '';
       }
 
       // Xử lý checkbox đặt lịch
@@ -62,7 +64,6 @@ const createCarProduct = async (req, res) => {
 
       // Thêm sản phẩm vào database
       const newProduct = await addCarProduct(carData);
-      console.log('Sản phẩm đã được thêm thành công:', newProduct);
 
       res.status(200).json({ 
         message: 'Sản phẩm đã được thêm thành công!',
@@ -71,6 +72,62 @@ const createCarProduct = async (req, res) => {
     });
   } catch (error) {
     console.error('Lỗi khi thêm sản phẩm:', error);
+    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+  }
+};
+
+const createAccessoryProduct = async (req, res) => {
+  try {
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error('Lỗi upload file:', err);
+        return res.status(400).json({ message: err.message });
+      }
+
+      // Log toàn bộ req.body để kiểm tra
+      console.log('Dữ liệu nhận được:', req.body);
+
+      // Lấy dữ liệu từ form
+      const accessoryData = {
+        tenSanPham: req.body.tenSP,
+        iDthuongHieu: req.body.iDthuongHieu,
+        loaiPhuKien: req.body.idLoai,
+        gia: req.body.GiaNiemYet,
+        chiTietSanPham: req.body.chiTietSP,
+        trangThai: req.body.trangThai,
+        dangKiLaiThu: req.body.datLich === 'on' ? 1 : 0
+      };
+
+      // Xử lý danh sách hình ảnh
+      if (req.files && req.files.length > 0) {
+        accessoryData.hinhAnh = req.files.map(file => file.filename).join(' || ');
+      } else {
+        accessoryData.hinhAnh = '';
+      }
+
+      // Kiểm tra các trường bắt buộc
+      const missingFields = [];
+      if (!accessoryData.tenSanPham) missingFields.push('Tên sản phẩm');
+      if (!accessoryData.iDthuongHieu) missingFields.push('Thương hiệu');
+      if (!accessoryData.loaiPhuKien) missingFields.push('Loại phụ kiện');
+      if (!accessoryData.gia) missingFields.push('Giá');
+      
+      if (missingFields.length > 0) {
+        return res.status(400).json({ 
+          message: `Dữ liệu không đầy đủ, thiếu các trường: ${missingFields.join(', ')}` 
+        });
+      }
+
+      // Thêm phụ kiện vào database
+      const newAccessory = await addAccessoryProduct(accessoryData);
+
+      res.status(200).json({ 
+        message: 'Phụ kiện đã được thêm thành công!',
+        accessory: newAccessory 
+      });
+    });
+  } catch (error) {
+    console.error('Lỗi khi thêm phụ kiện:', error);
     res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
   }
 };
@@ -125,4 +182,4 @@ const deleteProductByIdController = async (req, res) => {
   }
 };
 
-module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController };
+module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController, createAccessoryProduct };

@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     document.addEventListener('DOMContentLoaded', function() {
+        // Form thêm xe
         const createCarForm = document.getElementById('createCarForm');
         
         if (createCarForm) {
@@ -78,12 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                     
-                    // Kiểm tra loại file
+                // Kiểm tra loại file
+                for (let file of fileInput.files) {
                     if (!file.type.startsWith('image/')) {
                         alert(`File ${file.name} không phải là file ảnh!`);
                         return;
                     }
-                
+                }
     
                 try {
                     formData.set('tenSP', formData.get('tenSP'));
@@ -101,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     formData.set('dangkilaithu', formData.get('dangkilaithu') ? '1' : '0');
     
                     // Log dữ liệu trước khi gửi để debug
-                    console.log("Dữ liệu form trước khi gửi:");
+                    console.log("Dữ liệu form xe trước khi gửi:");
                     for (let pair of formData.entries()) {
                         console.log(pair[0] + ': ' + pair[1]);
                     }
@@ -114,9 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const result = await response.json();
                     
                     if (response.ok) {
-                        alert('Sản phẩm đã thêm thành công!');
+                        alert('Xe đã thêm thành công!');
                         createCarForm.reset();
-                        // Tải lại danh sách sản phẩm nếu cần
                         if (typeof fetchProducts === 'function') {
                             fetchProducts();
                         }
@@ -125,41 +126,70 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } catch (error) {
                     console.error('Lỗi kết nối:', error);
-                    alert('Đã xảy ra lỗi khi thêm sản phẩm.');
+                    alert('Đã xảy ra lỗi khi thêm xe.');
                 }
             });
         }
     
-        // Thêm preview ảnh (tùy chọn)
-        const uploadImage = document.getElementById('uploadImage');
-        if (uploadImage) {
-            uploadImage.addEventListener('change', function(event) {
-                const previewContainer = document.createElement('div');
-                previewContainer.id = 'imagePreview';
-                previewContainer.style.marginTop = '10px';
-                
-                // Xóa preview cũ nếu có
-                const oldPreview = document.getElementById('imagePreview');
-                if (oldPreview) {
-                    oldPreview.remove();
-                }
+        // Form thêm phụ kiện
+        const createAccessoryForm = document.getElementById('createAccessoryForm');
+        
+        if (createAccessoryForm) {
+            createAccessoryForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
     
-                // Tạo preview cho mỗi file được chọn
-                for (let file of this.files) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.style.maxHeight = '100px';
-                        img.style.marginRight = '10px';
-                        img.style.marginBottom = '10px';
-                        previewContainer.appendChild(img);
+                const formData = new FormData(createAccessoryForm);
+                const fileInput = document.getElementById('uploadImage');
+    
+                // Kiểm tra số lượng file
+                if (fileInput.files.length > 5) {
+                    alert('Chỉ được phép upload tối đa 5 ảnh!');
+                    return;
+                }
+                    
+                // Kiểm tra loại file
+                for (let file of fileInput.files) {
+                    if (!file.type.startsWith('image/')) {
+                        alert(`File ${file.name} không phải là file ảnh!`);
+                        return;
                     }
-                    reader.readAsDataURL(file);
                 }
     
-                // Chèn preview vào sau input
-                this.parentNode.appendChild(previewContainer);
+                try {
+                    formData.set('tenSP', formData.get('tenSP'));
+                    formData.set('iDthuongHieu', formData.get('iDthuongHieu'));
+                    formData.set('idLoai', formData.get('idLoai'));
+                    formData.set('GiaNiemYet', formData.get('GiaNiemYet'));
+                    formData.set('trangThai', formData.get('trangThai'));
+                    formData.set('chiTietSP', formData.get('chiTietSP'));
+                    formData.set('datLich', formData.get('datLich') ? '1' : '0');
+    
+                    // Log dữ liệu trước khi gửi để debug
+                    console.log("Dữ liệu form phụ kiện trước khi gửi:");
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
+    
+                    const response = await fetch('/products/create-accessory', {
+                        method: 'POST',
+                        body: formData 
+                    });
+    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        alert('Phụ kiện đã thêm thành công!');
+                        createAccessoryForm.reset();
+                        if (typeof fetchProducts === 'function') {
+                            fetchProducts();
+                        }
+                    } else {
+                        alert(`Có lỗi xảy ra: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error('Lỗi kết nối:', error);
+                    alert('Đã xảy ra lỗi khi thêm phụ kiện.');
+                }
             });
         }
     });

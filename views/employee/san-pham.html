@@ -160,7 +160,7 @@
                                                 </div>
                                                 <div>
                                                     <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                                    <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*">
+                                                    <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple required>
                                                 </div>
                                             </div>
 
@@ -231,59 +231,59 @@
 
                         <!-- Accessory Tab Content -->
                         <div class="tab-pane fade" id="accessory" role="tabpanel" aria-labelledby="accessory-tab">
-                            <form id="createAccessoryForm">
+                            <form id="createAccessoryForm" method="POST" action="/products/create-accessory" enctype="multipart/form-data">
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label for="tenSanPham" class="form-label">Tên Sản Phẩm</label>
-                                            <input type="text" class="form-control" id="tenSanPham" required>
+                                            <label for="tenSP" class="form-label">Tên Sản Phẩm</label>
+                                            <input type="text" class="form-control" id="tenSP" name="tenSP" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="thuongHieu" class="form-label">Thương hiệu</label>
-                                            <select class="form-select" id="thuongHieu" required>
+                                            <label for="iDthuongHieu" class="form-label">Thương hiệu</label>
+                                            <select class="form-select" id="iDthuongHieu" name="iDthuongHieu" required>
                                                 <option value="brand1">Brand 1</option>
-                                                <option value="brand2">Brand 2</option>
                                             </select>
                          
                                         </div>
                                         <div class="mb-3">
-                                            <label for="thuongHieu" class="form-label">Loại phụ kiện</label>
-                                            <select class="form-select" id="thuongHieu" required>
-                                                <option value="brand1">Loại phụ kiện 1</option>
-                                                <option value="brand2">Loại phụ kiện 2</option>
+                                            <label for="idLoai" class="form-label">Loại phụ kiện</label>
+                                            <select class="form-select" id="idLoai" name="idLoai" required>
+                                                <option value="LPK001">Camera</option>
+                                            
                                             </select>
                          
                                         </div>
                                        
                                         <div class="mb-3">
-                                            <label for="gia" class="form-label">Giá Niêm Yết (₫)</label>
-                                            <input type="number" class="form-control" id="gia" required>
+                                            <label for="GiaNiemYet" class="form-label">Giá Niêm Yết (₫)</label>
+                                            <input type="number" class="form-control" id="GiaNiemYet" name="GiaNiemYet" required>
                                         </div>
                                         <div>
                                             <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                            <input type="file" class="form-control" id="uploadImage" accept="image/*" multiple required>
+                                            <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="trangThai" class="form-label">Trạng Thái Sản Phẩm</label>
-                                            <select class="form-select" id="trangThai" required>
-                                                <option value="new">Mới</option>
-                                                <option value="used">Đã Qua Sử Dụng</option>
-                                                <option value="refurbished">Tân Trang</option>
+                                            <select class="form-select" id="trangThai" name="trangThai" required>
+                                                <option value="Mới">Mới</option>
+                                                <option value="Đã Qua Sử Dụng">Đã Qua Sử Dụng</option>
+                                                <option value="Tân Trang">Tân Trang</option>
+                                                <option value="Hide">Ẩn sản phẩm</option>
                                             </select>
                                         </div>
 
                                         <div class="form-check mt-5">
-                                            <input class="form-check-input" type="checkbox" id="dangKiLaiThu">
-                                            <label class="form-check-label" for="dangKiLaiThu">Cho phép đặt lịch</label>
+                                            <input class="form-check-input" type="checkbox" id="datLich" name="datLich">
+                                            <label class="form-check-label" for="datLich">Cho phép đặt</label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label for="chiTietSanPham" class="form-label">Chi Tiết Sản Phẩm</label>
-                                        <textarea class="form-control" id="chiTietSanPham" rows="20" required></textarea>
+                                        <label for="chiTietSP" class="form-label">Chi Tiết Sản Phẩm</label>
+                                        <textarea class="form-control" id="chiTietSP" name="chiTietSP" rows="20" required></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-start px-0">

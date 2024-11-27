@@ -1,5 +1,6 @@
 const { getDB } = require('../config/db');
-
+const fs = require('fs');
+const path = require('path');
 // Hàm thêm xe ô tô vào cơ sở dữ liệu
 const addCarProduct = async (carData) => {
   try {
@@ -18,10 +19,10 @@ const addCarProduct = async (carData) => {
       soKm: Number(carData.soKm || 0),
       mauXe: carData.mauXe || '',
       loaiCanSo: carData.loaiCanSo || '',
-      hinhAnh: carData.hinhAnh || '', // Tên file sau khi upload
+      hinhAnh: carData.hinhAnh || '',
       chiTietSP: carData.chiTietSP || '',
       trangThai: carData.trangThai || '',
-      datLich: Number(carData.datLich) || 0, // Chuyển đổi sang số 0/1
+      datLich: Number(carData.datLich) || 0,
       ngayTao: new Date(),
     };
 
@@ -31,6 +32,34 @@ const addCarProduct = async (carData) => {
   } catch (error) {
     console.error('Lỗi khi thêm sản phẩm:', error);
     throw new Error('Đã có lỗi xảy ra khi thêm sản phẩm');
+  }
+};
+
+//Phụ Kiện
+const addAccessoryProduct = async (accessoryData) => {
+  try {
+    const db = getDB();
+    const accessoryCollection = db.collection('PhuKien');
+
+    const newAccessoryData = {
+      id: `PK${Date.now()}`,
+      tenSP: accessoryData.tenSanPham,
+      IDthuongHieu: accessoryData.iDthuongHieu,
+      idLoai: accessoryData.loaiPhuKien,
+      GiaNiemYet: Number(accessoryData.gia),
+      chiTietSP: accessoryData.chiTietSanPham,
+      hinhAnh: accessoryData.hinhAnh || '',
+      trangThai: accessoryData.trangThai,
+      datLich: Number(accessoryData.dangKiLaiThu) || 0,
+      ngayTao: new Date(),
+    };
+
+    const result = await accessoryCollection.insertOne(newAccessoryData);
+    console.log('Phụ kiện đã được thêm thành công:', newAccessoryData);
+    return newAccessoryData;
+  } catch (error) {
+    console.error('Lỗi khi thêm phụ kiện:', error);
+    throw new Error('Đã có lỗi xảy ra khi thêm phụ kiện');
   }
 };
 
@@ -92,7 +121,31 @@ const deleteProductById = async (id) => {
   const carCollection = db.collection('XeOto');
   const accessoryCollection = db.collection('PhuKien');
 
-  // Tìm và xóa sản phẩm trong các collection
+  // Tìm sản phẩm để lấy thông tin hình ảnh trước khi xóa
+  let product = await carCollection.findOne({ id });
+  if (!product) {
+    product = await accessoryCollection.findOne({ id });
+  }
+
+  if (product && product.hinhAnh) {
+    // Xóa các file ảnh
+    const imageNames = product.hinhAnh.split(' || ');
+    imageNames.forEach(imageName => {
+      const imagePath = path.join('Public/images/Database/Products/', imageName);
+      
+      // Kiểm tra và xóa file
+      if (fs.existsSync(imagePath)) {
+        try {
+          fs.unlinkSync(imagePath);
+          console.log(`Đã xóa file ảnh: ${imageName}`);
+        } catch (error) {
+          console.error(`Lỗi xóa file ảnh ${imageName}:`, error);
+        }
+      }
+    });
+  }
+
+  // Xóa sản phẩm trong các collection
   const carResult = await carCollection.deleteOne({ id });
   if (carResult.deletedCount > 0) {
     return 'Xóa ô tô thành công!';
@@ -106,4 +159,4 @@ const deleteProductById = async (id) => {
   throw new Error('Sản phẩm không tồn tại.');
 };
 
-module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById };
+module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct };
