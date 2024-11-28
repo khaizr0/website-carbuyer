@@ -1,6 +1,7 @@
 const multer = require('multer');
 const path = require('path');
-const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct } = require('../models/ProductModel');
+const fs = require('fs');
+const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById } = require('../models/ProductModel');
 
 // Cấu hình multer
 const storage = multer.diskStorage({
@@ -182,4 +183,41 @@ const deleteProductByIdController = async (req, res) => {
   }
 };
 
-module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController, createAccessoryProduct };
+const getEditProductPageController = async (req, res) => {
+  try {
+      const productId = req.params.id;
+
+      // Tìm sản phẩm theo ID
+      const { product, productType } = await findProductById(productId);
+
+      if (!product) {
+          return res.status(404).json({ message: 'Sản phẩm không tồn tại.' });
+      }
+
+      const editProductHtml = fs.readFileSync(
+          path.join(__dirname, '../views/employee/editProduct.html'),
+          'utf8'
+      );
+
+      res.send(`
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Chỉnh Sửa Sản Phẩm</title>
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+          </head>
+          <body>
+              <input type="hidden" id="productType" value="${productType}">
+              ${editProductHtml}
+          </body>
+          </html>
+      `);
+  } catch (error) {
+      console.error('Lỗi khi tải trang chỉnh sửa sản phẩm:', error);
+      res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+  }
+};
+
+module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController, createAccessoryProduct, getEditProductPageController };

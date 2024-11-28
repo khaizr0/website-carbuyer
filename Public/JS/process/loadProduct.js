@@ -38,12 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Các hàm xử lý sự kiện
+    // Sửa sản phẩm
     window.editProduct = function(id) {
         console.log('Edit product:', id);
-        // Thêm code xử lý chỉnh sửa sản phẩm
+        window.location.href = `/products/edit/${id}`;
     }
     
+    // Xoá sản phẩm
     window.deleteProduct = async function (id) {
         if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
             try {

@@ -1,6 +1,26 @@
 const { getDB } = require('../config/db');
 const fs = require('fs');
 const path = require('path');
+
+const findProductById = async (productId) => {
+  try {
+      const db = getDB();
+      const carProduct = await db.collection('XeOto').findOne({ id: productId });
+      const accessoryProduct = await db.collection('PhuKien').findOne({ id: productId });
+
+      if (carProduct) {
+          return { product: carProduct, productType: 'XE' };
+      } else if (accessoryProduct) {
+          return { product: accessoryProduct, productType: 'PK' };
+      }
+
+      return { product: null, productType: null };
+  } catch (error) {
+      console.error('Lỗi khi tìm sản phẩm theo ID:', error);
+      throw new Error('Đã có lỗi xảy ra khi tìm sản phẩm');
+  }
+};
+
 // Hàm thêm xe ô tô vào cơ sở dữ liệu
 const addCarProduct = async (carData) => {
   try {
@@ -159,4 +179,5 @@ const deleteProductById = async (id) => {
   throw new Error('Sản phẩm không tồn tại.');
 };
 
-module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct };
+
+module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById };

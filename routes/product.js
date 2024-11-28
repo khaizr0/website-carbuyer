@@ -1,8 +1,11 @@
 const express = require('express');
-const router = express.Router();
-const { getRecentProductsController, getAllProductsController, deleteProductByIdController, createCarProduct, createAccessoryProduct } = require('../controllers/ProductController');
+const path = require('path');
+const { getDB } = require('../config/db');
 
-// Route to get recent products
+const router = express.Router();
+const { getRecentProductsController, getAllProductsController, deleteProductByIdController, createCarProduct, createAccessoryProduct 
+            , getEditProductPageController } = require('../controllers/ProductController');
+
 router.get('/recent-products', getRecentProductsController);
 
 router.get('/products', getAllProductsController);
@@ -12,5 +15,7 @@ router.delete('/products/:id', deleteProductByIdController);
 router.post('/products/create-car', createCarProduct);
 
 router.post('/products/create-accessory', createAccessoryProduct);
+
+router.get('/products/edit/:id', getEditProductPageController);
 
 module.exports = router;
