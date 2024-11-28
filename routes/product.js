@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const { getDB } = require('../config/db');
 
 const router = express.Router();
 const { getRecentProductsController, getAllProductsController, deleteProductByIdController, createCarProduct, createAccessoryProduct 

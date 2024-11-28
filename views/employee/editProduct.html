@@ -29,25 +29,25 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="tenSP" class="form-label">Tên Sản Phẩm</label>
-                                <input type="text" class="form-control" name="tenSP" id="tenSP" value="<!-- Tên sản phẩm từ backend -->" required>
+                                <input type="text" class="form-control" name="tenSP" id="tenSP" required>
                             </div>
                             <div class="mb-3">
                                 <label for="iDthuongHieu" class="form-label">Thương hiệu</label>
                                 <select class="form-select" name="iDthuongHieu" id="iDthuongHieu" required>
-                                    <option value="TH001" selected><!-- Đổ thương hiệu từ backend --></option>
+                                    <option value="TH001">Toyota</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="namSanXuat" class="form-label">Năm Sản Xuất</label>
-                                <input type="text" class="form-control" name="namSanXuat" id="namSanXuat" value="<!-- Năm sản xuất từ backend -->" required>
+                                <input type="text" class="form-control" name="namSanXuat" id="namSanXuat" required>
                             </div>
                             <div class="mb-3">
                                 <label for="GiaNiemYet" class="form-label">Giá Niêm Yết (₫)</label>
-                                <input type="number" class="form-control" name="GiaNiemYet" id="GiaNiemYet" value="<!-- Giá niêm yết từ backend -->" required>
+                                <input type="number" class="form-control" name="GiaNiemYet" id="GiaNiemYet" required>
                             </div>
                             <div class="mb-3">
                                 <label for="soKm" class="form-label">Số km đã đi</label>
-                                <input type="number" class="form-control" name="soKm" id="soKm" value="<!-- Số km từ backend -->">
+                                <input type="number" class="form-control" name="soKm" id="soKm">
                             </div>
                             <div class="mb-3">
                                 <label for="trangThai" class="form-label">Trạng Thái Sản Phẩm</label>
@@ -60,7 +60,7 @@
                             </div>
                             <div>
                                 <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple>
+                                <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple required>
                             </div>
                         </div>
 
@@ -116,11 +116,14 @@
 
                         <div class="col-md-4">
                             <label for="chiTietSP" class="form-label">Chi Tiết Sản Phẩm</label>
-                            <textarea class="form-control" name="chiTietSP" id="chiTietSP" rows="20" required><!-- Đổ chi tiết sản phẩm từ backend --></textarea>
+                            <textarea class="form-control" name="chiTietSP" id="chiTietSP" rows="20" required></textarea>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-start">
-                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <div class="modal-footer d-flex justify-content-start px-0">
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Cập Nhật
+                        </button>
                     </div>
                 </form>
             </div>
@@ -132,34 +135,38 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="tenSP" class="form-label">Tên Sản Phẩm</label>
-                                <input type="text" class="form-control" name="tenSP" id="tenSP" value="<!-- Tên sản phẩm từ backend -->" required>
+                                <input type="text" class="form-control" id="tenSP" name="tenSP" required>
                             </div>
                             <div class="mb-3">
                                 <label for="iDthuongHieu" class="form-label">Thương hiệu</label>
-                                <select class="form-select" name="iDthuongHieu" id="iDthuongHieu" required>
-                                    <option value="brand1" selected><!-- Đổ thương hiệu từ backend --></option>
+                                <select class="form-select" id="iDthuongHieu" name="iDthuongHieu" required>
+                                    <option value="brand1">Brand 1</option>
                                 </select>
+             
                             </div>
                             <div class="mb-3">
                                 <label for="idLoai" class="form-label">Loại phụ kiện</label>
-                                <select class="form-select" name="idLoai" id="idLoai" required>
+                                <select class="form-select" id="idLoai" name="idLoai" required>
                                     <option value="LPK001">Camera</option>
+                                
                                 </select>
+             
                             </div>
+                           
                             <div class="mb-3">
                                 <label for="GiaNiemYet" class="form-label">Giá Niêm Yết (₫)</label>
-                                <input type="number" class="form-control" name="GiaNiemYet" id="GiaNiemYet" value="<!-- Giá niêm yết từ backend -->" required>
+                                <input type="number" class="form-control" id="GiaNiemYet" name="GiaNiemYet" required>
                             </div>
                             <div>
                                 <label for="uploadImage" class="form-label">Upload Hình Ảnh</label>
-                                <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple>
+                                <input type="file" class="form-control" name="uploadImage" id="uploadImage" accept="image/*" multiple required>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="trangThai" class="form-label">Trạng Thái Sản Phẩm</label>
-                                <select class="form-select" name="trangThai" id="trangThai" required>
+                                <select class="form-select" id="trangThai" name="trangThai" required>
                                     <option value="Mới">Mới</option>
                                     <option value="Đã Qua Sử Dụng">Đã Qua Sử Dụng</option>
                                     <option value="Tân Trang">Tân Trang</option>
@@ -168,18 +175,21 @@
                             </div>
 
                             <div class="form-check mt-5">
-                                <input class="form-check-input" type="checkbox" name="datLich" id="datLich">
+                                <input class="form-check-input" type="checkbox" id="datLich" name="datLich">
                                 <label class="form-check-label" for="datLich">Cho phép đặt</label>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <label for="chiTietSP" class="form-label">Chi Tiết Sản Phẩm</label>
-                            <textarea class="form-control" name="chiTietSP" id="chiTietSP" rows="20" required><!-- Đổ chi tiết sản phẩm từ backend --></textarea>
+                            <textarea class="form-control" id="chiTietSP" name="chiTietSP" rows="20" required></textarea>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-start">
-                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <div class="modal-footer d-flex justify-content-start px-0">
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Cập Nhật
+                        </button>
                     </div>
                 </form>
             </div>
@@ -201,9 +211,8 @@
                 document.getElementById('accessory-tab').classList.add('active');
                 document.getElementById('accessory').classList.add('active', 'show');
             }
-        });  
+        });
     </script>
-    
 </body>
 
 </html>
