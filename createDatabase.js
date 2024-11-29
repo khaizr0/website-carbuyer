@@ -41,15 +41,16 @@ async function createDatabase() {
         });
 
         await db.collection('PhuKien').insertOne({
-            id: "PK001",
-            tenSP: "Camera hành trình",
-            IDthuongHieu: "TH002",
+            id: "PK1732901518686",
+            tenSP: "Phụ kiện",
+            iDthuongHieu: "brand1",
             idLoai: "LPK001",
-            GiaNiemYet: 5000000,
-            chiTietSP: "Camera hành trình 4K, kết nối wifi.",
-            hinhAnh: "camera_hanh_trinh.png || camera2.png",
+            GiaNiemYet: 312312,
+            chiTietSP: "21313131",
+            hinhAnh: "1732901518630-221924363.png",
             trangThai: "Mới",
-            datLich: 0
+            datLich: 0,
+            ngayTao: 0
         });
 
         await db.collection('ThuongHieu').insertOne({
@@ -103,11 +104,12 @@ async function createDatabase() {
             soChoNgoi: 5,
             soKm: 0,
             mauXe: "Đen",
-            loaiCanSo: "Tự động",
+            loaiCanSo: "automatic",
             hinhAnh: "toyota_camry.png || toyota2.png",
             chiTietSP: "Xe nhập khẩu, đời mới 2023.",
             trangThai: "Mới",
-            datLich: 1
+            datLich: 1,
+            ngayTao: 0
         });
 
         console.log('Đã thêm dữ liệu vào các collection');

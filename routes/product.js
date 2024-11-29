@@ -3,7 +3,7 @@ const path = require('path');
 
 const router = express.Router();
 const { getRecentProductsController, getAllProductsController, deleteProductByIdController, createCarProduct, createAccessoryProduct 
-            , getEditProductPageController } = require('../controllers/ProductController');
+            , getEditProductPageController, updateProduct } = require('../controllers/ProductController');
 
 router.get('/recent-products', getRecentProductsController);
 
@@ -16,5 +16,8 @@ router.post('/products/create-car', createCarProduct);
 router.post('/products/create-accessory', createAccessoryProduct);
 
 router.get('/products/edit/:id', getEditProductPageController);
+
+router.post('/products/update/:id', updateProduct);
+
 
 module.exports = router;

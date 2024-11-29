@@ -2,25 +2,6 @@ const { getDB } = require('../config/db');
 const fs = require('fs');
 const path = require('path');
 
-const findProductById = async (productId) => {
-  try {
-      const db = getDB();
-      const carProduct = await db.collection('XeOto').findOne({ id: productId });
-      const accessoryProduct = await db.collection('PhuKien').findOne({ id: productId });
-
-      if (carProduct) {
-          return { product: carProduct, productType: 'XE' };
-      } else if (accessoryProduct) {
-          return { product: accessoryProduct, productType: 'PK' };
-      }
-
-      return { product: null, productType: null };
-  } catch (error) {
-      console.error('Lỗi khi tìm sản phẩm theo ID:', error);
-      throw new Error('Đã có lỗi xảy ra khi tìm sản phẩm');
-  }
-};
-
 // Hàm thêm xe ô tô vào cơ sở dữ liệu
 const addCarProduct = async (carData) => {
   try {
@@ -63,14 +44,14 @@ const addAccessoryProduct = async (accessoryData) => {
 
     const newAccessoryData = {
       id: `PK${Date.now()}`,
-      tenSP: accessoryData.tenSanPham,
-      IDthuongHieu: accessoryData.iDthuongHieu,
-      idLoai: accessoryData.loaiPhuKien,
-      GiaNiemYet: Number(accessoryData.gia),
-      chiTietSP: accessoryData.chiTietSanPham,
+      tenSP: accessoryData.tenSP,
+      iDthuongHieu: accessoryData.iDthuongHieu,
+      idLoai: accessoryData.idLoai,
+      GiaNiemYet: Number(accessoryData.GiaNiemYet),
+      chiTietSP: accessoryData.chiTietSP,
       hinhAnh: accessoryData.hinhAnh || '',
       trangThai: accessoryData.trangThai,
-      datLich: Number(accessoryData.dangKiLaiThu) || 0,
+      datLich: Number(accessoryData.datLich) || 0,
       ngayTao: new Date(),
     };
 
@@ -179,66 +160,28 @@ const deleteProductById = async (id) => {
   throw new Error('Sản phẩm không tồn tại.');
 };
 
-const updateCarProduct = async (productId, carData) => {
+const findProductById = async (productId) => {
   try {
-    const db = getDB();
-    const carCollection = db.collection('XeOto');
-    
-    const updateData = {
-      tenSP: carData.tenSP,
-      nguyenLieuXe: carData.nguyenLieuXe || '',
-      iDthuongHieu: carData.iDthuongHieu,
-      namSanXuat: carData.namSanXuat,
-      kieuDang: carData.kieuDang || '',
-      GiaNiemYet: Number(carData.GiaNiemYet),
-      soChoNgoi: carData.soChoNgoi,
-      soKm: Number(carData.soKm || 0),
-      mauXe: carData.mauXe || '',
-      loaiCanSo: carData.loaiCanSo || '',
-      hinhAnh: carData.hinhAnh || '',
-      chiTietSP: carData.chiTietSP || '',
-      trangThai: carData.trangThai || '',
-      datLich: Number(carData.datLich) || 0,
-    };
+      const db = getDB();
+      console.log('Debug Model: Searching for Product ID:', productId);
 
-    const result = await carCollection.updateOne(
-      { id: productId },
-      { $set: updateData }
-    );
+      const carProduct = await db.collection('XeOto').findOne({ id: productId });
+      const accessoryProduct = await db.collection('PhuKien').findOne({ id: productId });
 
-    return result;
+      console.log('Debug Model: Car Product:', carProduct);
+      console.log('Debug Model: Accessory Product:', accessoryProduct);
+
+      if (carProduct) {
+          return { product: carProduct, productType: 'XE' };
+      } else if (accessoryProduct) {
+          return { product: accessoryProduct, productType: 'PK' };
+      }
+
+      return { product: null, productType: null };
   } catch (error) {
-    console.error('Lỗi khi cập nhật sản phẩm:', error);
-    throw new Error('Đã có lỗi xảy ra khi cập nhật sản phẩm');
+      console.error('Lỗi khi tìm sản phẩm theo ID:', error);
+      throw new Error('Đã có lỗi xảy ra khi tìm sản phẩm');
   }
 };
 
-const updateAccessoryProduct = async (productId, accessoryData) => {
-  try {
-    const db = getDB();
-    const accessoryCollection = db.collection('PhuKien');
-    
-    const updateData = {
-      tenSP: accessoryData.tenSanPham,
-      IDthuongHieu: accessoryData.iDthuongHieu,
-      idLoai: accessoryData.loaiPhuKien,
-      GiaNiemYet: Number(accessoryData.gia),
-      chiTietSP: accessoryData.chiTietSanPham,
-      hinhAnh: accessoryData.hinhAnh || '',
-      trangThai: accessoryData.trangThai,
-      datLich: Number(accessoryData.dangKiLaiThu) || 0
-    };
-
-    const result = await accessoryCollection.updateOne(
-      { id: productId },
-      { $set: updateData }
-    );
-
-    return result;
-  } catch (error) {
-    console.error('Lỗi khi cập nhật phụ kiện:', error);
-    throw new Error('Đã có lỗi xảy ra khi cập nhật phụ kiện');
-  }
-};
-
-module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, updateAccessoryProduct, updateCarProduct };
+module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById };

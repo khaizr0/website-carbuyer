@@ -1,7 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById } = require('../models/ProductModel');
+const { getDB } = require('../config/db');
+const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, updateProductById } = require('../models/ProductModel');
 
 // Cấu hình multer
 const storage = multer.diskStorage({
@@ -89,15 +90,7 @@ const createAccessoryProduct = async (req, res) => {
       console.log('Dữ liệu nhận được:', req.body);
 
       // Lấy dữ liệu từ form
-      const accessoryData = {
-        tenSanPham: req.body.tenSP,
-        iDthuongHieu: req.body.iDthuongHieu,
-        loaiPhuKien: req.body.idLoai,
-        gia: req.body.GiaNiemYet,
-        chiTietSanPham: req.body.chiTietSP,
-        trangThai: req.body.trangThai,
-        dangKiLaiThu: req.body.datLich === 'on' ? 1 : 0
-      };
+      const accessoryData = req.body;
 
       // Xử lý danh sách hình ảnh
       if (req.files && req.files.length > 0) {
@@ -108,10 +101,10 @@ const createAccessoryProduct = async (req, res) => {
 
       // Kiểm tra các trường bắt buộc
       const missingFields = [];
-      if (!accessoryData.tenSanPham) missingFields.push('Tên sản phẩm');
+      if (!accessoryData.tenSP) missingFields.push('Tên sản phẩm');
       if (!accessoryData.iDthuongHieu) missingFields.push('Thương hiệu');
-      if (!accessoryData.loaiPhuKien) missingFields.push('Loại phụ kiện');
-      if (!accessoryData.gia) missingFields.push('Giá');
+      if (!accessoryData.idLoai) missingFields.push('Loại phụ kiện');
+      if (!accessoryData.GiaNiemYet) missingFields.push('Giá');
       
       if (missingFields.length > 0) {
         return res.status(400).json({ 
@@ -185,19 +178,65 @@ const deleteProductByIdController = async (req, res) => {
 
 const getEditProductPageController = async (req, res) => {
   try {
-      const productId = req.params.id;
+      console.log('Bắt đầu xử lý yêu cầu chỉnh sửa sản phẩm.');
 
-      // Tìm sản phẩm theo ID
+      const productId = req.params.id;
+      console.log('ID sản phẩm:', productId);
+
       const { product, productType } = await findProductById(productId);
+      console.log('Kết quả từ findProductById:', { product, productType });
 
       if (!product) {
+          console.warn('Sản phẩm không tồn tại.');
           return res.status(404).json({ message: 'Sản phẩm không tồn tại.' });
       }
 
+      console.log('Đọc file editProduct.html.');
       const editProductHtml = fs.readFileSync(
           path.join(__dirname, '../views/employee/editProduct.html'),
           'utf8'
       );
+
+      // Debug nội dung HTML (nếu cần thiết, lưu ý: không in nội dung lớn vào log)
+      console.log('Đã đọc xong file editProduct.html.');
+
+      // Tạo script để điền dữ liệu
+      const scriptFillData = `
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          console.log('Đang khởi tạo dữ liệu cho form.');
+          const productType = '${productType}';
+          const product = ${JSON.stringify(product)};
+          
+          console.log('Loại sản phẩm:', productType);
+          console.log('Dữ liệu sản phẩm:', product);
+
+          if (productType === 'XE') {
+              document.getElementById('tenSP').value = product.tenSP;
+              document.getElementById('iDthuongHieu').value = product.iDthuongHieu;
+              document.getElementById('namSanXuat').value = product.namSanXuat;
+              document.getElementById('GiaNiemYet').value = product.GiaNiemYet;
+              document.getElementById('soKm').value = product.soKm;
+              document.getElementById('nguyenLieuXe').value = product.nguyenLieuXe;
+              document.getElementById('kieuDang').value = product.kieuDang;
+              document.getElementById('soChoNgoi').value = product.soChoNgoi;
+              document.getElementById('mauXe').value = product.mauXe;
+              document.getElementById('loaiCanSo').value = product.loaiCanSo;
+              document.getElementById('chiTietSP').value = product.chiTietSP;
+              document.getElementById('trangThai').value = product.trangThai;
+          } else if (productType === 'PK') {
+              document.getElementById('tenSPPK').value = product.tenSP;
+              document.getElementById('iDthuongHieuPK').value = product.iDthuongHieu;
+              document.getElementById('idLoaiPK').value = product.idLoai;
+              document.getElementById('GiaNiemYetPK').value = product.GiaNiemYet;
+              document.getElementById('chiTietSPPK').value = product.chiTietSP;
+              document.getElementById('trangThaiPK').value = product.trangThai;
+          }
+      });
+      </script>
+      `;
+
+      console.log('Script điền dữ liệu đã được tạo.');
 
       res.send(`
           <!DOCTYPE html>
@@ -211,13 +250,88 @@ const getEditProductPageController = async (req, res) => {
           <body>
               <input type="hidden" id="productType" value="${productType}">
               ${editProductHtml}
+              ${scriptFillData}
           </body>
           </html>
       `);
+
+      console.log('Đã gửi response với giao diện chỉnh sửa sản phẩm.');
   } catch (error) {
       console.error('Lỗi khi tải trang chỉnh sửa sản phẩm:', error);
       res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
   }
 };
 
-module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, deleteProductByIdController, createAccessoryProduct, getEditProductPageController };
+const updateProduct = async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+      // Tìm sản phẩm hiện tại
+      const { product, productType } = await findProductById(productId);
+
+      if (!product) {
+          return res.status(404).json({ message: 'Sản phẩm không tồn tại.' });
+      }
+
+      // Xử lý upload hình ảnh mới (nếu có)
+      upload(req, res, async (err) => {
+          if (err) {
+              console.error('Lỗi upload file:', err);
+              return res.status(400).json({ message: err.message });
+          }
+
+          // Danh sách file mới
+          const newImages = req.files.map(file => file.filename);
+          console.log('Hình ảnh mới:', newImages);
+
+          // Kiểm tra thay đổi hình ảnh
+          if (newImages.length > 0 && product.images) {
+              // Xóa ảnh cũ trong thư mục
+              product.images.forEach(image => {
+                  const filePath = path.join(__dirname, '../Public/images/Database/Products/', image);
+                  if (fs.existsSync(filePath)) {
+                      fs.unlinkSync(filePath);
+                      console.log(`Đã xóa ảnh cũ: ${filePath}`);
+                  }
+              });
+          }
+
+          // Chuẩn hóa dữ liệu nếu là sản phẩm Phụ Kiện
+          let updatedData = { ...req.body };
+
+          if (productType === 'PK') {
+              updatedData.tenSP = updatedData.tenSPPK;
+              updatedData.iDthuongHieu = updatedData.iDthuongHieuPK;
+              updatedData.idLoai = updatedData.idLoaiPK;
+              updatedData.GiaNiemYet = updatedData.GiaNiemYetPK;
+              updatedData.chiTietSP = updatedData.chiTietSPPK;
+              updatedData.trangThai = updatedData.trangThaiPK;
+
+              // Xóa các key không cần thiết
+              delete updatedData.tenSPPK;
+              delete updatedData.iDthuongHieuPK;
+              delete updatedData.idLoaiPK;
+              delete updatedData.GiaNiemYetPK;
+              delete updatedData.chiTietSPPK;
+              delete updatedData.trangThaiPK;
+          }
+
+          // Thêm ảnh mới vào dữ liệu cập nhật
+          updatedData.images = newImages.length > 0 ? newImages : product.images; // Giữ ảnh cũ nếu không upload ảnh mới
+
+          // Cập nhật vào database
+          const db = getDB();
+          const collectionName = productType === 'XE' ? 'XeOto' : 'PhuKien';
+          await db.collection(collectionName).updateOne({ id: productId }, { $set: updatedData });
+
+          return res.status(200).json({ message: 'Cập nhật sản phẩm thành công.' });
+      });
+  } catch (error) {
+      console.error('Lỗi khi cập nhật sản phẩm:', error);
+      res.status(500).json({ message: 'Có lỗi xảy ra, vui lòng thử lại.' });
+  }
+};
+
+
+module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, 
+  deleteProductByIdController, createAccessoryProduct, getEditProductPageController, updateProduct };
