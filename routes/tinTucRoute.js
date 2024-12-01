@@ -109,4 +109,13 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/employee/tin-tuc', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'employee/tin-tuc.html'));
+  });
+
+router.get('/tintuc', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'news.html'));
+  });
+
+
 module.exports = router;

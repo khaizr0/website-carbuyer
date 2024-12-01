@@ -4,7 +4,7 @@ const fs = require('fs');
 const { getDB } = require('../config/db');
 const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, updateProductById } = require('../models/ProductModel');
 
-const IDRS = "";
+const IDSP = "";
 
 // Cấu hình multer
 const storage = multer.diskStorage({
@@ -185,7 +185,7 @@ const getEditProductPageController = async (req, res) => {
       const productId = req.params.id;
       console.log('ID sản phẩm:', productId);
 
-      global.IDRS = productId;
+      global.IDSP = productId;
 
       const { product, productType } = await findProductById(productId);
       console.log('Kết quả từ findProductById:', { product, productType });
@@ -267,7 +267,7 @@ const getEditProductPageController = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const productId = global.IDRS;
+  const productId = global.IDSP;
   console.log('ID:', productId); 
 
   try {

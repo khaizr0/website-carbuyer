@@ -3,15 +3,28 @@ const express = require('express');
 const { login, forgotPassword, resetPassword, resetPasswordPage } = require('../controllers/authController');
 const router = express.Router();
 
-// Handle GET request to /login
+// Handle GET
 router.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'views', 'authentication', 'Admin-login.html'));
 });
 
-// Handle POST request to /login
-router.post('/login', login);
+router.get('/forgot', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views','authentication', 'forgot-password.html'));
+});
 
-// Route for admin dashboard (protected)
+router.get('/reset-password', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views','authentication', 'reset-password.html'));
+});
+
+router.get('/email-sent-success', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'views','authentication', 'email-sent-success.html'));
+});
+
+router.get('/reset-password/:email/:token', resetPasswordPage);
+
+router.get('/reset-password', resetPassword);
+
+// session
 router.get('/admin', (req, res) => {
   if (!req.session.userId) {
     return res.redirect('/login');
@@ -19,13 +32,13 @@ router.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'views', 'admin', 'home.html'));
 });
 
-// Route cho việc quên mật khẩu
+// Handle POST
+router.post('/login', login);
+
 router.post('/forgot-password', forgotPassword);
 
-// Route trang reset mật khẩu
-router.get('/reset-password/:email/:token', resetPasswordPage);
+router.post('/reset-password', resetPassword);
 
-// Route xử lý đặt lại mật khẩu
 router.post('/reset-password/:email/:token', resetPassword);
 
 module.exports = router;

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function fetchProducts() {
         try {
-            const response = await fetch('/products');
+            const response = await fetch('/product/');
             const products = await response.json();
             
             const carList = document.getElementById('carList');
@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sửa sản phẩm
     window.editProduct = function(id) {
         console.log('Edit product:', id);
-        window.location.href = `/products/edit/${id}`;
+        window.location.href = `/product/edit/${id}`;
     }
     
     // Xoá sản phẩm
     window.deleteProduct = async function (id) {
         if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
             try {
-                const response = await fetch(`/products/${id}`, {
+                const response = await fetch(`/product/${id}`, {
                     method: 'DELETE',
                 });
                 if (response.ok) {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log(pair[0] + ': ' + pair[1]);
                     }
     
-                    const response = await fetch('/products/create-car', {
+                    const response = await fetch('/product/create-car', {
                         method: 'POST',
                         body: formData 
                     });
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log(pair[0] + ': ' + pair[1]);
                     }
     
-                    const response = await fetch('/products/create-accessory', {
+                    const response = await fetch('/product/create-accessory', {
                         method: 'POST',
                         body: formData 
                     });
