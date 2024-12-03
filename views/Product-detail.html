@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,14 @@
     <link rel="stylesheet" href="/Public/css/home.css">
     <link rel="icon" type="image/x-icon" href="/Documents/CarLogo.png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/Public/css/header.css">
     <link rel="stylesheet" href="/Public/css/modal.css">
     <link rel="stylesheet" href="/Public/css/product-detail.css">
 
-    <script src="/Public/JS/header.js" defer ></script>
+    <script src="/Public/JS/header.js" defer></script>
     <link rel="stylesheet" href="/Public/css/footer.css">
 
     <!-- Font Awesome -->
@@ -23,6 +26,7 @@
     <title>Chi tiết sản phẩm</title>
 
 </head>
+
 <body>
     <div class="layout">
         <div class="come-back">
@@ -32,56 +36,68 @@
     <br>
     <div class="layout">
         <div class="box-product-detail">
-        
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
-            
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <img src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg" alt="ảnh" class="img-detail-1">
-                <div class="image-range">
-                    <button class="btn-change-image">
-                        <i class="ri-arrow-left-circle-fill"></i>
-                    </button>
-                    <img src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg" class="img-detail-2">
-                    <img src="https://bmw-khuyenmai.com/wp-content/uploads/2022/10/bmw-3-2023-20.jpeg" class="img-detail-2">
-                    <img src="https://choxe365.com/wp-content/uploads/2022/01/bmw-320i.png" class="img-detail-2">
-                    <img src="https://dailymuabanxe.net/wp-content/uploads/2022/12/z3963399809058_886a40561483a04e42931f37084f4029.jpg" class="img-detail-2">
-                    <button class="btn-change-image"> 
-                        <i class="ri-arrow-right-circle-fill"></i>
-                    </button>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <img id="product-images" src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
+                        alt="ảnh" class="img-detail-1">
+                    <div class="image-range">
+                        <button class="btn-change-image">
+                            <i class="ri-arrow-left-circle-fill"></i>
+                        </button>
+                        <img src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
+                            class="img-detail-2">
+                        <img src="https://bmw-khuyenmai.com/wp-content/uploads/2022/10/bmw-3-2023-20.jpeg"
+                            class="img-detail-2">
+                        <img src="https://choxe365.com/wp-content/uploads/2022/01/bmw-320i.png" class="img-detail-2">
+                        <img src="https://dailymuabanxe.net/wp-content/uploads/2022/12/z3963399809058_886a40561483a04e42931f37084f4029.jpg"
+                            class="img-detail-2">
+                        <button class="btn-change-image">
+                            <i class="ri-arrow-right-circle-fill"></i>
+                        </button>
+                    </div>
                 </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="product-1"
+                    style="display: flex; flex-direction: column; flex-wrap: wrap; max-width: 200px;">
+                    <div class="box-price">
+                        <h1 class="product-detail-name" id="product-name">BMW 320i Sport Line 2024</h1>
+                        <p class="product-detail-p" id="product-price-label">Giá niêm yết:</p>
+                        <h3 class="product-detail-price" id="product-price">1.600.000.000 đ</h3>
+                    </div>
+                    <div class="box-detail-model">
+                        <p class="product-detail-model" id="product-year"><i class="ri-calendar-line"></i> <span
+                                id="year-text">2024</span></p>
+                        <p class="product-detail-model" id="product-mileage"><i class="ri-scan-line"></i> <span
+                                id="mileage-text">20.000 km</span></p>
+                        <p class="product-detail-model" id="product-fuel"><i class="ri-gas-station-fill"></i> <span
+                                id="fuel-text">Xăng</span></p>
+                        <p class="product-detail-model" id="product-seats"><i class="ri-settings-5-line"></i> <span
+                                id="seats-text">5 chỗ</span></p>
+                        <p class="product-detail-model" id="product-transmission"><i class="ri-roadster-fill"></i> <span
+                                id="transmission-text">Tự động 9 cấp</span></p>
+                    </div>
+                    <div class="btn-regiter-callnow" id="contact-buttons">
+                        <button class="register" id="register-button" onclick="openModal()">Đăng ký lái thử</button>
+                        <button class="call" id="call-button">Gọi ngay</button>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="display: flex; flex-direction: column; flex-wrap: wrap; max-width: 200px;">
-                <div class="box-price">
-                    <h1 class="product-detail-name">BMW 320i Sport Line 2024</h1>
-                    <p class="product-detail-p">Giá niêm yết:</p>
-                    <h3 class="product-detail-price">1.600.000.000 đ</h3>
-                </div>
-                <div class="box-detail-model">
-                    <p class="product-detail-model"><i class="ri-calendar-line"></i> 2024</p>
-                    <p class="product-detail-model"><i class="ri-scan-line"></i> 20.000 km</p>
-                    <p class="product-detail-model"><i class="ri-gas-station-fill"></i> Xăng</p>
-                    <p class="product-detail-model"><i class="ri-settings-5-line"></i> 5 chỗ</p>
-                    <p class="product-detail-model"><i class="ri-roadster-fill"></i> Tự động 9 cấp</p>
-                </div>
-                <div class="btn-regiter-callnow">
-                    <button class="register" onclick="openModal()">Đăng ký lái thử</button>
-                    <button class="call">Gọi ngay</button>
-                </div>
-            </div>
-            
-        </div>
-        
+
         </div>
     </div>
     <div class="layout">
-        <div class="box-tongquan-tskt" >
+        <div class="box-tongquan-tskt">
             <ul class="box-tongquan-tskt">
-                <li class="active"><a href="javascript:void(0)" onclick="showContent('TQ', 'TQ', this)">Tổng quan</a></li>
+                <li class="active"><a href="javascript:void(0)" onclick="showContent('TQ', 'TQ', this)">Tổng quan</a>
+                </li>
                 <li><a href="javascript:void(0)" onclick="showContent('TSKT', 'TSKT', this)">Thông số kỹ thuật</a></li>
             </ul>
         </div>
     </div>
-    <div class = "noidung" id = "TQ">
+    <div class="noidung" id="TQ">
         <div class="layout">
             <div class="box-product-detail-infromation">
                 <section>
@@ -93,21 +109,23 @@
                         <li>✅ Đã dán film 3M và trang bị bộ lót sàn 5D</li>
                     </ul>
                 </section>
-            
+
                 <section>
                     <h2>⚙️ Option nổi bật</h2>
                     <ul>
                         <li>👉 Núm xoay điều khiển iDrive Touch & hệ điều hành BMW 7.0</li>
                         <li>👉 Hệ thống âm thanh loa BMW Hifi 10 loa công suất 205W</li>
                         <li>👉 Điều hòa 3 vùng độc lập có cửa gió phía sau</li>
-                        <li>👉 Động cơ 4 xy-lanh thẳng hàng I4 tăng áp cổng nạp kép công nghệ BMW TwinPower-Turbo đi cùng hộp số tự động 8 cấp</li>
+                        <li>👉 Động cơ 4 xy-lanh thẳng hàng I4 tăng áp cổng nạp kép công nghệ BMW TwinPower-Turbo đi
+                            cùng hộp số tự động 8 cấp</li>
                         <li>👉 Lưới tản nhiệt thiết kế hình quả thận viền crom mạ bạc</li>
-                        <li>👉 Màn hình giải trí 10.25 inch kết nối với cụm màn hình 12.3 inch, Apple Carplay, sạc không dây</li>
+                        <li>👉 Màn hình giải trí 10.25 inch kết nối với cụm màn hình 12.3 inch, Apple Carplay, sạc không
+                            dây</li>
                         <li>👉 Đèn LED toàn phần, mở rộng góc đánh lái, bật/tắt tự động</li>
                         <li>👉 Bộ la zăng 18 inch, 10 nan bạc, lốp 225/45R18</li>
                     </ul>
                 </section>
-            
+
                 <section>
                     <h2>⚙️ Tính năng an toàn thông minh</h2>
                     <ul>
@@ -119,30 +137,41 @@
                         <li>⭕ Hệ thống Parking Assistant với camera lùi</li>
                     </ul>
                 </section>
-            
+
                 <section>
                     <h2>BMW 320i SPORT LINE 2024 - PHONG CÁCH THỂ THAO, HIỆU SUẤT MẠNH MẼ</h2>
-                    <p class="menu-content">BMW 320i Sport Line 2024 là mẫu xe sedan thể thao hàng đầu của BMW, mang lại trải nghiệm lái tuyệt vời và phong cách hiện đại. Thiết kế ngoại thất ấn tượng, nội thất tinh tế và khả năng vận hành vượt trội đem đến trải nghiệm lái đầy phấn khích và đẳng cấp.</p>
+                    <p class="menu-content">BMW 320i Sport Line 2024 là mẫu xe sedan thể thao hàng đầu của BMW, mang lại
+                        trải nghiệm lái tuyệt vời và phong cách hiện đại. Thiết kế ngoại thất ấn tượng, nội thất tinh tế
+                        và khả năng vận hành vượt trội đem đến trải nghiệm lái đầy phấn khích và đẳng cấp.</p>
                 </section>
-            
+
                 <section>
                     <h3 class="menu-content">1. NGOẠI THẤT THỂ THAO CUỐN HÚT</h3>
-                    <p class="menu-content">BMW 320i Sport Line 2024 có thiết kế ngoại thất nổi bật, mang phong cách thể thao hiện đại. Đặc trưng với lưới tản nhiệt hình quả thận, đèn LED sắc nét và đường nét mượt mà, mạnh mẽ. Đuôi xe với đèn hậu LED chữ L và ống xả kép, mâm xe 18 inch đa chấu thiết kế thể thao.</p>
+                    <p class="menu-content">BMW 320i Sport Line 2024 có thiết kế ngoại thất nổi bật, mang phong cách thể
+                        thao hiện đại. Đặc trưng với lưới tản nhiệt hình quả thận, đèn LED sắc nét và đường nét mượt mà,
+                        mạnh mẽ. Đuôi xe với đèn hậu LED chữ L và ống xả kép, mâm xe 18 inch đa chấu thiết kế thể thao.
+                    </p>
                 </section>
 
                 <section>
                     <h3 class="menu-content">2. KHÔNG GIAN NỘI THẤT</h3>
-                    <p class="menu-content">Nội thất sang trọng và tinh tế, bọc da cao cấp, ghế ngồi thể thao thoải mái, màn hình cảm ứng 10.25 inch, vô lăng 3 chấu tích hợp nút điều khiển. Khoang hành lý 480 lít, hệ thống giải trí hiện đại với âm thanh cao cấp và điều khiển giọng nói.</p>
+                    <p class="menu-content">Nội thất sang trọng và tinh tế, bọc da cao cấp, ghế ngồi thể thao thoải mái,
+                        màn hình cảm ứng 10.25 inch, vô lăng 3 chấu tích hợp nút điều khiển. Khoang hành lý 480 lít, hệ
+                        thống giải trí hiện đại với âm thanh cao cấp và điều khiển giọng nói.</p>
                 </section>
 
                 <section>
                     <h3 class="menu-content">3. HIỆU SUẤT ĐỘNG CƠ VÀ TÍNH NĂNG AN TOÀN</h3>
-                    <p class="menu-content">Động cơ TwinPower Turbo 2.0L, công suất 184 mã lực, tăng tốc từ 0-100 km/h trong 7.1 giây, hộp số tự động 8 cấp Steptronic Sport, hệ dẫn động cầu sau. Công nghệ BMW EfficientDynamics tối ưu hiệu suất và giảm khí thải.</p>
+                    <p class="menu-content">Động cơ TwinPower Turbo 2.0L, công suất 184 mã lực, tăng tốc từ 0-100 km/h
+                        trong 7.1 giây, hộp số tự động 8 cấp Steptronic Sport, hệ dẫn động cầu sau. Công nghệ BMW
+                        EfficientDynamics tối ưu hiệu suất và giảm khí thải.</p>
                 </section>
 
                 <section>
                     <h3 class="menu-content">4. CÔNG NGHỆ AN TOÀN HIỆN ĐẠI</h3>
-                    <p class="menu-content">BMW 320i Sport Line 2024 trang bị công nghệ an toàn tiên tiến như hỗ trợ phanh, cảnh báo va chạm, hỗ trợ giữ làn đường và cảm biến lùi, đảm bảo an toàn tối đa khi di chuyển.</p>
+                    <p class="menu-content">BMW 320i Sport Line 2024 trang bị công nghệ an toàn tiên tiến như hỗ trợ
+                        phanh, cảnh báo va chạm, hỗ trợ giữ làn đường và cảm biến lùi, đảm bảo an toàn tối đa khi di
+                        chuyển.</p>
                 </section>
 
                 <hr style="float: left; width: 500px; border: 1px solid #000;">
@@ -152,7 +181,7 @@
             </div>
         </div>
     </div>
-    <div class = "noidung" id ="TSKT">
+    <div class="noidung" id="TSKT">
         <div class="layout">
             <div class="box-product-detail-infromation">
                 <h3>THÔNG SỐ KỸ THUẬT KIA CANIVAL SIGNATURE 2.2 2023</h3>
@@ -187,7 +216,7 @@
                             <td>2335/55R19</td>
                         </tr>
                     </thead>
-                    
+
                 </table>
             </div>
         </div>
@@ -200,7 +229,8 @@
 
     <div class="layout">
         <div class="box-product-detail">
-            <img src="https://www.bmw-phumyhung.vn/wp-content/uploads/sites/2/2022/09/BMW-THE-X6_POST1.jpg" alt="" class="box-image-detail-panel">
+            <img src="https://www.bmw-phumyhung.vn/wp-content/uploads/sites/2/2022/09/BMW-THE-X6_POST1.jpg" alt=""
+                class="box-image-detail-panel">
         </div>
     </div>
 
@@ -212,12 +242,14 @@
 
     <div class="bancothequantam">
         <br>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+            style="display: flex; flex-direction: row; flex-wrap: wrap;">
             <button class="btn-change-lienquan-left">
                 <i class="ri-arrow-left-circle-line"></i>
             </button>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt="" class="image-lienquan">
+                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
+                    class="image-lienquan">
                 <h3 class="name-lienquan">BMW 320i Sport Line 2024</h3>
                 <h4 class="price-lienquan">1.600.000.000 đ</h4>
                 <div class="box-detail-lienquan">
@@ -228,7 +260,8 @@
             </div>
 
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt="" class="image-lienquan">
+                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
+                    class="image-lienquan">
                 <h3 class="name-lienquan">BMW 320i Sport Line 2024</h3>
                 <h4 class="price-lienquan">1.600.000.000 đ</h4>
                 <div class="box-detail-lienquan">
@@ -239,7 +272,8 @@
             </div>
 
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt="" class="image-lienquan">
+                <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
+                    class="image-lienquan">
                 <h3 class="name-lienquan">BMW 320i Sport Line 2024</h3>
                 <h4 class="price-lienquan">1.600.000.000 đ</h4>
                 <div class="box-detail-lienquan">
@@ -249,13 +283,13 @@
                 </div>
             </div>
 
-           
-            <button class="btn-change-lienquan-right"> 
+
+            <button class="btn-change-lienquan-right">
                 <i class="ri-arrow-right-circle-line"></i>
             </button>
-            
+
         </div>
-        
+
     </div>
 
 
@@ -301,12 +335,12 @@
     <!-- Footer -->
     <div id="footer-container"></div>
     <script src="/Public/JS/footer.js"></script>
-    
+
     <script>
         // Lấy tất cả các ảnh nhỏ và ảnh chính
         const thumbnails = document.querySelectorAll('.img-detail-2');
         const mainImage = document.querySelector('.img-detail-1');
-    
+
         // Lặp qua từng ảnh nhỏ
         thumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', () => {
@@ -314,10 +348,139 @@
                 mainImage.src = thumbnail.src;
             });
         });
-    </script>
+
+        function fetchProductDetails(productId) {
+            fetch(`http://localhost:3000/products/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if the data contains error (product not found)
+                    if (data.error) {
+                        document.getElementById('product-details').innerHTML = '<p>Product not found.</p>';
+                    } else {
+                        console.log(data); // Log the product data for debugging
+        
+                        // Set the product details
+                        document.getElementById('product-name').textContent = data.name || 'No Name Available';
+                        document.getElementById('product-price').textContent = formatCurrency(data.price) || 'Price Not Available';
+                        document.getElementById('year-text').textContent = data.year || 'No Year Available';
+                        document.getElementById('mileage-text').textContent = data.mileage ? `${data.mileage} km` : 'Mileage Not Available';
+                        document.getElementById('fuel-text').textContent = data.fuelType || 'Fuel Type Not Available';
+             
+                        document.getElementById('transmission-text').textContent = data.transmission || 'Transmission Type Not Available';
+         
+          
+        
+            
+                        const imageContainer = document.getElementById('product-images');
+                        imageContainer.innerHTML = '';  // Clear existing images
+                        
+                        // Check if there are images in the product data
+                        if (data.images && data.images.length > 0) {
+                            // Select the image element with the id 'product-images'
+                            const imgElement = document.getElementById('product-images');
+                            
+                            // If the image element exists, set its 'src' to the first image from the array
+                            if (imgElement) {
+                                imgElement.src = data.images[0];  // Use the first image from the array
+                                imgElement.alt = 'Product Image';
+                                imgElement.style.width = '100%';  // Ensure the image fills the container width
+                                imgElement.style.height = 'auto';  // Maintain the aspect ratio
+                            }
+                        } else {
+                            imageContainer.innerHTML = '<p>No images available.</p>';  // Display message if no images
+                        }
+                        
+                        
+               
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching product details:', error);
+         
+                });
+        }
+        
+
+        // Utility function to format price as currency
+        function formatCurrency(price) {
+            if (!price) return '';
+            return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
+        window.onload = () => {
+            // Get the product ID from the URL query parameter (e.g., ?id=XE001)
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id'); // Extract 'id' parameter from the URL
+
+            // Check if productId exists in the URL
+            if (productId) {
+                fetchProductDetails(productId);  // Call the function to fetch product details
+            } else {
+                console.error("Product ID not found in the URL.");
+            }
+        };
+
+// Open the modal when the "register-button" is clicked
+function openModal() {
+    document.getElementById('registerModal').style.display = 'block';
+}
+
+// Close the modal when the "close" button or outside the modal is clicked
+function closeModal() {
+    document.getElementById('registerModal').style.display = 'none';
+}
+
+// Handle the form submission
+function submitForm(event) {
+    event.preventDefault(); // Prevent the default form submission
     
+    // Get form data
+    const name = document.getElementById('name').value || null;
+    const phone = document.getElementById('phone').value || null;
+    const date = document.getElementById('date').value || null;
+    const time = document.getElementById('time').value || null;
+    
+    // Prepare data to send to the server
+    const formData = {
+        name,
+        phone,
+        date,
+        time
+    };
 
+    // Make the API call to register the test drive
+    fetch('/dat-lich/create', {
+        method: 'POST', // HTTP method
+        headers: {
+            'Content-Type': 'application/json' // Set the content type to JSON
+        },
+        body: JSON.stringify(formData) // Send the form data as a JSON string
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        if (data && data.success) {
+            // Success handling, e.g., close modal, show success message
+            alert('Đăng ký lái thử thành công!');
+            closeModal();
+        } else {
+            // Error handling, show message or alert
+            alert('Có lỗi xảy ra, vui lòng thử lại!');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra, vui lòng thử lại!');
+    });
+}
 
+    
+// Close the modal if the user clicks anywhere outside of it
+window.onclick = function(event) {
+    if (event.target == document.getElementById('registerModal')) {
+        closeModal();
+    }
+}
 
+    </script>
 </body>
 </html>

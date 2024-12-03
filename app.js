@@ -35,6 +35,9 @@ app.get('/phukien', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'otherProduct.html'));
 });
 
+app.get('/chitietxe', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'Product-detail.html'));
+});
 
 // 404 errors
 app.use((req, res) => {

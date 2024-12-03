@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addNews, getNewsById, getAllNews, updateNewsById, deleteNewsById, getLatestNewsId } = require('../models/TinTuc');  // Import functions from TinTuc.js
+const { addNews, getNewsById, getAllNews, updateNewsById, deleteNewsById, getLatestNewsId, showNewsOnHome } = require('../models/TinTuc');  // Import functions from TinTuc.js
 const multer = require('multer');  // Import multer for file handling
 const path = require('path');
 // CREATE: Add a new news article
@@ -117,5 +117,13 @@ router.get('/tintuc', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'news.html'));
   });
 
+router.get('/api/showNewsOnHome', async (req, res) => {
+    try {
+        const news = await showNewsOnHome();
+        res.status(200).json(news);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching news for home', error });
+    }
+});
 
 module.exports = router;

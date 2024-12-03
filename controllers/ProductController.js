@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { getDB } = require('../config/db');
-const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, updateProductById } = require('../models/ProductModel');
+const { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, getProductById } = require('../models/ProductModel');
 
 const IDSP = "";
 
@@ -145,7 +145,15 @@ const getRecentProductsController = async (req, res) => {
         year: product.namSanXuat,
         mileage: product.soKm.toLocaleString('vi-VN') + ' km',
         fuelType: product.nguyenLieuXe,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        brandId: product.iDthuongHieu,
+        type: product.kieuDang,
+        seats: product.soChoNgoi,
+        color: product.mauXe,
+        transmission: product.loaiCanSo,
+        details: product.chiTietSP,
+        status: product.trangThai,
+        booked: product.datLich
       };
     });
     
@@ -337,6 +345,20 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const getProductByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;  
+    console.log('ID sản phẩm:', id);
+
+    const product = await getProductById(id);
+
+    res.status(200).json(product);
+  } catch (error) {
+    console.error('Lỗi khi lấy sản phẩm:', error);
+    res.status(500).json({ message: 'Có lỗi khi lấy sản phẩm.' });
+  }
+};
 
 module.exports = { createCarProduct, getRecentProductsController, getAllProductsController, 
-  deleteProductByIdController, createAccessoryProduct, getEditProductPageController, updateProduct };
+  deleteProductByIdController, createAccessoryProduct, getEditProductPageController,
+   updateProduct, getProductByIdController };

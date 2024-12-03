@@ -11,18 +11,18 @@ const addCarProduct = async (carData) => {
     const newCarData = {
       id: `XE${Date.now()}`,
       tenSP: carData.tenSP,
-      nguyenLieuXe: carData.nguyenLieuXe || '',
+      nguyenLieuXe: carData.nguyenLieuXe,
       iDthuongHieu: carData.iDthuongHieu,
       namSanXuat: carData.namSanXuat,
-      kieuDang: carData.kieuDang || '',
+      kieuDang: carData.kieuDang,
       GiaNiemYet: Number(carData.GiaNiemYet),
       soChoNgoi: carData.soChoNgoi,
       soKm: Number(carData.soKm || 0),
-      mauXe: carData.mauXe || '',
-      loaiCanSo: carData.loaiCanSo || '',
+      mauXe: carData.mauXe,
+      loaiCanSo: carData.loaiCanSo,
       hinhAnh: carData.hinhAnh || '',
       chiTietSP: carData.chiTietSP || '',
-      trangThai: carData.trangThai || '',
+      trangThai: carData.trangThai,
       datLich: Number(carData.datLich) || 0,
       ngayTao: new Date(),
     };
@@ -184,4 +184,50 @@ const findProductById = async (productId) => {
   }
 };
 
-module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById };
+const getProductById = async (id) => {
+  const db = getDB();
+  const carCollection = db.collection('XeOto');
+  const accessoryCollection = db.collection('PhuKien');
+
+  // Tìm sản phẩm ô tô theo ID
+  const car = await carCollection.findOne({ id });
+  if (car) {
+    // Split the hinhAnh field into an array of images
+    const images = car.hinhAnh ? car.hinhAnh.split(' || ') : [];
+
+    return {
+      id: car.id,
+      name: car.tenSP,
+      brand: car.iDthuongHieu,
+      price: car.GiaNiemYet,
+      type: 'Ô tô',
+      mileage: car.soKm,
+      fuelType: car.nguyenLieuXe,
+      color: car.mauXe,
+      transmission: car.loaiCanSo,
+      details: car.chiTietSP,
+      status: car.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn',
+      booked: car.datLich === 1 ? true : false,
+      images: images.map(image => `/Public/images/Database/Products/${image}`), // Add images field
+    };
+  }
+
+  // Tìm sản phẩm phụ kiện theo ID
+  const accessory = await accessoryCollection.findOne({ id });
+  if (accessory) {
+    return {
+      id: accessory.id,
+      name: accessory.tenSP,
+      brand: accessory.IDthuongHieu,
+      price: accessory.GiaNiemYet,
+      type: 'Phụ kiện',
+      status: accessory.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn',
+      images: accessory.hinhAnh ? accessory.hinhAnh.split(' || ') : [], // Handle accessory images if any
+    };
+  }
+
+  // Nếu không tìm thấy sản phẩm
+  throw new Error('Sản phẩm không tồn tại.');
+};
+
+module.exports = { addCarProduct, getRecentProducts, getAllProducts, deleteProductById, addAccessoryProduct, findProductById, getProductById };

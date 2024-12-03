@@ -103,6 +103,24 @@ const getLatestNewsId = async () => {
     }
 };
 
+//home.html:
+const showNewsOnHome = async () => {
+    try {
+        const db = await getDB();
+        const collection = db.collection('TinTuc');
+        
+        const newsList = await collection
+            .find({ trangThai: 1 }) 
+            .sort({ ngayDang: -1 }) 
+            .limit(3)
+            .toArray();
+        
+        return newsList;
+    } catch (error) {
+        console.error('Error fetching news for home:', error);
+        throw new Error('Error fetching news for home');
+    }
+};
 
 module.exports = {
     addNews,
@@ -110,5 +128,6 @@ module.exports = {
     getNewsById,
     getAllNews,
     updateNewsById,
-    deleteNewsById
+    deleteNewsById,
+    showNewsOnHome
 };

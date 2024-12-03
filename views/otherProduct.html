@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xe đang bán</title>
+    <title>Phụ Kiện</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/Public/css/header.css">
     <link rel="stylesheet" href="/Public/css/footer.css">
     <script src="/Public/JS/header.js" defer></script>
-    
+
     <link rel="stylesheet" href="/Public/css/productOption.css">
     <script src="/Public/JS/productOption.js"></script>
 </head>
+
 <body>
     <div class="header-text">
         <img src="/Public/images/background.jpg" alt="background" class="background-image">
@@ -29,8 +33,9 @@
             <!-- Thương hiệu -->
             <div class="filter-section">
                 <h3>
-                    Thương hiệu 
-                    <button class="toggle-button" onclick="toggleSection(this)"><i class="fas fa-angle-down"></i></button>
+                    Thương hiệu
+                    <button class="toggle-button" onclick="toggleSection(this)"><i
+                            class="fas fa-angle-down"></i></button>
                 </h3>
                 <div class="filter-content">
                     <ul>
@@ -46,8 +51,9 @@
             <!-- Mức giá -->
             <div class="filter-section">
                 <h3>
-                    Mức giá 
-                    <button class="toggle-button" onclick="toggleSection(this)"><i class="fas fa-angle-down"></i></button>
+                    Mức giá
+                    <button class="toggle-button" onclick="toggleSection(this)"><i
+                            class="fas fa-angle-down"></i></button>
                 </h3>
                 <div class="filter-content">
                     <ul>
@@ -61,8 +67,9 @@
             <!-- Kiểu dáng -->
             <div class="filter-section">
                 <h3>
-                    Kiểu dáng 
-                    <button class="toggle-button" onclick="toggleSection(this)"><i class="fas fa-angle-down"></i></button>
+                    Kiểu dáng
+                    <button class="toggle-button" onclick="toggleSection(this)"><i
+                            class="fas fa-angle-down"></i></button>
                 </h3>
                 <div class="filter-content">
                     <ul>
@@ -76,8 +83,9 @@
             <!-- Năm sản xuất -->
             <div class="filter-section">
                 <h3>
-                    Năm sản xuất 
-                    <button class="toggle-button" onclick="toggleSection(this)"><i class="fas fa-angle-down"></i></button>
+                    Năm sản xuất
+                    <button class="toggle-button" onclick="toggleSection(this)"><i
+                            class="fas fa-angle-down"></i></button>
                 </h3>
                 <div class="filter-content">
                     <ul>
@@ -91,8 +99,9 @@
             <!-- Màu xe -->
             <div class="filter-section">
                 <h3>
-                    Màu xe 
-                    <button class="toggle-button" onclick="toggleSection(this)"><i class="fas fa-angle-down"></i></button>
+                    Màu xe
+                    <button class="toggle-button" onclick="toggleSection(this)"><i
+                            class="fas fa-angle-down"></i></button>
                 </h3>
                 <div class="filter-content">
                     <ul>
@@ -122,7 +131,7 @@
                 }
             }
         </script>
-        
+
         <!-- Danh sách xe -->
         <section class="product-list">
             <div class="sort-section">
@@ -210,11 +219,54 @@
         </section>
     </div>
     <script src="/Public/JS/productOption.js"></script>
-
+    <script>
+        // Function to fetch and display "phụ kiện" (accessories) from the API or server
+        async function fetchAccessories() {
+            try {
+                const response = await fetch('/phukien'); // Adjust the API endpoint as needed
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const products = await response.json(); // Get all products
+    
+                // Filter products to only include accessories
+                const accessories = products.filter(product => product.type === "Phụ kiện");
+    
+                // Select the container to display accessories
+                const container = document.querySelector('.products-grid');
+                container.innerHTML = ''; // Clear previous content
+    
+                // Dynamically create and insert accessory cards
+                accessories.forEach(accessory => {
+                    const accessoryCard = document.createElement('div');
+                    accessoryCard.classList.add('product-card'); // Match the car card style
+    
+                    accessoryCard.innerHTML = `
+                        <img src="/Public/images/Database/Products/${accessory.images[0] || '/images/default-accessory.png'}" alt="${accessory.name}">
+                        <h3>${accessory.name}</h3>
+                        <p class="price">${accessory.price.toLocaleString()} VNĐ</p>
+                        <div class="car-info">
+                            <span><i class="fas fa-info-circle"></i> ${accessory.description || 'No description available'}</span>
+                        </div>
+                    `;
+    
+                    container.appendChild(accessoryCard);
+                });
+            } catch (error) {
+                console.error('Error fetching accessories:', error);
+            }
+        }
+    
+        // Call the function to fetch and display accessories
+        fetchAccessories();
+    </script>
+    
     <br><br>
     <!-- Footer -->
     <div id="footer-container"></div>
     <script src="/Public/JS/footer.js"></script>
 
 </body>
+
 </html>
