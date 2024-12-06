@@ -1,35 +1,36 @@
 const { getDB } = require('../config/db');
 
-class DatLichKHModel {
-  
+const DatLichKHModel = {
   // Thêm một lịch hẹn mới
-  static async addBooking(bookingData) {
+  async addBooking(data) {
     try {
       const db = getDB();
+      console.log(data.hoTenKH);
+      console.log(data);
       const result = await db.collection('DatLichKH').insertOne({
         id: `DL${Date.now()}`,
-        hoTenKH: bookingData.hoTenKH,
-        time: bookingData.time,
-        date: bookingData.date,
-        soDT: bookingData.soDT,
-        email: bookingData.email,
-        tenDichVu: bookingData.tenDichVu,
-        idXe: bookingData.idXe || null,
-        idPhuKien: bookingData.idPhuKien || null,
-        trangThai: bookingData.trangThai || 0, // 0: Pending, 1: Confirmed, 2: Cancelled
-        ngayTao: new Date()
+        hoTenKH: data.hoTenKH,
+        time: data.time,
+        date: data.date,
+        soDT: data.soDT,
+        email: data.email,
+        tenDichVu: data.tenDichVu,
+        idXe: data.idXe || null,
+        idPhuKien: data.idPhuKien || null,
+        trangThai: data.trangThai || 0,
+        ngayTao: new Date(),
       });
 
-      console.log('Đặt lịch thành công:', result.ops[0]);
-      return result.ops[0];
+      console.log('Đặt lịch thành công:', data);
+      return data;
     } catch (error) {
       console.error('Lỗi khi thêm lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi thêm lịch hẹn.');
     }
-  }
+  },
 
   // Lấy tất cả các lịch hẹn
-  static async getAllBookings() {
+  async getAllBookings() {
     try {
       const db = getDB();
       return await db.collection('DatLichKH').find().toArray();
@@ -37,10 +38,10 @@ class DatLichKHModel {
       console.error('Lỗi khi lấy danh sách lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi lấy danh sách lịch hẹn.');
     }
-  }
+  },
 
   // Lấy lịch hẹn theo ID
-  static async getBookingById(id) {
+  async getBookingById(id) {
     try {
       const db = getDB();
       const booking = await db.collection('DatLichKH').findOne({ id });
@@ -52,10 +53,10 @@ class DatLichKHModel {
       console.error('Lỗi khi lấy lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi lấy lịch hẹn.');
     }
-  }
+  },
 
   // Cập nhật trạng thái lịch hẹn
-  static async updateBookingStatus(id, trangThai) {
+  async updateBookingStatus(id, trangThai) {
     try {
       const db = getDB();
       const result = await db.collection('DatLichKH').updateOne(
@@ -73,10 +74,10 @@ class DatLichKHModel {
       console.error('Lỗi khi cập nhật trạng thái lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi cập nhật trạng thái lịch hẹn.');
     }
-  }
+  },
 
   // Xóa lịch hẹn theo ID
-  static async deleteBookingById(id) {
+  async deleteBookingById(id) {
     try {
       const db = getDB();
       const result = await db.collection('DatLichKH').deleteOne({ id });
@@ -90,7 +91,7 @@ class DatLichKHModel {
       console.error('Lỗi khi xóa lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi xóa lịch hẹn.');
     }
-  }
-}
+  },
+};
 
 module.exports = DatLichKHModel;
