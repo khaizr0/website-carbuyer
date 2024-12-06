@@ -5,6 +5,7 @@ const authRoutes = require('./routes/auth');
 const employeeRoutes = require('./routes/employee');
 const productRoutes = require('./routes/product');
 const newsRoutes = require('./routes/tinTucRoute');
+const booking = require('./routes/DatLichKHRoute');
 const path = require('path');
 const multer = require('multer');
 const app = express();
@@ -24,6 +25,7 @@ app.use('/', authRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/product', productRoutes);
 app.use('/news', newsRoutes);
+app.use('/booking', booking);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'Home.html'));
