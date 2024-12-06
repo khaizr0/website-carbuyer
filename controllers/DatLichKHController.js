@@ -1,4 +1,4 @@
-const { addBooking, getBookingById, getAllDatLich, deleteBookingById } = require('../models/DatLichKHModel');
+const { addBooking, getBookingById, getAllBookings, deleteBookingById } = require('../models/DatLichKHModel');
 
 const createDatLichController = async (data) => {
   try {
@@ -9,7 +9,7 @@ const createDatLichController = async (data) => {
     if (!data.dichVuId) data.dichVuId = null;
 
     // Proceed with adding the new booking
-    const newDatLich = await addDatLich(data);
+    const newDatLich = await addBooking(data);
     return {
       message: 'Đặt lịch thành công!',
       datLich: newDatLich,
@@ -22,7 +22,7 @@ const createDatLichController = async (data) => {
 
 const getDatLichByIdController = async (id) => {
   try {
-    const datLich = await getDatLichById(id);
+    const datLich = await getBookingById(id);
     return datLich;
   } catch (error) {
     console.error('Lỗi khi lấy đặt lịch:', error);
@@ -32,7 +32,7 @@ const getDatLichByIdController = async (id) => {
 
 const getAllDatLichController = async () => {
   try {
-    const allDatLich = await getAllDatLich();
+    const allDatLich = await getAllBookings();
     return allDatLich;
   } catch (error) {
     console.error('Lỗi khi lấy danh sách đặt lịch:', error);
@@ -42,8 +42,8 @@ const getAllDatLichController = async () => {
 
 const deleteDatLichByIdController = async (id) => {
   try {
-    const message = await deleteDatLichById(id);
-    return { message };
+    await deleteBookingById(id);
+    return { message: 'Xóa đặt lịch thành công!' };
   } catch (error) {
     console.error('Lỗi khi xóa đặt lịch:', error);
     throw new Error('Có lỗi khi xóa đặt lịch.');
