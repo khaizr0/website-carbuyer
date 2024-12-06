@@ -40,7 +40,8 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
 
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <img id="product-images" src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
+                    <img id="product-images"
+                        src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
                         alt="ảnh" class="img-detail-1">
                     <div class="image-range">
                         <button class="btn-change-image">
@@ -298,7 +299,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Đăng ký lái thử</h2><br><br>
-            <form id="registerForm">
+            <form id="registerForm" method="post">
                 <div class="form-row">
                     <div class="form-column">
                         <label for="name">Họ tên:</label>
@@ -328,7 +329,6 @@
     </div>
 
     <script src="/Public/JS/modal.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 
     <br><br>
@@ -358,27 +358,27 @@
                         document.getElementById('product-details').innerHTML = '<p>Product not found.</p>';
                     } else {
                         console.log(data); // Log the product data for debugging
-        
+
                         // Set the product details
                         document.getElementById('product-name').textContent = data.name || 'No Name Available';
                         document.getElementById('product-price').textContent = formatCurrency(data.price) || 'Price Not Available';
                         document.getElementById('year-text').textContent = data.year || 'No Year Available';
                         document.getElementById('mileage-text').textContent = data.mileage ? `${data.mileage} km` : 'Mileage Not Available';
                         document.getElementById('fuel-text').textContent = data.fuelType || 'Fuel Type Not Available';
-             
+
                         document.getElementById('transmission-text').textContent = data.transmission || 'Transmission Type Not Available';
-         
-          
-        
-            
+
+
+
+
                         const imageContainer = document.getElementById('product-images');
                         imageContainer.innerHTML = '';  // Clear existing images
-                        
+
                         // Check if there are images in the product data
                         if (data.images && data.images.length > 0) {
                             // Select the image element with the id 'product-images'
                             const imgElement = document.getElementById('product-images');
-                            
+
                             // If the image element exists, set its 'src' to the first image from the array
                             if (imgElement) {
                                 imgElement.src = data.images[0];  // Use the first image from the array
@@ -389,17 +389,17 @@
                         } else {
                             imageContainer.innerHTML = '<p>No images available.</p>';  // Display message if no images
                         }
-                        
-                        
-               
+
+
+
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching product details:', error);
-         
+
                 });
         }
-        
+
 
         // Utility function to format price as currency
         function formatCurrency(price) {
@@ -420,67 +420,80 @@
             }
         };
 
-// Open the modal when the "register-button" is clicked
-function openModal() {
-    document.getElementById('registerModal').style.display = 'block';
-}
-
-// Close the modal when the "close" button or outside the modal is clicked
-function closeModal() {
-    document.getElementById('registerModal').style.display = 'none';
-}
-
-// Handle the form submission
-function submitForm(event) {
-    event.preventDefault(); // Prevent the default form submission
-    
-    // Get form data
-    const name = document.getElementById('name').value || null;
-    const phone = document.getElementById('phone').value || null;
-    const date = document.getElementById('date').value || null;
-    const time = document.getElementById('time').value || null;
-    
-    // Prepare data to send to the server
-    const formData = {
-        name,
-        phone,
-        date,
-        time
-    };
-
-    // Make the API call to register the test drive
-    fetch('/dat-lich/create', {
-        method: 'POST', // HTTP method
-        headers: {
-            'Content-Type': 'application/json' // Set the content type to JSON
-        },
-        body: JSON.stringify(formData) // Send the form data as a JSON string
-    })
-    .then(response => response.json()) // Parse the JSON response
-    .then(data => {
-        if (data && data.success) {
-            // Success handling, e.g., close modal, show success message
-            alert('Đăng ký lái thử thành công!');
-            closeModal();
-        } else {
-            // Error handling, show message or alert
-            alert('Có lỗi xảy ra, vui lòng thử lại!');
+        // Open the modal when the "register-button" is clicked
+        function openModal() {
+            document.getElementById('registerModal').style.display = 'block';
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Có lỗi xảy ra, vui lòng thử lại!');
-    });
-}
 
-    
-// Close the modal if the user clicks anywhere outside of it
-window.onclick = function(event) {
-    if (event.target == document.getElementById('registerModal')) {
-        closeModal();
-    }
-}
+        // Close the modal when the "close" button or outside the modal is clicked
+        function closeModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
 
+        // Handle the form submission
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id'); 
+            // Get form data
+            const name = document.getElementById('name').value || null;
+            const phone = document.getElementById('phone').value || null;
+            const date = document.getElementById('date').value || null;
+            const time = document.getElementById('time').value || null;
+
+            // Prepare data to send to the server
+            const formData = {
+                idXe: productId,
+                hoTenKH: name,
+                soDT: phone,
+                ngayTao: date,
+                time: time
+            };
+            // Make the API call to register the test drive
+            fetch('/booking/create', {
+                method: 'POST', // HTTP method
+                headers: {
+                    'Content-Type': 'application/json' // Set the content type to JSON
+                },
+                body: JSON.stringify(formData) // Send the form data as a JSON string
+            })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    if (data) {
+                        // Success handling, e.g., close modal, show success message
+                        alert('Đăng ký lái thử thành công!');
+                        closeModal();
+                    } else {
+                        // Error handling, show message or alert
+                        alert('Có lỗi xảy ra, vui lòng thử lại!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra, vui lòng thử lại!');
+                });
+        }
+
+
+        // Close the modal if the user clicks anywhere outside of it
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('registerModal')) {
+                closeModal();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select the form by its ID
+            const form = document.getElementById('registerForm');
+        
+            // Ensure the form exists before adding the event listener
+            if (form) {
+                form.addEventListener('submit', submitForm); // Attach the submit event to submitForm
+            } else {
+                console.error('Form not found!');
+            }
+        });
+        
     </script>
 </body>
+
 </html>
