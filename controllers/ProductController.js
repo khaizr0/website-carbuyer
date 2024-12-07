@@ -135,8 +135,9 @@ const getRecentProductsController = async (req, res) => {
     const formattedProducts = recentProducts.map(product => {
       const imageFileName = product.hinhAnh.split('||')[0].trim();
       const imageUrl = `/Public/images/Database/Products/${imageFileName}`;
-
+      const images = product.hinhAnh ? product.hinhAnh.split(' || ') : [];
       return {
+        id: product.id,
         name: product.tenSP,
         price: new Intl.NumberFormat('vi-VN', { 
           style: 'currency', 
@@ -153,7 +154,8 @@ const getRecentProductsController = async (req, res) => {
         transmission: product.loaiCanSo,
         details: product.chiTietSP,
         status: product.trangThai,
-        booked: product.datLich
+        booked: product.datLich,
+        images: images.map(image => `/Public/images/Database/Products/${image}`)
       };
     });
     
