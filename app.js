@@ -6,6 +6,9 @@ const employeeRoutes = require('./routes/employee');
 const productRoutes = require('./routes/product');
 const newsRoutes = require('./routes/tinTucRoute');
 const booking = require('./routes/DatLichKHRoute');
+const bookingRoutes = require('./routes/Booking');
+const myUserRoute = require('./routes/MyUserRoute');
+const userRoute = require('./routes/UserRoute');
 const path = require('path');
 const multer = require('multer');
 const app = express();
@@ -22,10 +25,13 @@ app.use('/config', express.static(path.join(__dirname, 'config')));
 
 // Routes
 app.use('/', authRoutes);
+app.use('/api/my/user', myUserRoute);
+app.use('/api/user', userRoute);
 app.use('/employee', employeeRoutes);
 app.use('/product', productRoutes);
 app.use('/news', newsRoutes);
 app.use('/booking', booking);
+app.use('/lichHen', bookingRoutes);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'Home.html'));

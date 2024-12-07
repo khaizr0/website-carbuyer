@@ -25,7 +25,8 @@ const login = async (req, res) => {
     if (hashedPassword !== user.matKhau) {
       return res.status(400).send('Invalid password');
     }
-
+    console.log(user);
+    
     req.session.userId = user.id;
     req.session.userRole = user.PhanLoai;
 

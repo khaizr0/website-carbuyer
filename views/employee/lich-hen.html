@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Tin Tức</title>
+    <title>Danh sách Lịch Hẹn</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="/Public/css/employee.css">
 </head>
 
 <body>
-    <header class="d-flex justify-content-between align-items-center text-white">
+    <header class="d-flex justify-content-between align-items-center text-white p-3">
         <div class="d-flex align-items-center">
             <!-- Logo -->
             <a href="#">
@@ -21,13 +21,13 @@
             <!-- Navigation Links -->
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/employee/dashboard">Quản lý sản phẩm</a>
+                    <a class="nav-link text-white" href="/employee/dashboard">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/news/employee/tin-tuc">Quản lý tin tức</a>
+                    <a class="nav-link text-white" href="/news/employee/tin-tuc">Quản lý tin tức</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Lịch được đặt</a>
+                    <a class="nav-link active text-white fw-bold" href="/lichhen">Lịch được đặt</a>
                 </li>
             </ul>
         </div>
@@ -38,25 +38,26 @@
         </div>
     </header>
 
-
-    <div class="p-5">
-        <h1>Danh sách Lịch Hẹn</h1>
+    <main class="container py-5">
+        <h1 class="mb-4">Danh sách Lịch Hẹn</h1>
         <div>
-            <div class="container-fluid d-flex justify-content-between table-options">
-                <div>
-                    <form class="input-group">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm lịch hẹn" aria-label="Search">
-                        <button class="btn btn-search" type="submit"><i class="fas fa-search"></i></button>
-                    </form>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <form class="input-group" action="/lichHen/search" method="GET">
+                    <input class="form-control" type="search" name="query" placeholder="Tìm kiếm lịch hẹn"
+                        aria-label="Search">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+                </form>
             </div>
 
-            <div class="table-container">
-                <table class="table">
-                    <thead>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
                         <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
                             <th>Tên dịch vụ</th>
                             <th>Tên Khách Hàng</th>
+                            <th>SĐT</th>
+                            <th>Email</th>
                             <th>Ngày</th>
                             <th>Giờ</th>
                             <th>Trạng Thái</th>
@@ -64,19 +65,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example data -->
+                        <!-- Dữ liệu mẫu -->
                         <tr>
+                            <td><input type="checkbox" class="row-checkbox" data-id="1"></td>
                             <td>Đăng kí lái thử xe BMW</td>
                             <td>Nguyễn Văn A</td>
+                            <td>0987144005</td>
+                            <td>nguyenvana@gmail.com</td>
                             <td>2024-11-10</td>
                             <td>14:00</td>
                             <td>Đã đặt</td>
                             <td>
-                                <button class="btn btn-trans change-time-btn" data-id="1" data-date="2024-11-10"
-                                    data-time="14:00" data-bs-toggle="modal" data-bs-target="#changeTimeModal"><i
-                                        class="fas fa-clock"></i></button>
-                                <form action="/lichHen/delete/1" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-trans"><i class="fas fa-trash"></i></button>
+                                <form action="/lichHen/done" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </form>
+                                <button class="btn btn-warning change-time-btn" data-id="1" data-date="2024-11-10"
+                                    data-time="14:00" data-bs-toggle="modal" data-bs-target="#changeTimeModal">
+                                    <i class="fas fa-clock"></i>
+                                </button>
+                                <form action="/lichHen/delete" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -85,7 +93,7 @@
             </div>
         </div>
 
-        <!-- The Modal for Changing Appointment Time -->
+        <!-- Modal for Changing Appointment Time -->
         <div class="modal fade" id="changeTimeModal" tabindex="-1" aria-labelledby="changeTimeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -105,53 +113,37 @@
                                 <label for="newTime" class="form-label">Giờ Mới</label>
                                 <input type="time" class="form-control" id="newTime" name="newTime" required>
                             </div>
-                            <!-- Modal Footer with Buttons -->
-                            <div class="modal-footer d-flex justify-content-start px-0">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa-solid fa-clock"></i>
-                                    Lưu
-                                </button>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Event listener for opening the change time modal
-        document.querySelectorAll('.change-time-btn').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var appointmentId = this.getAttribute('data-id');
-                var appointmentDate = this.getAttribute('data-date');
-                var appointmentTime = this.getAttribute('data-time');
-                document.getElementById('appointmentId').value = appointmentId;
-                document.getElementById('newDate').value = appointmentDate;
-                document.getElementById('newTime').value = appointmentTime;
+        document.addEventListener('DOMContentLoaded', function() {
+            const changeTimeButtons = document.querySelectorAll('.change-time-btn');
+            const appointmentIdInput = document.getElementById('appointmentId');
+            const newDateInput = document.getElementById('newDate');
+            const newTimeInput = document.getElementById('newTime');
+    
+            changeTimeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const date = this.getAttribute('data-date');
+                    const time = this.getAttribute('data-time');
+    
+                    appointmentIdInput.value = id;
+                    newDateInput.value = date;
+                    newTimeInput.value = time;
+                });
             });
-        });
-
-        // Xóa các mục đã chọn
-        document.getElementById('deleteSelected').addEventListener('click', function () {
-            var checkedIds = [];
-            var checkboxes = document.querySelectorAll('.row-checkbox:checked');
-            checkboxes.forEach(function (checkbox) {
-                checkedIds.push(checkbox.dataset.id);
-            });
-
-            if (checkedIds.length > 0) {
-                // Call your deletion logic here
-                console.log('Delete IDs:', checkedIds); // Example logic, replace with actual deletion
-            } else {
-                alert('Vui lòng chọn ít nhất một mục để xóa.');
-            }
         });
     </script>
-
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

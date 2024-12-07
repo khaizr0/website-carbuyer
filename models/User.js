@@ -1,4 +1,5 @@
 const { getDB } = require('../config/db');
+
 const getUserByEmail = async (email) => {
   const db = getDB();
   const user = await db.collection('User').findOne({ email });
@@ -10,4 +11,9 @@ const addUser = async (user) => {
   await db.collection('User').insertOne(user);
 };
 
-module.exports = { getUserByEmail, addUser };
+const getCollection = async() => {
+  const db = getDB();
+  return db.collection('User');
+};
+
+module.exports = { getUserByEmail, addUser, getCollection };
