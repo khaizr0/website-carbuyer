@@ -81,17 +81,23 @@ const getAllProducts = async () => {
   const carsCollection = db.collection('XeOto');
   const accessoriesCollection = db.collection('PhuKien');
   const brandsCollection = db.collection('ThuongHieu');
-  
+
   const cars = await carsCollection.find({}).toArray();
   const accessories = await accessoriesCollection.find({}).toArray();
   const brands = await brandsCollection.find({}).toArray();
-  
+
   // Map brands để dễ tra cứu
   const brandMap = brands.reduce((acc, brand) => {
     acc[brand.id] = brand.TenTH;
     return acc;
   }, {});
-  
+
+  // Hàm phụ để định dạng hình ảnh
+  const mapImages = (imageString) => {
+    if (!imageString) return [];
+    return imageString.split(' || ').map(image => image.trim()).map(image => `/Public/images/Database/Products/${image}`);
+  };
+
   // Format dữ liệu ô tô
   const formattedCars = cars.map(car => ({
     id: car.id,
@@ -99,9 +105,10 @@ const getAllProducts = async () => {
     brand: brandMap[car.iDthuongHieu] || 'Unknown',
     price: car.GiaNiemYet,
     type: 'Ô tô',
-    status: car.trangThai
+    status: car.trangThai,
+    images: mapImages(car.hinhAnh), // Sử dụng hàm mapImages để xử lý hình ảnh
   }));
-  
+
   // Format dữ liệu phụ kiện
   const formattedAccessories = accessories.map(acc => ({
     id: acc.id,
@@ -109,12 +116,14 @@ const getAllProducts = async () => {
     brand: brandMap[acc.IDthuongHieu] || 'Unknown',
     price: acc.GiaNiemYet,
     type: 'Phụ kiện',
-    status: acc.trangThai
+    status: acc.trangThai,
+    images: mapImages(acc.hinhAnh), // Sử dụng hàm mapImages để xử lý hình ảnh
   }));
-  
+
   // Gộp và sắp xếp tất cả sản phẩm
   return [...formattedCars, ...formattedAccessories];
 };
+
 
 // Hàm xóa sản phẩm theo ID
 const deleteProductById = async (id) => {
@@ -163,13 +172,9 @@ const deleteProductById = async (id) => {
 const findProductById = async (productId) => {
   try {
       const db = getDB();
-      console.log('Debug Model: Searching for Product ID:', productId);
 
       const carProduct = await db.collection('XeOto').findOne({ id: productId });
       const accessoryProduct = await db.collection('PhuKien').findOne({ id: productId });
-
-      console.log('Debug Model: Car Product:', carProduct);
-      console.log('Debug Model: Accessory Product:', accessoryProduct);
 
       if (carProduct) {
           return { product: carProduct, productType: 'XE' };
@@ -215,6 +220,7 @@ const getProductById = async (id) => {
   // Tìm sản phẩm phụ kiện theo ID
   const accessory = await accessoryCollection.findOne({ id });
   if (accessory) {
+    const accessoryImages = accessory.hinhAnh ? accessory.hinhAnh.split(' || ') : [];
     return {
       id: accessory.id,
       name: accessory.tenSP,
@@ -222,10 +228,10 @@ const getProductById = async (id) => {
       price: accessory.GiaNiemYet,
       type: 'Phụ kiện',
       status: accessory.trangThai === 1 ? 'Đang đăng' : 'Đã ẩn',
-      images: accessory.hinhAnh ? accessory.hinhAnh.split(' || ') : [], // Handle accessory images if any
+      images: accessoryImages.map(image => `/Public/images/Database/Products/${image}`), // Handle accessory images if any
     };
   }
-
+ console.log(accessory);
   // Nếu không tìm thấy sản phẩm
   throw new Error('Sản phẩm không tồn tại.');
 };
