@@ -47,7 +47,7 @@ async function createDatabase() {
             idLoai: "LPK001",
             GiaNiemYet: 312312,
             chiTietSP: "21313131",
-            hinhAnh: "1732901518630-221924363.png",
+            hinhAnh: "camera_hanh_trinh.jpg || camera2.jpg",
             trangThai: "Mới",
             datLich: 0,
             ngayTao: 0
@@ -105,7 +105,7 @@ async function createDatabase() {
             soKm: 0,
             mauXe: "Đen",
             loaiCanSo: "automatic",
-            hinhAnh: "toyota_camry.png || toyota2.png",
+            hinhAnh: "toyota_camry.jpg || toyota2.png",
             chiTietSP: "Xe nhập khẩu, đời mới 2023.",
             trangThai: "Mới",
             datLich: 1,

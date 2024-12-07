@@ -17,7 +17,6 @@ router.get('/edit/:id', getEditProductPageController);
 
 router.post('/update/:id', updateProduct);
 
-//
 router.get('/products/:id', getProductByIdController);
 
 module.exports = router;

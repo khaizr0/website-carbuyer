@@ -223,13 +223,13 @@
         // Function to fetch and display "phụ kiện" (accessories) from the API or server
         async function fetchAccessories() {
             try {
-                const response = await fetch('/phukien'); // Adjust the API endpoint as needed
+                const response = await fetch('/product'); // Adjust the API endpoint as needed
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-    
+               
                 const products = await response.json(); // Get all products
-    
+       
                 // Filter products to only include accessories
                 const accessories = products.filter(product => product.type === "Phụ kiện");
     
@@ -241,16 +241,20 @@
                 accessories.forEach(accessory => {
                     const accessoryCard = document.createElement('div');
                     accessoryCard.classList.add('product-card'); // Match the car card style
-    
+                    console.log(accessory);
                     accessoryCard.innerHTML = `
-                        <img src="/Public/images/Database/Products/${accessory.images[0] || '/images/default-accessory.png'}" alt="${accessory.name}">
+                        <img src="${accessory.images[0] || '/images/default-accessory.png'}" alt="${accessory.name}">
                         <h3>${accessory.name}</h3>
                         <p class="price">${accessory.price.toLocaleString()} VNĐ</p>
                         <div class="car-info">
                             <span><i class="fas fa-info-circle"></i> ${accessory.description || 'No description available'}</span>
                         </div>
                     `;
-    
+                    // Add click event to navigate to the product detail page
+                    accessoryCard.addEventListener('click', () => {
+                        window.location.href = `/chitietphukien?id=${accessory.id}`;
+                    });
+
                     container.appendChild(accessoryCard);
                 });
             } catch (error) {

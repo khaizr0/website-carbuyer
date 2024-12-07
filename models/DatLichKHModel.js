@@ -6,7 +6,14 @@ const DatLichKHModel = {
     try {
       const db = getDB();
       console.log(data.hoTenKH);
-      console.log(data);
+      let idXe = null;
+      let idPhuKien = null;
+  
+      if (data.idXe && data.idXe.startsWith('XE')) {
+        idXe = data.idXe;
+      } else if (data.idXe && data.idXe.startsWith('PK')) {
+        idPhuKien = data.idXe;
+      }
       const result = await db.collection('DatLichKH').insertOne({
         id: `DL${Date.now()}`,
         hoTenKH: data.hoTenKH,
@@ -15,8 +22,8 @@ const DatLichKHModel = {
         soDT: data.soDT,
         email: data.email,
         tenDichVu: data.tenDichVu,
-        idXe: data.idXe || null,
-        idPhuKien: data.idPhuKien || null,
+        idXe: idXe || null,
+        idPhuKien: idPhuKien || null,
         trangThai: data.trangThai || 0,
         ngayTao: new Date(),
       });

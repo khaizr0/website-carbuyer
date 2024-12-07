@@ -18,6 +18,8 @@
     <script src="/Public/JS/header.js" defer></script>
     <link rel="stylesheet" href="/Public/css/footer.css">
 
+    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -80,7 +82,8 @@
                     </div>
                     <div class="btn-regiter-callnow" id="contact-buttons">
                         <button class="register" id="register-button" onclick="openModal()">Đăng ký lái thử</button>
-                        <button class="call" id="call-button">Gọi ngay</button>
+                        <button class="call" id="call-button" onclick="window.location.href='tel:+84123456789'">Gọi ngay</button>
+
                     </div>
                 </div>
 
@@ -348,9 +351,10 @@
                 mainImage.src = thumbnail.src;
             });
         });
+        
 
         function fetchProductDetails(productId) {
-            fetch(`http://localhost:3000/products/${productId}`)
+            fetch(`http://localhost:3000/product/products/${productId}`)
                 .then(response => response.json())
                 .then(data => {
                     // Check if the data contains error (product not found)

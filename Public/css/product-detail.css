@@ -305,3 +305,8 @@ ul li {
     font-size: 50px;
     color:white;
 }
+
+.menu a {
+    font-size: 16px; /* Thay 14px bằng giá trị bạn muốn */
+}
+
