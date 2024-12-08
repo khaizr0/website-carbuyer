@@ -29,12 +29,6 @@
 
 <body>
     <div class="layout">
-        <div class="come-back">
-            <i class="ri-arrow-go-back-line"></i> Quay lại
-        </div>
-    </div>
-    <br>
-    <div class="layout">
         <div class="box-product-detail">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
@@ -67,32 +61,24 @@
                         <p class="product-detail-p" id="product-price-label">Giá niêm yết:</p>
                         <h3 class="product-detail-price" id="product-price">1.600.000.000 đ</h3>
                     </div>
-                
                     <div class="btn-regiter-callnow" id="contact-buttons">
                         <button class="register" id="register-button" onclick="openModal()">Đăng ký phụ kiện</button>
                         <button class="call" id="call-button" onclick="window.location.href='tel:+84123456789'">Gọi ngay</button>
-
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     </div>
-    <h1>Tổng quan</h1>
     <div class="noidung" id="TQ">
         <div class="layout">
-            <div class="box-product-detail-infromation">
-
+            <div class="box-product-detail-infromation" id="product-details-content">
+                <!-- Chi tiết sản phẩm sẽ được điền động tại đây -->
             </div>
         </div>
     </div>
 
     <br>
     <div class="caikhunggiday"></div>
-
-
 
     <div class="layout">
         <div class="box-product-detail">
@@ -104,8 +90,6 @@
     <div class="quantam">
         <h1>Bạn có thể quan tâm</h1>
     </div>
-
-
 
     <div class="bancothequantam">
         <br>
@@ -164,7 +148,7 @@
     <div id="registerModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Đăng ký lái thử</h2><br><br>
+            <h2>Đặt trước</h2><br><br>
             <form id="registerForm" method="post">
                 <div class="form-row">
                     <div class="form-column">
@@ -174,6 +158,12 @@
                     <div class="form-column">
                         <label for="phone">Số điện thoại:</label>
                         <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
                 </div>
                 <div class="form-row">
@@ -219,44 +209,62 @@
             fetch(`http://localhost:3000/product/products/${productId}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Check if the data contains error (product not found)
-                    if (data.error) {
-                        document.getElementById('product-details').innerHTML = '<p>Product not found.</p>';
-                    } else {
-                        console.log(data); // Log the product data for debugging
-
-                        // Set the product details
-                        document.getElementById('product-name').textContent = data.name || 'No Name Available';
-                        document.getElementById('product-price').textContent = formatCurrency(data.price) || 'Price Not Available';
-
-
-
-                        const imageContainer = document.getElementById('product-images');
-                        imageContainer.innerHTML = '';  // Clear existing images
-
-                        // Check if there are images in the product data
-                        if (data.images && data.images.length > 0) {
-                            // Select the image element with the id 'product-images'
-                            const imgElement = document.getElementById('product-images');
-
-                            // If the image element exists, set its 'src' to the first image from the array
-                            if (imgElement) {
-                                imgElement.src = data.images[0];  // Use the first image from the array
-                                imgElement.alt = 'Product Image';
-                                imgElement.style.width = '100%';  // Ensure the image fills the container width
-                                imgElement.style.height = 'auto';  // Maintain the aspect ratio
-                            }
-                        } else {
-                            imageContainer.innerHTML = '<p>No images available.</p>';  // Display message if no images
-                        }
-
-
-
+                    console.log(data); // Log toàn bộ dữ liệu để debug
+        
+                    // Cập nhật thông tin sản phẩm
+                    document.getElementById('product-name').textContent = data.name || 'Không có tên';
+                    document.getElementById('product-price').textContent = formatCurrency(data.price) || 'Giá chưa cập nhật';
+        
+                    // Xử lý hình ảnh
+                    if (data.images && data.images.length > 0) {
+                        const mainImage = document.getElementById('product-images');
+                        mainImage.src = data.images[0];
+                        mainImage.alt = data.name;
+        
+                        // Cập nhật các thumbnail
+                        const thumbnailContainer = document.querySelector('.image-range');
+                        thumbnailContainer.innerHTML = ''; // Xóa các thumbnail cũ
+        
+                        // Thêm nút trái
+                        const leftButton = document.createElement('button');
+                        leftButton.className = 'btn-change-image';
+                        leftButton.innerHTML = '<i class="ri-arrow-left-circle-fill"></i>';
+                        thumbnailContainer.appendChild(leftButton);
+        
+                        // Tạo thumbnail
+                        data.images.forEach((imgSrc, index) => {
+                            const img = document.createElement('img');
+                            img.src = imgSrc;
+                            img.className = 'img-detail-2';
+                            img.addEventListener('click', () => {
+                                mainImage.src = imgSrc;
+                            });
+                            thumbnailContainer.appendChild(img);
+                        });
+        
+                        // Thêm nút phải
+                        const rightButton = document.createElement('button');
+                        rightButton.className = 'btn-change-image';
+                        rightButton.innerHTML = '<i class="ri-arrow-right-circle-fill"></i>';
+                        thumbnailContainer.appendChild(rightButton);
                     }
+        
+                    // Hiển thị chi tiết sản phẩm
+                    const detailsContent = document.getElementById('product-details-content');
+                    detailsContent.innerHTML = `
+                        <div class="product-details">
+                            <h2>Chi tiết sản phẩm</h2>
+                            <p><strong>Loại sản phẩm:</strong> ${data.type || 'Chưa xác định'}</p>
+                            <div class="product-description">
+                                <h3>Mô tả chi tiết</h3>
+                                ${data.details || 'Không có mô tả chi tiết'}
+                            </div>
+                        </div>
+                    `;
                 })
                 .catch(error => {
-                    console.error('Error fetching product details:', error);
-
+                    console.error('Lỗi khi tải chi tiết sản phẩm:', error);
+                    alert('Không thể tải chi tiết sản phẩm');
                 });
         }
 

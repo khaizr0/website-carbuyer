@@ -40,19 +40,8 @@ const getAllDatLichController = async () => {
   }
 };
 
-const deleteDatLichByIdController = async (id) => {
-  try {
-    await deleteBookingById(id);
-    return { message: 'Xóa đặt lịch thành công!' };
-  } catch (error) {
-    console.error('Lỗi khi xóa đặt lịch:', error);
-    throw new Error('Có lỗi khi xóa đặt lịch.');
-  }
-};
-
 module.exports = {
   createDatLichController,
   getDatLichByIdController,
-  getAllDatLichController,
-  deleteDatLichByIdController,
+  getAllDatLichController
 };

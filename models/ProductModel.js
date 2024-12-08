@@ -205,6 +205,7 @@ const getProductById = async (id) => {
       name: car.tenSP,
       brand: car.iDthuongHieu,
       price: car.GiaNiemYet,
+      year: car.namSanXuat,
       type: 'Ô tô',
       mileage: car.soKm,
       fuelType: car.nguyenLieuXe,
