@@ -161,7 +161,7 @@
                 
                 products.forEach(product => {
                     const productCard = `
-                        <div class="card">
+                        <div class="card" onclick="window.location.href='/chitietxe?id=${product.id}'">
                             <img 
                                 src="${product.imageUrl}" 
                                 alt="Car" 

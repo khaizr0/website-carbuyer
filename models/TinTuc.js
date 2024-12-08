@@ -122,6 +122,7 @@ const showNewsOnHome = async () => {
     }
 };
 
+
 module.exports = {
     addNews,
     getLatestNewsId,

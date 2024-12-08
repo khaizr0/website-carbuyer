@@ -63,135 +63,91 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
-    document.addEventListener('DOMContentLoaded', function() {
-        // Form thêm xe
-        const createCarForm = document.getElementById('createCarForm');
-        
-        if (createCarForm) {
-            createCarForm.addEventListener('submit', async function(event) {
-                event.preventDefault();
+    // Form thêm xe
+    const createCarForm = document.getElementById('createCarForm');
     
-                const formData = new FormData(createCarForm);
-                const fileInput = document.getElementById('uploadImage');
-    
-                // Kiểm tra số lượng file
-                if (fileInput.files.length > 5) {
-                    alert('Chỉ được phép upload tối đa 5 ảnh!');
+    if (createCarForm) {
+        createCarForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(createCarForm);
+            const fileInput = document.getElementById('uploadImage');
+
+            // Kiểm tra số lượng file
+            if (fileInput.files.length > 5) {
+                alert('Chỉ được phép upload tối đa 5 ảnh!');
+                return;
+            }
+                
+            // Kiểm tra loại file
+            for (let file of fileInput.files) {
+                if (!file.type.startsWith('image/')) {
+                    alert(`File ${file.name} không phải là file ảnh!`);
                     return;
                 }
-                    
-                // Kiểm tra loại file
-                for (let file of fileInput.files) {
-                    if (!file.type.startsWith('image/')) {
-                        alert(`File ${file.name} không phải là file ảnh!`);
-                        return;
-                    }
+            }
+
+            try {
+                const response = await fetch('/product/create-car', {
+                    method: 'POST',
+                    body: formData 
+                });
+                
+                if (response.ok) {
+                    window.alert('Xe đã thêm thành công!');
+                    window.location.reload();
+                } else {
+                    const errorData = await response.json();
+                    window.alert(errorData.message || 'Có lỗi xảy ra');
                 }
+            } catch (error) {
+                console.error('Lỗi kết nối:', error);
+                window.alert('Đã xảy ra lỗi khi thêm xe.');
+            }
+        });
+    }
+
+    // Form thêm phụ kiện
+    const createAccessoryForm = document.getElementById('createAccessoryForm');
     
-                try {
-                    formData.set('tenSP', formData.get('tenSP'));
-                    formData.set('iDthuongHieu', formData.get('iDthuongHieu'));
-                    formData.set('namSanXuat', formData.get('namSanXuat'));
-                    formData.set('GiaNiemYet', formData.get('GiaNiemYet'));
-                    formData.set('soKm', formData.get('soKm') || '0');
-                    formData.set('trangThai', formData.get('trangThai'));
-                    formData.set('nguyenLieuXe', formData.get('nguyenLieuXe'));
-                    formData.set('kieuDang', formData.get('kieuDang'));
-                    formData.set('soChoNgoi', formData.get('soChoNgoi'));
-                    formData.set('mauXe', formData.get('mauXe'));
-                    formData.set('loaiCanSo', formData.get('loaiCanSo'));
-                    formData.set('chiTietSP', formData.get('chiTietSP'));
-                    formData.set('dangkilaithu', formData.get('dangkilaithu') ? '1' : '0');
-    
-                    // Log dữ liệu trước khi gửi để debug
-                    console.log("Dữ liệu form xe trước khi gửi:");
-                    for (let pair of formData.entries()) {
-                        console.log(pair[0] + ': ' + pair[1]);
-                    }
-    
-                    const response = await fetch('/product/create-car', {
-                        method: 'POST',
-                        body: formData 
-                    });
-    
-                    const result = await response.json();
-                    
-                    if (response.ok) {
-                        alert('Xe đã thêm thành công!');
-                        createCarForm.reset();
-                        if (typeof fetchProducts === 'function') {
-                            fetchProducts();
-                        }
-                    } else {
-                        alert(`Có lỗi xảy ra: ${result.message}`);
-                    }
-                } catch (error) {
-                    console.error('Lỗi kết nối:', error);
-                    alert('Đã xảy ra lỗi khi thêm xe.');
-                }
-            });
-        }
-    
-        // Form thêm phụ kiện
-        const createAccessoryForm = document.getElementById('createAccessoryForm');
-        
-        if (createAccessoryForm) {
-            createAccessoryForm.addEventListener('submit', async function(event) {
-                event.preventDefault();
-    
-                const formData = new FormData(createAccessoryForm);
-                const fileInput = document.getElementById('uploadImage');
-    
-                // Kiểm tra số lượng file
-                if (fileInput.files.length > 5) {
-                    alert('Chỉ được phép upload tối đa 5 ảnh!');
+    if (createAccessoryForm) {
+        createAccessoryForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(createAccessoryForm);
+            const fileInput = document.getElementById('uploadImage');
+
+            // Kiểm tra số lượng file
+            if (fileInput.files.length > 5) {
+                alert('Chỉ được phép upload tối đa 5 ảnh!');
+                return;
+            }
+                
+            // Kiểm tra loại file
+            for (let file of fileInput.files) {
+                if (!file.type.startsWith('image/')) {
+                    alert(`File ${file.name} không phải là file ảnh!`);
                     return;
                 }
-                    
-                // Kiểm tra loại file
-                for (let file of fileInput.files) {
-                    if (!file.type.startsWith('image/')) {
-                        alert(`File ${file.name} không phải là file ảnh!`);
-                        return;
-                    }
+            }
+
+            try {
+                const response = await fetch('/product/create-accessory', {
+                    method: 'POST',
+                    body: formData 
+                });
+                
+                if (response.ok) {
+                    window.alert('Phụ kiện đã thêm thành công!');
+                    window.location.reload();
+                } else {
+                    const errorData = await response.json();
+                    window.alert(errorData.message || 'Có lỗi xảy ra');
                 }
-    
-                try {
-                    formData.set('tenSP', formData.get('tenSP'));
-                    formData.set('iDthuongHieu', formData.get('iDthuongHieu'));
-                    formData.set('idLoai', formData.get('idLoai'));
-                    formData.set('GiaNiemYet', formData.get('GiaNiemYet'));
-                    formData.set('trangThai', formData.get('trangThai'));
-                    formData.set('chiTietSP', formData.get('chiTietSP'));
-                    formData.set('datLich', formData.get('datLich') ? '1' : '0');
-    
-                    // Log dữ liệu trước khi gửi để debug
-                    console.log("Dữ liệu form phụ kiện trước khi gửi:");
-                    for (let pair of formData.entries()) {
-                        console.log(pair[0] + ': ' + pair[1]);
-                    }
-    
-                    const response = await fetch('/product/create-accessory', {
-                        method: 'POST',
-                        body: formData 
-                    });
-    
-                    const result = await response.json();
-                    
-                    if (response.ok) {
-                        alert('Phụ kiện đã thêm thành công!');
-                        createAccessoryForm.reset();
-                        if (typeof fetchProducts === 'function') {
-                            fetchProducts();
-                        }
-                    } else {
-                        alert(`Có lỗi xảy ra: ${result.message}`);
-                    }
-                } catch (error) {
-                    console.error('Lỗi kết nối:', error);
-                    alert('Đã xảy ra lỗi khi thêm phụ kiện.');
-                }
-            });
-        }
-    });
+            } catch (error) {
+                console.error('Lỗi kết nối:', error);
+                window.alert('Đã xảy ra lỗi khi thêm phụ kiện.');
+            }
+        });
+    }
 });

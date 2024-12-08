@@ -24,4 +24,8 @@ router.get('/chitietphukien', (req, res) => {
     res.sendFile(path.join(viewsPath, 'other-detail.html'));
 });
 
+router.get('/tintuc', (req, res) => {
+    res.sendFile(path.join(viewsPath, 'news.html'));
+});
+
 module.exports = router;

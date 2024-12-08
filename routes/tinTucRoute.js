@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { addNews, getNewsById, getAllNews, updateNewsById, deleteNewsById, getLatestNewsId, showNewsOnHome } = require('../models/TinTuc');  // Import functions from TinTuc.js
+const newsController = require('../controllers/newsController');
 const multer = require('multer');  // Import multer for file handling
 const path = require('path');
 // CREATE: Add a new news article
@@ -125,5 +126,16 @@ router.get('/api/showNewsOnHome', async (req, res) => {
         res.status(500).json({ message: 'Error fetching news for home', error });
     }
 });
+
+// Route render trang chi tiết tin tức
+router.get('/detail/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/news-detail.html'));
+});
+
+// API lấy tất cả tin tức
+router.get('/api/all', newsController.getAllNews);
+
+// API lấy chi tiết tin tức
+router.get('/api/detail/:id', newsController.getNewsById);
 
 module.exports = router;

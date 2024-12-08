@@ -31,15 +31,13 @@ const upload = multer({
   }
 }).array('uploadImage', 5);
 
-const createCarProduct = async (req, res) => {
-  try {
-    upload(req, res, async (err) => {
-      if (err) {
-        console.error('Lỗi upload file:', err);
-        return res.status(400).json({ message: err.message });
-      }
+const createCarProduct = (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ message: err.message });
+    }
 
-      // Lấy dữ liệu từ form
+    try {
       const carData = req.body;
       
       // Xử lý danh sách hình ảnh
@@ -69,29 +67,24 @@ const createCarProduct = async (req, res) => {
       // Thêm sản phẩm vào database
       const newProduct = await addCarProduct(carData);
 
-      res.status(200).json({ 
+      return res.status(200).json({ 
         message: 'Sản phẩm đã được thêm thành công!',
         product: newProduct 
       });
-    });
-  } catch (error) {
-    console.error('Lỗi khi thêm sản phẩm:', error);
-    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
-  }
+    } catch (error) {
+      console.error('Lỗi khi thêm sản phẩm:', error);
+      return res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+    }
+  });
 };
 
-const createAccessoryProduct = async (req, res) => {
-  try {
-    upload(req, res, async (err) => {
-      if (err) {
-        console.error('Lỗi upload file:', err);
-        return res.status(400).json({ message: err.message });
-      }
+const createAccessoryProduct = (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ message: err.message });
+    }
 
-      // Log toàn bộ req.body để kiểm tra
-      console.log('Dữ liệu nhận được:', req.body);
-
-      // Lấy dữ liệu từ form
+    try {
       const accessoryData = req.body;
 
       // Xử lý danh sách hình ảnh
@@ -117,15 +110,15 @@ const createAccessoryProduct = async (req, res) => {
       // Thêm phụ kiện vào database
       const newAccessory = await addAccessoryProduct(accessoryData);
 
-      res.status(200).json({ 
+      return res.status(200).json({ 
         message: 'Phụ kiện đã được thêm thành công!',
         accessory: newAccessory 
       });
-    });
-  } catch (error) {
-    console.error('Lỗi khi thêm phụ kiện:', error);
-    res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
-  }
+    } catch (error) {
+      console.error('Lỗi khi thêm phụ kiện:', error);
+      return res.status(500).json({ message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau!' });
+    }
+  });
 };
 
 const getRecentProductsController = async (req, res) => {
