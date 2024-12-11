@@ -70,6 +70,10 @@
         color: #555;
         line-height: 1.6;
         margin-bottom: 20px;
+        overflow-wrap: break-word; /* Đảm bảo từ không bị tràn ra ngoài */
+        word-wrap: break-word; /* Hỗ trợ cho các trình duyệt cũ */
+        overflow: hidden; /* Ẩn phần nội dung tràn ra ngoài */
+        padding: 10px; /* Thêm padding để tạo khoảng cách */
     }
 
     .news-image {

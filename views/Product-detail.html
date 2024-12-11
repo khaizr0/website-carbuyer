@@ -18,13 +18,6 @@
     <script src="/Public/JS/header.js" defer></script>
     <link rel="stylesheet" href="/Public/css/footer.css">
 
-    
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
     <title>Chi tiết sản phẩm</title>
 
 </head>
@@ -32,7 +25,6 @@
 <body>
     <div class="layout">
         <div class="box-product-detail">
-
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
 
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -41,7 +33,7 @@
                         alt="ảnh" class="img-detail-1">
                     <div class="image-range">
                         <button class="btn-change-image">
-                            <i class="ri-arrow-left-circle-fill"></i>
+                            <i class="fa-solid fa-circle-chevron-left"></i>
                         </button>
                         <img src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
                             class="img-detail-2">
@@ -50,9 +42,9 @@
                         <img src="https://choxe365.com/wp-content/uploads/2022/01/bmw-320i.png" class="img-detail-2">
                         <img src="https://dailymuabanxe.net/wp-content/uploads/2022/12/z3963399809058_886a40561483a04e42931f37084f4029.jpg"
                             class="img-detail-2">
-                        <button class="btn-change-image">
-                            <i class="ri-arrow-right-circle-fill"></i>
-                        </button>
+                            <button class="btn-change-image">
+                                <i class="fa-solid fa-circle-chevron-right"></i>
+                            </button>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="product-1"
@@ -63,16 +55,26 @@
                         <h3 class="product-detail-price" id="product-price">1.600.000.000 đ</h3>
                     </div>
                     <div class="box-detail-model">
-                        <p class="product-detail-model" id="product-year"><i class="ri-calendar-line"></i> <span
-                                id="year-text">2024</span></p>
-                        <p class="product-detail-model" id="product-mileage"><i class="ri-scan-line"></i> <span
-                                id="mileage-text">20.000 km</span></p>
-                        <p class="product-detail-model" id="product-fuel"><i class="ri-gas-station-fill"></i> <span
-                                id="fuel-text">Xăng</span></p>
-                        <p class="product-detail-model" id="product-seats"><i class="ri-settings-5-line"></i> <span
-                                id="seats-text">5 chỗ</span></p>
-                        <p class="product-detail-model" id="product-transmission"><i class="ri-roadster-fill"></i> <span
-                                id="transmission-text">Tự động 9 cấp</span></p>
+                        <p class="product-detail-model" id="product-year">
+                            <i class="fa-solid fa-calendar"></i> 
+                            <span id="year-text">2024</span>
+                        </p>
+                        <p class="product-detail-model" id="product-mileage">
+                            <i class="fa-solid fa-road"></i> 
+                            <span id="mileage-text">20.000 km</span>
+                        </p>
+                        <p class="product-detail-model" id="product-fuel">
+                            <i class="fa-solid fa-gas-pump"></i> 
+                            <span id="fuel-text">Xăng</span>
+                        </p>
+                        <p class="product-detail-model" id="product-seats">
+                            <i class="fa-solid fa-car-seat"></i> 
+                            <span id="seats-text">5 chỗ</span>
+                        </p>
+                        <p class="product-detail-model" id="product-transmission">
+                            <i class="fa-solid fa-gear"></i> 
+                            <span id="transmission-text">Tự động 9 cấp</span>
+                        </p>
                     </div>
                     <div class="btn-regiter-callnow" id="contact-buttons">
                         <button class="register" id="register-button" onclick="openModal()">Đăng ký lái thử</button>
@@ -120,7 +122,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
             style="display: flex; flex-direction: row; flex-wrap: wrap;">
             <button class="btn-change-lienquan-left">
-                <i class="ri-arrow-left-circle-line"></i>
+                <i class="fa-solid fa-circle-chevron-left"></i>
             </button>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
@@ -128,9 +130,15 @@
                 <h3 class="name-lienquan">BMW 320i Sport Line 2024</h3>
                 <h4 class="price-lienquan">1.600.000.000 đ</h4>
                 <div class="box-detail-lienquan">
-                    <p class="product-detail-lienquan"><i class="ri-calendar-event-line"></i> 2024</p>
-                    <p class="product-detail-lienquan"><i class="ri-road-map-line"></i>20.000 km</p>
-                    <p class="product-detail-lienquan"><i class="ri-gas-station-line"></i> Xăng</p>
+                    <p class="product-detail-lienquan">
+                        <i class="fa-solid fa-calendar-days"></i> 2024
+                    </p>
+                    <p class="product-detail-lienquan">
+                        <i class="fa-solid fa-road"></i> 20.000 km
+                    </p>
+                    <p class="product-detail-lienquan">
+                        <i class="fa-solid fa-gas-pump"></i> Xăng
+                    </p>
                 </div>
             </div>
 
@@ -157,17 +165,12 @@
                     <p class="product-detail-lienquan"><i class="ri-gas-station-line"></i> Xăng</p>
                 </div>
             </div>
-
-
             <button class="btn-change-lienquan-right">
-                <i class="ri-arrow-right-circle-line"></i>
+                <i class="fa-solid fa-circle-chevron-right"></i>
             </button>
-
         </div>
 
     </div>
-
-
 
     <div id="registerModal" class="modal">
         <div class="modal-content">

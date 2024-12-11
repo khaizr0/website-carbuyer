@@ -73,11 +73,13 @@ h1, h2, h3 {
   .featured-image {
     width: 50%;
     object-fit: cover;
+    
   }
   
   .featured-content {
     padding: 20px;
     width: 50%;
+    
   }
   
   .featured-content h2 {
@@ -87,6 +89,13 @@ h1, h2, h3 {
   
   .featured-content p {
     color: #555;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3; 
+    max-height: 4.5em;
+    line-height: 1.5em;
   }
   
   .other-articles {
@@ -108,6 +117,7 @@ h1, h2, h3 {
   
   .article-content {
     padding: 15px;
+    
   }
   
   .article-content h4 {
@@ -117,6 +127,13 @@ h1, h2, h3 {
   
   .article-content p {
     color: #555;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    max-height: 4.5em;
+    line-height: 1em; 
   }
   
 /* Pagination Styles */

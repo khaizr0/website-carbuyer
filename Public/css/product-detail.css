@@ -30,8 +30,8 @@
     border-radius: 10px;
 }
 .img-detail-1{
-    max-height: 550px;
-    max-width: 750px;
+    height: 550px;
+    width: 750px;
     padding: 40px 40px 0px 40px;
     border-radius: 10px;
 }
@@ -310,3 +310,25 @@ ul li {
     font-size: 16px; /* Thay 14px bằng giá trị bạn muốn */
 }
 
+/* Điều chỉnh kích thước và màu sắc icon */
+.product-detail-model i, 
+.product-detail-lienquan i {
+    font-size: 24px;
+    color: #34499E;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.btn-change-image i, 
+.btn-change-lienquan-left i, 
+.btn-change-lienquan-right i {
+    font-size: 40px;
+    color: rgba(255,255,255,0.7);
+    transition: color 0.3s ease;
+}
+
+.btn-change-image i:hover, 
+.btn-change-lienquan-left i:hover, 
+.btn-change-lienquan-right i:hover {
+    color: rgba(255,255,255,1);
+}

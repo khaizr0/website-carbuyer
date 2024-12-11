@@ -31,15 +31,6 @@ const footerHTML = `
                     <div class="footer-bottom">
                         <p>Công ty TNHH Vina - GPKD số 0317 do Sở KH và ĐT TP Hồ Chí Minh cấp ngày 19/10/202<br>
                         Địa chỉ:  Tp. Hồ Chí Minh</p>
-                        <div class="footer-certification">
-                            <img src="certification.png" alt="Certification">
-                        </div>
-                        <p>Copyright © 2024 Auto.</p>
-                        <div class="footer-social-icons">
-                            <img src="youtube-icon.png" alt="YouTube">
-                            <img src="tiktok-icon.png" alt="TikTok">
-                            <img src="facebook-icon.png" alt="Facebook">
-                        </div>
                     </div>
                 </div>
             </div>
