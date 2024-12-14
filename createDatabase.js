@@ -26,11 +26,9 @@ async function createDatabase() {
             id: "DL001",
             hoTenKH: "Nguyen Van A",
             time: "10:30",
-            date: "2024-10-20",
+            date: "21-10-2024",
             soDT: "0909123456",
-            email: "nguyenvana@example.com",
-            tenDichVu: "Lái thử xe",
-            idXe: "XE001",
+            idXe: "XE1733646898449",
             idPhuKien: null,
             trangThai: 0
         });

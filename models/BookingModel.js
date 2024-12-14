@@ -4,19 +4,44 @@ const { getDB } = require('../config/db');
 class BookingModel {
     static async getAllBookings() {
         const db = getDB();
-        return await db.collection('DatLichKH').find({}).toArray();
+        const bookings = await db.collection('DatLichKH').find({}).toArray();
+        
+        // Xử lý để lấy tên sản phẩm và xác định loại
+        const processedBookings = await Promise.all(bookings.map(async (booking) => {
+            let productName = 'Chưa xác định';
+            let productType = 'Chưa xác định';
+    
+            if (booking.idXe) {
+                const xe = await db.collection('XeOto').findOne({ id: booking.idXe });
+                productName = xe ? xe.tenSP : 'Không xác định';
+                productType = 'Đăng kí lái thử';
+            }
+    
+            if (booking.idPhuKien) {
+                const phuKien = await db.collection('PhuKien').findOne({ id: booking.idPhuKien });
+                productName = phuKien ? phuKien.tenSP : 'Không xác định';
+                productType = 'Đặt trước sản phẩm';
+            }
+    
+            // Chuyển đổi định dạng ngày
+            const formattedDate = booking.date ? 
+                booking.date.split('-').reverse().join('/') : 
+                'Chưa xác định';
+    
+            return {
+                ...booking,
+                tenSP: productName,
+                idSP: booking.idXe || booking.idPhuKien,
+                loaiDichVu: productType,
+                date: formattedDate
+            };
+        }));
+    
+        return processedBookings;
     }
 
     static async searchBookings(query) {
-        const db = getDB();
-        return await db.collection('DatLichKH').find({
-            $or: [
-                { hoTenKH: { $regex: query, $options: 'i' } },
-                { soDT: { $regex: query, $options: 'i' } },
-                { email: { $regex: query, $options: 'i' } },
-                { tenDichVu: { $regex: query, $options: 'i' } }
-            ]
-        }).toArray();
+
     }
 
     static async updateBookingStatus(id, status) {

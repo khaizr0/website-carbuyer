@@ -18,23 +18,22 @@ class BookingController {
             const bookings = await BookingModel.getAllBookings();
             const filePath = path.join(__dirname, '../views/employee/lich-hen.html');
             
-            // Đọc nội dung file HTML
             fs.readFile(filePath, 'utf8', (err, data) => {
                 if (err) {
                     console.error('Lỗi đọc file:', err);
                     return res.status(500).send('Có lỗi xảy ra khi tải trang');
                 }
-
-                // Sử dụng BookingController.getTrangThaiText thay vì this.getTrangThaiText
+    
                 const bookingRows = bookings.map(booking => `
                     <tr>
                         <td><input type="checkbox" class="row-checkbox" data-id="${booking._id}"></td>
-                        <td>${booking.tenDichVu || 'Chưa xác định'}</td>
-                        <td>${booking.hoTenKH || 'Chưa xác định'}</td>
-                        <td>${booking.soDT || 'Chưa xác định'}</td>
-                        <td>${booking.email || 'Chưa xác định'}</td>
-                        <td>${booking.date || 'Chưa xác định'}</td>
-                        <td>${booking.time || 'Chưa xác định'}</td>
+                        <td>${booking.tenSP}</td>
+                        <td>${booking.idSP}</td>
+                        <td>${booking.hoTenKH}</td>
+                        <td>${booking.soDT}</td>
+                        <td>${booking.date}</td>
+                        <td>${booking.time}</td>
+                        <td>${booking.loaiDichVu}</td>
                         <td>${BookingController.getTrangThaiText(booking.trangThai)}</td>
                         <td>
                             <form action="/lichHen/done" method="POST" style="display:inline;">
@@ -52,13 +51,12 @@ class BookingController {
                         </td>
                     </tr>
                 `).join('');
-
-                // Thay thế phần tbody cũ bằng dữ liệu mới
+    
                 const modifiedHTML = data.replace(
                     /<tbody>[\s\S]*?<\/tbody>/,
                     `<tbody>${bookingRows}</tbody>`
                 );
-
+    
                 res.send(modifiedHTML);
             });
         } catch (error) {
@@ -68,55 +66,7 @@ class BookingController {
     }
 
     static async searchBookings(req, res) {
-        try {
-            const query = req.query.query;
-            const bookings = await BookingModel.searchBookings(query);
-            const filePath = path.join(__dirname, '../views/employee/lich-hen.html');
-            
-            fs.readFile(filePath, 'utf8', (err, data) => {
-                if (err) {
-                    console.error('Lỗi đọc file:', err);
-                    return res.status(500).send('Có lỗi xảy ra khi tìm kiếm');
-                }
-
-                const bookingRows = bookings.map(booking => `
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox" data-id="${booking._id}"></td>
-                        <td>${booking.tenDichVu || 'Chưa xác định'}</td>
-                        <td>${booking.hoTenKH || 'Chưa xác định'}</td>
-                        <td>${booking.soDT || 'Chưa xác định'}</td>
-                        <td>${booking.email || 'Chưa xác định'}</td>
-                        <td>${booking.date || 'Chưa xác định'}</td>
-                        <td>${booking.time || 'Chưa xác định'}</td>
-                        <td>${BookingController.getTrangThaiText(booking.trangThai)}</td>
-                        <td>
-                            <form action="/lichHen/done" method="POST" style="display:inline;">
-                                <input type="hidden" name="id" value="${booking._id}">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
-                            </form>
-                            <button class="btn btn-warning change-time-btn" data-id="${booking._id}" data-date="${booking.date}"
-                                data-time="${booking.time}" data-bs-toggle="modal" data-bs-target="#changeTimeModal">
-                                <i class="fas fa-clock"></i>
-                            </button>
-                            <form action="/lichHen/delete" method="POST" style="display:inline;">
-                                <input type="hidden" name="id" value="${booking._id}">
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                `).join('');
-
-                const modifiedHTML = data.replace(
-                    /<tbody>[\s\S]*?<\/tbody>/,
-                    `<tbody>${bookingRows}</tbody>`
-                );
-
-                res.send(modifiedHTML);
-            });
-        } catch (error) {
-            console.error('Lỗi tìm kiếm lịch hẹn:', error);
-            res.status(500).send('Có lỗi xảy ra khi tìm kiếm');
-        }
+       
     }
 
     static async markBookingDone(req, res) {
