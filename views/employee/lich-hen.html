@@ -41,8 +41,22 @@
         <div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <form class="input-group" action="/lichHen/search" method="GET">
-                    <input class="form-control" type="search" name="query" placeholder="Tìm kiếm lịch hẹn"
-                        aria-label="Search">
+                    <input class="form-control" type="search" name="sanPham" placeholder="Tên sản phẩm" aria-label="Search">
+                    <input class="form-control" type="search" name="idSanPham" placeholder="ID sản phẩm" aria-label="Search">
+                    <input class="form-control" type="search" name="tenKhachHang" placeholder="Tên Khách Hàng" aria-label="Search">
+                    <input class="form-control" type="search" name="soDT" placeholder="SĐT" aria-label="Search">
+                    <input class="form-control" type="date" name="ngay" placeholder="Ngày" aria-label="Search">
+                    <select class="form-select" name="loai">
+                        <option value="">Chọn loại</option>
+                        <option value="PK">Phụ kiện</option>
+                        <option value="XE">Xe</option>
+                    </select>
+                    <select class="form-select" name="trangThai">
+                        <option value="">Chọn trạng thái</option>
+                        <option value="0">Đã đặt</option>
+                        <option value="1">Hoàn thành</option>
+                        <option value="2">Đổi lịch</option>
+                    </select>
                     <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
                 </form>
             </div>
