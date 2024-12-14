@@ -38,9 +38,6 @@
                         src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
                         alt="ảnh" class="img-detail-1">
                     <div class="image-range">
-                        <button class="btn-change-image">
-                            <i class="ri-arrow-left-circle-fill"></i>
-                        </button>
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxTzzmx0bXJ9KzefdruWYbEaVnmeDTFhvthQ&s"
                             class="img-detail-2">
                         <img src="https://bizweb.dktcdn.net/100/066/626/files/khung-anh-den-pin-xe-dap.jpg?v=1639969199288"
@@ -49,13 +46,10 @@
                         class="img-detail-2">
                         <img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/032/885/products/fenix-bc05rv2-1-a34e05d3-7154-473f-b64a-d140b5b87370.jpg?v=1649661440977"
                             class="img-detail-2">
-                        <button class="btn-change-image">
-                            <i class="ri-arrow-right-circle-fill"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="product-1"
-                    style="display: flex; flex-direction: column; flex-wrap: wrap; max-width: 200px;">
+                    style="display: flex; flex-direction: column; flex-wrap: wrap; max-width: 600px;">
                     <div class="box-price">
                         <h1 class="product-detail-name" id="product-name">BMW 320i Sport Line 2024</h1>
                         <p class="product-detail-p" id="product-price-label">Giá niêm yết:</p>
@@ -95,9 +89,6 @@
         <br>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
             style="display: flex; flex-direction: row; flex-wrap: wrap;">
-            <button class="btn-change-lienquan-left">
-                <i class="ri-arrow-left-circle-line"></i>
-            </button>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
                     class="image-lienquan">
@@ -133,17 +124,9 @@
                     <p class="product-detail-lienquan"><i class="ri-gas-station-line"></i> Xăng</p>
                 </div>
             </div>
-
-
-            <button class="btn-change-lienquan-right">
-                <i class="ri-arrow-right-circle-line"></i>
-            </button>
-
         </div>
 
     </div>
-
-
 
     <div id="registerModal" class="modal">
         <div class="modal-content">
@@ -158,12 +141,6 @@
                     <div class="form-column">
                         <label for="phone">Số điện thoại:</label>
                         <input type="tel" id="phone" name="phone" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-column">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
                     </div>
                 </div>
                 <div class="form-row">
@@ -225,12 +202,6 @@
                         const thumbnailContainer = document.querySelector('.image-range');
                         thumbnailContainer.innerHTML = ''; // Xóa các thumbnail cũ
         
-                        // Thêm nút trái
-                        const leftButton = document.createElement('button');
-                        leftButton.className = 'btn-change-image';
-                        leftButton.innerHTML = '<i class="ri-arrow-left-circle-fill"></i>';
-                        thumbnailContainer.appendChild(leftButton);
-        
                         // Tạo thumbnail
                         data.images.forEach((imgSrc, index) => {
                             const img = document.createElement('img');
@@ -241,12 +212,6 @@
                             });
                             thumbnailContainer.appendChild(img);
                         });
-        
-                        // Thêm nút phải
-                        const rightButton = document.createElement('button');
-                        rightButton.className = 'btn-change-image';
-                        rightButton.innerHTML = '<i class="ri-arrow-right-circle-fill"></i>';
-                        thumbnailContainer.appendChild(rightButton);
                     }
         
                     // Hiển thị chi tiết sản phẩm

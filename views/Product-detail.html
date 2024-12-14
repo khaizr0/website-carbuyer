@@ -32,9 +32,6 @@
                         src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
                         alt="ảnh" class="img-detail-1">
                     <div class="image-range">
-                        <button class="btn-change-image">
-                            <i class="fa-solid fa-circle-chevron-left"></i>
-                        </button>
                         <img src="https://www.bmw-longbien.com.vn/wp-content/uploads/sites/3/2019/06/bmw-long-bien-bmw-320i-2024-anh-bia.jpg"
                             class="img-detail-2">
                         <img src="https://bmw-khuyenmai.com/wp-content/uploads/2022/10/bmw-3-2023-20.jpeg"
@@ -42,13 +39,10 @@
                         <img src="https://choxe365.com/wp-content/uploads/2022/01/bmw-320i.png" class="img-detail-2">
                         <img src="https://dailymuabanxe.net/wp-content/uploads/2022/12/z3963399809058_886a40561483a04e42931f37084f4029.jpg"
                             class="img-detail-2">
-                            <button class="btn-change-image">
-                                <i class="fa-solid fa-circle-chevron-right"></i>
-                            </button>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="product-1"
-                    style="display: flex; flex-direction: column; flex-wrap: wrap; max-width: 200px;">
+                    style="display: flex; flex-direction: column; flex-wrap: wrap;">
                     <div class="box-price">
                         <h1 class="product-detail-name" id="product-name">BMW 320i Sport Line 2024</h1>
                         <p class="product-detail-p" id="product-price-label">Giá niêm yết:</p>
@@ -68,7 +62,7 @@
                             <span id="fuel-text">Xăng</span>
                         </p>
                         <p class="product-detail-model" id="product-seats">
-                            <i class="fa-solid fa-car-seat"></i> 
+                            <i class="fa-solid fa-chair"></i>
                             <span id="seats-text">5 chỗ</span>
                         </p>
                         <p class="product-detail-model" id="product-transmission">
@@ -91,14 +85,6 @@
             </div>
         </div>
     </div>
-    <div class="noidung" id="TSKT">
-        <div class="layout">
-            <div class="box-product-detail-infromation">
-               
-            </div>
-        </div>
-    </div>
-
     <br>
     <div class="caikhunggiday"></div>
 
@@ -121,9 +107,6 @@
         <br>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
             style="display: flex; flex-direction: row; flex-wrap: wrap;">
-            <button class="btn-change-lienquan-left">
-                <i class="fa-solid fa-circle-chevron-left"></i>
-            </button>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <img src="https://bmw-mienbac.vn/wp-content/uploads/2021/06/anh-xe-320i-sport-line-600x401.jpg" alt=""
                     class="image-lienquan">
@@ -165,11 +148,7 @@
                     <p class="product-detail-lienquan"><i class="ri-gas-station-line"></i> Xăng</p>
                 </div>
             </div>
-            <button class="btn-change-lienquan-right">
-                <i class="fa-solid fa-circle-chevron-right"></i>
-            </button>
         </div>
-
     </div>
 
     <div id="registerModal" class="modal">
@@ -227,45 +206,17 @@
         });
         
         function displayProductDetails(data) {
+            // Xử lý nội dung xuống dòng
+            const detailsWithLineBreaks = (data.details || 'Không có thông tin chi tiết').replace(/\r\n/g, '<br>');
+        
             // Hiển thị thông tin tổng quan
             const overviewSection = document.querySelector('#TQ .box-product-detail-infromation');
             overviewSection.innerHTML = `
                 <h2>Tổng Quan</h2>
-                <p>${data.details || 'Không có thông tin chi tiết'}</p>
-            `;
-        
-            // Hiển thị thông số kỹ thuật
-            const technicalSection = document.querySelector('#TSKT .box-product-detail-infromation');
-            technicalSection.innerHTML = `
-                <h2>Thông Số Kỹ Thuật</h2>
-                <table>
-                    <tr>
-                        <td>Hãng Xe</td>
-                        <td>${data.brand || 'Không rõ'}</td>
-                    </tr>
-                    <tr>
-                        <td>Loại Xe</td>
-                        <td>${data.type || 'Không rõ'}</td>
-                    </tr>
-                    <tr>
-                        <td>Màu Sắc</td>
-                        <td>${data.color || 'Không rõ'}</td>
-                    </tr>
-                    <tr>
-                        <td>Nhiên Liệu</td>
-                        <td>${data.fuelType || 'Không rõ'}</td>
-                    </tr>
-                    <tr>
-                        <td>Hộp Số</td>
-                        <td>${data.transmission || 'Không rõ'}</td>
-                    </tr>
-                    <tr>
-                        <td>Trạng Thái</td>
-                        <td>${data.status || 'Không rõ'}</td>
-                    </tr>
-                </table>
+                <p>${detailsWithLineBreaks}</p>
             `;
         }
+        
         
         // Chỉnh sửa hàm fetchProductDetails để thêm hiển thị chi tiết
         function fetchProductDetails(productId) {
@@ -294,8 +245,7 @@
                             if (imgElement) {
                                 imgElement.src = data.images[0];  
                                 imgElement.alt = 'Product Image';
-                                imgElement.style.width = '100%';  
-                                imgElement.style.height = 'auto';  
+                                imgElement.style.width = '670px';
                             }
         
                             // Cập nhật ảnh thumbnail
