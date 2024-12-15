@@ -153,7 +153,6 @@
                     const date = this.getAttribute('data-date');
                     const time = this.getAttribute('data-time');
     
-                    // Chuyển đổi định dạng ngày từ dd/mm/yyyy sang yyyy-mm-dd cho input date
                     const [day, month, year] = date.split('/');
                     const formattedDate = `${year}-${month}-${day}`;
     
@@ -166,7 +165,7 @@
             const rows = document.querySelectorAll('tbody tr');
         
             rows.forEach(row => {
-                const statusCell = row.cells[8]; // Trạng thái nằm ở cột thứ 8
+                const statusCell = row.cells[8];
                 const status = statusCell.textContent.trim();
         
                 if (status === 'Hoàn thành') {
@@ -181,7 +180,40 @@
                     }
                 }
             });
-        });
+
+             // Xử lý xác nhận cho nút hoàn thành
+            const doneButtons = document.querySelectorAll('form[action="/lichHen/done"] button');
+            doneButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const confirmed = confirm("Bạn có chắc chắn muốn đánh dấu lịch hẹn này là hoàn thành?");
+                    if (!confirmed) {
+                        event.preventDefault();
+                    }
+                });
+            });
+
+            // Xử lý xác nhận cho nút xóa
+            const deleteButtons = document.querySelectorAll('form[action="/lichHen/delete"] button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const confirmed = confirm("Bạn có chắc chắn muốn xóa lịch hẹn này?");
+                    if (!confirmed) {
+                        event.preventDefault();
+                    }
+                });
+            });
+
+            // Xử lý xác nhận cho nút đổi giờ
+            const changeTimeForms = document.querySelectorAll('form[action="/lichHen/change-time"]');
+            changeTimeForms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    const confirmed = confirm("Bạn có chắc chắn muốn thay đổi giờ và ngày lịch hẹn này?");
+                    if (!confirmed) {
+                        event.preventDefault();
+                    }
+                });
+            });
+    });
     </script>
 </body>
 

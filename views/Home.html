@@ -193,8 +193,8 @@
                     noNewsMessage.style.display = 'none';
                     newsItems.forEach(news => {
                         const newsItem = `
-                            <div class="news-item">
-                                 <img src="/Public/images/${news.anhDaiDien}" alt="${news.tenTT}">
+                            <div class="news-item" onclick="window.location.href='/news/detail/${news._id}'">
+                                <img src="/Public/images/${news.anhDaiDien}" alt="${news.tenTT}">
                                 <div class="news-content">
                                     <h3>${news.tenTT}</h3>
                                     <p>${news.chiTietBaiViet.substring(0, 100)}...</p>
