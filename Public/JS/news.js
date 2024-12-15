@@ -70,12 +70,19 @@ async function fetchNews() {
     }
 }
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return date.toLocaleDateString('en-GB', options).replace(/\//g, '-'); // Định dạng ngày theo kiểu DD-MM-YYYY
+}
+
 function updateFeaturedArticle(news) {
     const featuredArticle = document.querySelector('.featured-article');
     featuredArticle.querySelector('img').src = `/Public/images/${news.anhDaiDien}`;
-    featuredArticle.querySelector('h3').textContent = news.ngayDang;
+    featuredArticle.querySelector('h3').textContent = formatDate(news.ngayDang); // Sử dụng hàm formatDate
     featuredArticle.querySelector('h2').textContent = news.tenTT;
-    featuredArticle.querySelector('p').textContent = news.chiTietBaiViet.substring(0, 150) + '...';
+    featuredArticle.querySelector('p').innerHTML = news.chiTietBaiViet; 
+    featuredArticle.querySelector('.read-more').href = `/news/detail/${news._id}`;
 }
 
 function createArticleElement(news) {
@@ -86,9 +93,9 @@ function createArticleElement(news) {
     articleDiv.innerHTML = `
         <img src="/Public/images/${news.anhDaiDien}" alt="${news.tenTT}">
         <div class="article-content">
-            <h3>${news.ngayDang}</h3>
+            <h3>${formatDate(news.ngayDang)}</h3> <!-- Sử dụng hàm formatDate -->
             <h4>${news.tenTT}</h4>
-            <p>${news.chiTietBaiViet.substring(0, 100)}...</p>
+            <p>${news.chiTietBaiViet}</p>
             <a href="/news/detail/${news._id}">Đọc thêm</a>
         </div>
     `;

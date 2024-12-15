@@ -34,10 +34,20 @@ async function createDatabase() {
         // });
 
         await db.collection('LoaiPhuKien').insertMany([
+            { id: "LPK999", tenLoai: "Khác" },
             { id: "LPK001", tenLoai: "Camera" },
             { id: "LPK002", tenLoai: "Cảm biến" },
             { id: "LPK003", tenLoai: "Loa Bluetooth" },
-            { id: "LPK004", tenLoai: "Gương cầu lồi" }
+            { id: "LPK004", tenLoai: "Gương cầu lồi" },
+            { id: "LPK005", tenLoai: "Sạc điện thoại" },
+            { id: "LPK006", tenLoai: "Máy bơm lốp" },
+            { id: "LPK007", tenLoai: "Bọc ghế" },
+            { id: "LPK008", tenLoai: "Thảm lót sàn" },
+            { id: "LPK009", tenLoai: "Tẩu sạc đa năng" },
+            { id: "LPK010", tenLoai: "Hệ thống định vị GPS" },
+            { id: "LPK011", tenLoai: "Đèn LED" },
+            { id: "LPK012", tenLoai: "Kính chắn nắng" },
+            { id: "LPK013", tenLoai: "Túi khí bổ sung" },
         ]);
 
         // await db.collection('PhuKien').insertMany([
@@ -68,30 +78,59 @@ async function createDatabase() {
         // ]);
 
         await db.collection('ThuongHieu').insertMany([
-            { id: "TH001", TenTH: "Toyota", idPhanLoaiTH: 0 },
-            { id: "TH002", TenTH: "Honda", idPhanLoaiTH: 0 },
-            { id: "TH003", TenTH: "BMW", idPhanLoaiTH: 0 },
-            { id: "TH004", TenTH: "Mercedes", idPhanLoaiTH: 0 }
+            { id: "THKHAC0", TenTH: "Khác", idPhanLoaiTH: 0 },
+            // Xe
+            { id: "THXE001", TenTH: "Toyota", idPhanLoaiTH: 0 },
+            { id: "THXE002", TenTH: "Honda", idPhanLoaiTH: 0 },
+            { id: "THXE003", TenTH: "Ford", idPhanLoaiTH: 0 },
+            { id: "THXE004", TenTH: "Hyundai", idPhanLoaiTH: 0 },
+            { id: "THXE005", TenTH: "Kia", idPhanLoaiTH: 0 },
+            { id: "THXE006", TenTH: "Mazda", idPhanLoaiTH: 0 },
+            { id: "THXE007", TenTH: "Chevrolet", idPhanLoaiTH: 0 },
+            { id: "THXE008", TenTH: "BMW", idPhanLoaiTH: 0 },
+            { id: "THXE009", TenTH: "Mercedes-Benz", idPhanLoaiTH: 0 },
+            { id: "THXE010", TenTH: "Audi", idPhanLoaiTH: 0 },
+            { id: "THXE011", TenTH: "Nissan", idPhanLoaiTH: 0 },
+            { id: "THXE012", TenTH: "Mitsubishi", idPhanLoaiTH: 0 },
+            { id: "THXE013", TenTH: "Lexus", idPhanLoaiTH: 0 },
+            { id: "THXE014", TenTH: "Volkswagen", idPhanLoaiTH: 0 },
+            { id: "THXE015", TenTH: "Subaru", idPhanLoaiTH: 0 },
+            // Phụ Kiện
+            { id: "THPK001", TenTH: "Bosch", idPhanLoaiTH: 1 },
+            { id: "THPK002", TenTH: "Pioneer", idPhanLoaiTH: 1 },
+            { id: "THPK003", TenTH: "Bridgestone", idPhanLoaiTH: 1 },
+            { id: "THPK004", TenTH: "Michelin", idPhanLoaiTH: 1 },
+            { id: "THPK005", TenTH: "Philips", idPhanLoaiTH: 1 },
+            { id: "THPK006", TenTH: "Hankook", idPhanLoaiTH: 1 },
+            { id: "THPK007", TenTH: "Kenwood", idPhanLoaiTH: 1 },
+            { id: "THPK008", TenTH: "Sony", idPhanLoaiTH: 1 },
+            { id: "THPK009", TenTH: "Thule", idPhanLoaiTH: 1 },
+            { id: "THPK010", TenTH: "Yokohama", idPhanLoaiTH: 1 },
+            { id: "THPK011", TenTH: "Mobil 1", idPhanLoaiTH: 1 },
+            { id: "THPK012", TenTH: "Castrol", idPhanLoaiTH: 1 },
+            { id: "THPK013", TenTH: "Denso", idPhanLoaiTH: 1 },
+            { id: "THPK014", TenTH: "NGK", idPhanLoaiTH: 1 },
+            { id: "THPK015", TenTH: "Goodyear", idPhanLoaiTH: 1 }
         ]);
 
-        await db.collection('TinTuc').insertMany([
-            {
-                id: "TT001",
-                tenTT: "Toyota ra mắt Camry mới",
-                anhDaiDien: "camry_news.png",
-                chiTietBaiViet: "Toyota chính thức ra mắt dòng Camry 2023...",
-                ngayDang: "2024-10-16",
-                trangThai: 1
-            },
-            {
-                id: "TT002",
-                tenTT: "Honda Civic 2024 có gì mới?",
-                anhDaiDien: "civic_news.png",
-                chiTietBaiViet: "Honda đã cập nhật dòng Civic mới với nhiều tính năng nổi bật...",
-                ngayDang: "2024-11-01",
-                trangThai: 1
-            }
-        ]);
+        // await db.collection('TinTuc').insertMany([
+        //     {
+        //         id: "TT001",
+        //         tenTT: "Toyota ra mắt Camry mới",
+        //         anhDaiDien: "camry_news.png",
+        //         chiTietBaiViet: "Toyota chính thức ra mắt dòng Camry 2023...",
+        //         ngayDang: "2024-10-16",
+        //         trangThai: 1
+        //     },
+        //     {
+        //         id: "TT002",
+        //         tenTT: "Honda Civic 2024 có gì mới?",
+        //         anhDaiDien: "civic_news.png",
+        //         chiTietBaiViet: "Honda đã cập nhật dòng Civic mới với nhiều tính năng nổi bật...",
+        //         ngayDang: "2024-11-01",
+        //         trangThai: 1
+        //     }
+        // ]);
 
         // await db.collection('User').insertOne({
         //     id: "U001",

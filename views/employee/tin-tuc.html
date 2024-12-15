@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="/Public/css/employee.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 
 <body>
@@ -124,7 +125,8 @@
 
                     <div class="mb-3 mt-4">
                         <label for="chiTietBaiViet" class="form-label">Nội Dung</label>
-                        <textarea class="form-control" id="chiTietBaiViet" name="chiTietBaiViet" rows="8" required></textarea>
+                        <div id="editor" style="height: 200px;"></div>
+                        <input type="hidden" name="chiTietBaiViet" id="chiTietBaiViet" required>
                     </div>
 
                     <div class="modal-footer d-flex justify-content-start px-0">
@@ -169,7 +171,8 @@
 
                     <div class="mb-3 mt-4">
                         <label for="editChiTietBaiViet" class="form-label">Nội Dung</label>
-                        <textarea class="form-control" id="editChiTietBaiViet" name="chiTietBaiViet" rows="8" required></textarea>
+                        <div id="editEditor" style="height: 200px;"></div>
+                        <input type="hidden" name="chiTietBaiViet" id="editChiTietBaiViet" required>
                     </div>
 
                     <div class="modal-footer d-flex justify-content-start px-0">
@@ -182,8 +185,7 @@
         </div>
     </div>
 </div>
-
-    <script>
+<script>
 // Fetch and display news items on page load
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.querySelector("table tbody");
@@ -212,10 +214,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error fetching news:", error);
     }
 });
+// Khởi tạo Quill editor cho tạo tin tức
+const quill = new Quill('#editor', {
+    theme: 'snow'
+});
+
+// Khởi tạo Quill editor cho chỉnh sửa tin tức
+const editQuill = new Quill('#editEditor', {
+    theme: 'snow'
+});
 // Handle form submission for creating and editing news
 document.getElementById("createNewsForm").addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent default form submission
     
+    // Lưu nội dung từ Quill vào input ẩn
+    const chiTietBaiVietContent = quill.root.innerHTML;
+    document.getElementById('chiTietBaiViet').value = chiTietBaiVietContent;
+
     const formData = new FormData(event.target);
     const url = '/news/create';  // URL for creating a news article
     const method = 'POST';  // POST for creating
@@ -251,7 +266,7 @@ document.addEventListener("click", async (event) => {
             // Populate the modal fields with the current news data
             document.getElementById('editTenTT').value = news.tenTT;
             document.getElementById('editTrangThai').value = news.trangThai ? "1" : "0";
-            document.getElementById('editChiTietBaiViet').value = news.chiTietBaiViet;
+            editQuill.root.innerHTML = news.chiTietBaiViet; // Gán nội dung vào Quill editor
 
             // Add ID to the form data for updating
             document.getElementById('editNewsId').value = news._id;
@@ -268,9 +283,13 @@ document.addEventListener("click", async (event) => {
 document.getElementById("editNewsForm").addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent default form submission
     
+    // Lưu nội dung từ Quill vào input ẩn
+    const chiTietBaiVietContent = editQuill.root.innerHTML;
+    document.getElementById('editChiTietBaiViet').value = chiTietBaiVietContent;
+
     const formData = new FormData(event.target);
     const id = formData.get('id');
-    const url = `/news/${id}`;  // URL for editing a news article
+    const url = `/news/${id}`; // URL for editing a news article
     const method = 'PUT';  // PUT for editing
     
     try {
@@ -291,6 +310,7 @@ document.getElementById("editNewsForm").addEventListener("submit", async (event)
         alert("Có lỗi xảy ra khi gửi yêu cầu.");
     }
 });
+
 
 // Delete news item functionality
 document.addEventListener("click", async (event) => {
