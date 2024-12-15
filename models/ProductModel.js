@@ -113,7 +113,7 @@ const getAllProducts = async () => {
   const formattedAccessories = accessories.map(acc => ({
     id: acc.id,
     name: acc.tenSP,
-    brand: brandMap[acc.IDthuongHieu] || 'Unknown',
+    brand: brandMap[acc.iDthuongHieu] || 'Unknown',
     price: acc.GiaNiemYet,
     type: 'Phụ kiện',
     status: acc.trangThai,
