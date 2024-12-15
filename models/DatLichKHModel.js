@@ -8,20 +8,22 @@ const DatLichKHModel = {
       console.log(data.hoTenKH);
       let idXe = null;
       let idPhuKien = null;
-  
+
       if (data.idXe && data.idXe.startsWith('XE')) {
         idXe = data.idXe;
       } else if (data.idXe && data.idXe.startsWith('PK')) {
         idPhuKien = data.idXe;
       }
+
+      // Chuyển đổi ngày sang định dạng yyyy-mm-dd
+      const formattedDate = new Date(data.ngayTao).toISOString().split('T')[0];
+
       const result = await db.collection('DatLichKH').insertOne({
         id: `DL${Date.now()}`,
         hoTenKH: data.hoTenKH,
         time: data.time,
-        date: data.date,
+        date: formattedDate, // Lưu ngày theo định dạng yyyy-mm-dd
         soDT: data.soDT,
-        email: data.email,
-        tenDichVu: data.tenDichVu,
         idXe: idXe || null,
         idPhuKien: idPhuKien || null,
         trangThai: data.trangThai || 0,
@@ -80,23 +82,6 @@ const DatLichKHModel = {
     } catch (error) {
       console.error('Lỗi khi cập nhật trạng thái lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi cập nhật trạng thái lịch hẹn.');
-    }
-  },
-
-  // Xóa lịch hẹn theo ID
-  async deleteBookingById(id) {
-    try {
-      const db = getDB();
-      const result = await db.collection('DatLichKH').deleteOne({ id });
-      if (result.deletedCount === 0) {
-        throw new Error('Không tìm thấy lịch hẹn để xóa.');
-      }
-
-      console.log(`Xóa lịch hẹn thành công với ID: ${id}`);
-      return true;
-    } catch (error) {
-      console.error('Lỗi khi xóa lịch hẹn:', error);
-      throw new Error('Đã xảy ra lỗi khi xóa lịch hẹn.');
     }
   },
 };

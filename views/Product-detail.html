@@ -301,7 +301,6 @@
             document.getElementById('registerModal').style.display = 'none';
         }
 
-        // Handle the form submission
         function submitForm(event) {
             event.preventDefault(); // Prevent the default form submission
             const urlParams = new URLSearchParams(window.location.search);
@@ -309,15 +308,15 @@
             // Get form data
             const name = document.getElementById('name').value || null;
             const phone = document.getElementById('phone').value || null;
-            const date = document.getElementById('date').value || null;
+            const date = document.getElementById('date').value || null; // Ngày sẽ được lấy từ input
             const time = document.getElementById('time').value || null;
-
+        
             // Prepare data to send to the server
             const formData = {
                 idXe: productId,
                 hoTenKH: name,
                 soDT: phone,
-                ngayTao: date,
+                ngayTao: date, //  yyyy-mm-dd
                 time: time
             };
             // Make the API call to register the test drive
@@ -366,5 +365,4 @@
         
     </script>
 </body>
-
 </html>

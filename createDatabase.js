@@ -26,7 +26,7 @@ async function createDatabase() {
             id: "DL001",
             hoTenKH: "Nguyen Van A",
             time: "10:30",
-            date: "21-10-2024",
+            date: "2024-10-21",
             soDT: "0909123456",
             idXe: "XE1733646898449",
             idPhuKien: null,

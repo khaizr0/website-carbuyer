@@ -162,6 +162,25 @@
                     newTimeInput.value = time;
                 });
             });
+
+            const rows = document.querySelectorAll('tbody tr');
+        
+            rows.forEach(row => {
+                const statusCell = row.cells[8]; // Trạng thái nằm ở cột thứ 8
+                const status = statusCell.textContent.trim();
+        
+                if (status === 'Hoàn thành') {
+                    const doneButton = row.querySelector('form button.btn-success');
+                    const changeTimeButton = row.querySelector('button.change-time-btn');
+        
+                    if (doneButton) {
+                        doneButton.style.display = 'none';
+                    }
+                    if (changeTimeButton) {
+                        changeTimeButton.style.display = 'none';
+                    }
+                }
+            });
         });
     </script>
 </body>

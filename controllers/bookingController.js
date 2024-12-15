@@ -38,10 +38,12 @@ class BookingController {
                         <td>
                             <form action="/lichHen/done" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="${booking._id}">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button type="submit" class="btn btn-success" ${booking.trangThai === 1 ? 'style="display:none;"' : ''}>
+                                    <i class="fas fa-check"></i>
+                                </button>
                             </form>
                             <button class="btn btn-warning change-time-btn" data-id="${booking._id}" data-date="${booking.date}"
-                                data-time="${booking.time}" data-bs-toggle="modal" data-bs-target="#changeTimeModal">
+                                data-time="${booking.time}" data-bs-toggle="modal" data-bs-target="#changeTimeModal" ${booking.trangThai === 1 ? 'style="display:none;"' : ''}>
                                 <i class="fas fa-clock"></i>
                             </button>
                             <form action="/lichHen/delete" method="POST" style="display:inline;">
@@ -91,10 +93,12 @@ class BookingController {
                         <td>
                             <form action="/lichHen/done" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="${booking._id}">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button type="submit" class="btn btn-success" ${booking.trangThai === 1 ? 'style="display:none;"' : ''}>
+                                    <i class="fas fa-check"></i>
+                                </button>
                             </form>
                             <button class="btn btn-warning change-time-btn" data-id="${booking._id}" data-date="${booking.date}"
-                                data-time="${booking.time}" data-bs-toggle="modal" data-bs-target="#changeTimeModal">
+                                data-time="${booking.time}" data-bs-toggle="modal" data-bs-target="#changeTimeModal" ${booking.trangThai === 1 ? 'style="display:none;"' : ''}>
                                 <i class="fas fa-clock"></i>
                             </button>
                             <form action="/lichHen/delete" method="POST" style="display:inline;">
