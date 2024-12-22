@@ -1,4 +1,75 @@
 const { getDB } = require('../config/db');
+const nodemailer = require('nodemailer');
+
+function formatDate(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${day}-${month}-${year}`;
+}
+  // Cấu hình nodemailer
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'khai.sendmail@gmail.com',
+      pass: 'bfsjnqexelavxnhi',
+    },
+  });
+
+  // Helper function để lấy email nhân viên
+  async function getStaffEmails() {
+    const db = getDB();
+    const staffMembers = await db.collection('User').find({ PhanLoai: 1 }).toArray();
+    return staffMembers.map(staff => staff.email);
+  }
+
+  // Helper function để lấy thông tin sản phẩm
+  async function getProductInfo(idXe, idPhuKien) {
+    const db = getDB();
+    if (idXe) {
+      const xe = await db.collection('XeOto').findOne({ id: idXe });
+      return xe ? `Xe: ${xe.tenSP}` : '';
+    } else if (idPhuKien) {
+      const phuKien = await db.collection('PhuKien').findOne({ id: idPhuKien });
+      return phuKien ? `Phụ kiện: ${phuKien.tenSP}` : '';
+    }
+    return '';
+  }
+
+  // Helper function để gửi email
+  async function sendNewBookingNotification(bookingData) {
+    try {
+      const staffEmails = await getStaffEmails();
+      if (!staffEmails.length) {
+        console.log('Không tìm thấy email nhân viên');
+        return;
+      }
+
+      const productInfo = await getProductInfo(bookingData.idXe, bookingData.idPhuKien);
+
+      const mailOptions = {
+        from: 'khai.sendmail@gmail.com',
+        to: staffEmails.join(', '),
+        subject: 'Đơn Đặt Lịch Mới',
+        html: `
+          <h2>Thông Tin Đơn Đặt Lịch Mới</h2>
+          <p><strong>Mã đơn:</strong> ${bookingData.id}</p>
+          <p><strong>Khách hàng:</strong> ${bookingData.hoTenKH}</p>
+          <p><strong>Số điện thoại:</strong> ${bookingData.soDT}</p>
+          <p><strong>Ngày đặt:</strong> ${formatDate(bookingData.date)}</p>
+          <p><strong>Giờ đặt:</strong> ${bookingData.time}</p>
+          <p><strong>Sản phẩm:</strong> ${productInfo}</p>
+          <p>Vui lòng kiểm tra và xử lý đơn đặt lịch trong hệ thống.</p>
+          <p>Đây là email tự động vui lòng không trả lời.</p>
+        `
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log('Đã gửi email thông báo thành công');
+    } catch (error) {
+      console.error('Lỗi khi gửi email thông báo:', error);
+    }
+  }
 
 const DatLichKHModel = {
   // Thêm một lịch hẹn mới
@@ -18,20 +89,25 @@ const DatLichKHModel = {
       // Chuyển đổi ngày sang định dạng yyyy-mm-dd
       const formattedDate = new Date(data.ngayTao).toISOString().split('T')[0];
 
-      const result = await db.collection('DatLichKH').insertOne({
+      const bookingData = {
         id: `DL${Date.now()}`,
         hoTenKH: data.hoTenKH,
         time: data.time,
-        date: formattedDate, // Lưu ngày theo định dạng yyyy-mm-dd
+        date: formattedDate,
         soDT: data.soDT,
         idXe: idXe || null,
         idPhuKien: idPhuKien || null,
         trangThai: data.trangThai || 0,
         ngayTao: new Date(),
-      });
+      };
 
-      console.log('Đặt lịch thành công:', data);
-      return data;
+      const result = await db.collection('DatLichKH').insertOne(bookingData);
+
+      // Gửi email thông báo
+      await sendNewBookingNotification(bookingData);
+
+      console.log('Đặt lịch thành công:', bookingData);
+      return bookingData;
     } catch (error) {
       console.error('Lỗi khi thêm lịch hẹn:', error);
       throw new Error('Đã xảy ra lỗi khi thêm lịch hẹn.');
